@@ -1,4 +1,0 @@
-﻿function test()
-{
-    echo "Test"
-}
