@@ -8,8 +8,8 @@
         New-Item $directory -ItemType Directory
     }
 
-    "IPCONFIG" > $filePath
-    ipconfig /all >$filePath
+    "IPCONFIG" >> $filePath
+    ipconfig /all >>$filePath
 
     notepad.exe $filePath
 }
