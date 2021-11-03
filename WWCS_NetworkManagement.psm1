@@ -17,7 +17,7 @@
     
 
     "IPCONFIG -----------------------------------------------------------------------------" | Out-File -FilePat $filePath -Append
-    ipconfig | Out-File -FilePath $filePath -Append
+    ipconfig -all | Out-File -FilePath $filePath -Append
 
     "DNS Settings-----------------------------------------------------------------------------" | Out-File -FilePath $filePath -Append
     "Net Adapters-----------------------------------------------------------------------------" | Out-File -FilePath $filePath -Append
