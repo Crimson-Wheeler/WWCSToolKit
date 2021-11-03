@@ -8,7 +8,7 @@
         New-Item $directory -ItemType Directory
     }
 
-    "IPCONFIG -----------------------------------------------------------------------------" | Out-File -FilePat h$filePath -Append
+    "IPCONFIG -----------------------------------------------------------------------------" | Out-File -FilePat $filePath -Append
     ipconfig | Out-File -FilePath $filePath -Append
 
     "DNS Settings-----------------------------------------------------------------------------" | Out-File -FilePath $filePath -Append
