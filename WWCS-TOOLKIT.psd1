@@ -22,6 +22,8 @@
                             'Create-O365User',
                             'Clear-PrintSpooler',
                             'Add-Printer',
-                            'Get-ADComputersLastLogon'
+                            'Get-ADComputersLastLogon',
+                            'Get-NetworkInfo',
+                            'Clear-PrintSpooler'
                         )
 }
