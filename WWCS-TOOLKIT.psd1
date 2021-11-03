@@ -3,7 +3,7 @@
     CompanyName = "WWCS Inc."
     Copyright = "© WWCS Inc. All Rights Reserved"
     HelpInfoUri="wwcs.com"
-    ModuleVersion = "1.0.0.1"
+    ModuleVersion = "1.0.0.2" #Key [Structure Change].[New File].[New Function].[Function Change/Bug Fix]
     NestedModules = @('WWCS-TOOLKIT.psm1',
                         'WWCS_AD.psm1',
                         'WWCS_Office.psm1',

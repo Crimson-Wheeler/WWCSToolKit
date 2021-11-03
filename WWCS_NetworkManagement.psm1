@@ -19,7 +19,9 @@
     "IPCONFIG -----------------------------------------------------------------------------" | Out-File -FilePat $filePath -Append
     ipconfig -all | Out-File -FilePath $filePath -Append
 
-    "DNS Settings-----------------------------------------------------------------------------" | Out-File -FilePath $filePath -Append
+    "Network Info-----------------------------------------------------------------------------" | Out-File -FilePath $filePath -Append
+    Get-NetworkInfo | Out-File -FilePath $filePath -Append
+
     "Net Adapters-----------------------------------------------------------------------------" | Out-File -FilePath $filePath -Append
     "DNS Settings-----------------------------------------------------------------------------" | Out-File -FilePath $filePath -Append
     "DNS Settings-----------------------------------------------------------------------------" | Out-File -FilePath $filePath -Append
