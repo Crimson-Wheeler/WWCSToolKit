@@ -10,4 +10,6 @@
 
     "IPCONFIG" > $filePath
     ipconfig /all >$filePath
+
+    notepad.exe $filePath
 }
