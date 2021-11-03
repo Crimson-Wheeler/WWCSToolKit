@@ -8,7 +8,9 @@
                         'WWCS_AD.psm1',
                         'WWCS_Office.psm1',
                         'WWCS_Messages.psm1',
-                        'WWCS_PasswordManagement.psm1'
+                        'WWCS_PasswordManagement.psm1',
+                        'WWCS_PrinterManagement.psm1',
+                        'WWCS_NetworkManagement.psm1'
                         )
     FunctionsToExport = @('Send-Email',
                             'test',
