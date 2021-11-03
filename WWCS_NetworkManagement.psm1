@@ -3,7 +3,7 @@
     $fileName = "NetworkInfo.txt"
     $directory = "C:\Temp\Logs"
     $filePath = "$($directory)\$($fileName)"
-    if(Test-Path -Path "C:\Temp\Logs" -ne $true)
+    if(-not (Test-Path -Path "C:\Temp\Logs"))
     {
         New-Item $directory -ItemType Directory
     }
