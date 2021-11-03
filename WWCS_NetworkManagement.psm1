@@ -5,14 +5,16 @@
     $directory = "C:\Temp\Logs"
     $filePath = "$($directory)\$($fileName)"
 
-    if(Test-Path -Path $filePath)
-    {
-        Remove-Item $directory    
-    }
+
     if(-not (Test-Path -Path $directory))
     {
         New-Item $directory -ItemType Directory
     }
+    if(Test-Path -Path $filePath)
+    {
+        Remove-Item $filePath
+    }
+    
 
     "IPCONFIG -----------------------------------------------------------------------------" | Out-File -FilePat $filePath -Append
     ipconfig | Out-File -FilePath $filePath -Append
