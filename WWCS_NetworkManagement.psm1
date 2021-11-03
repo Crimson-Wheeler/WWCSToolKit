@@ -8,13 +8,13 @@
         New-Item $directory -ItemType Directory
     }
 
-    "IPCONFIG -----------------------------------------------------------------------------" | Out-File -FilePath$filePath -Append
-    ipconfig | Out-File -FilePath$filePath -Append
+    "IPCONFIG -----------------------------------------------------------------------------" | Out-File -FilePat h$filePath -Append
+    ipconfig | Out-File -FilePath $filePath -Append
 
-    "DNS Settings-----------------------------------------------------------------------------" | Out-File -FilePath$filePath -Append
-    "Net Adapters-----------------------------------------------------------------------------" | Out-File -FilePath$filePath -Append
-    "DNS Settings-----------------------------------------------------------------------------" | Out-File -FilePath$filePath -Append
-    "DNS Settings-----------------------------------------------------------------------------" | Out-File -FilePath$filePath -Append
-    "DNS Settings-----------------------------------------------------------------------------" | Out-File -FilePath$filePath -Append
+    "DNS Settings-----------------------------------------------------------------------------" | Out-File -FilePath $filePath -Append
+    "Net Adapters-----------------------------------------------------------------------------" | Out-File -FilePath $filePath -Append
+    "DNS Settings-----------------------------------------------------------------------------" | Out-File -FilePath $filePath -Append
+    "DNS Settings-----------------------------------------------------------------------------" | Out-File -FilePath $filePath -Append
+    "DNS Settings-----------------------------------------------------------------------------" | Out-File -FilePath $filePath -Append
     notepad.exe $filePath
 }
