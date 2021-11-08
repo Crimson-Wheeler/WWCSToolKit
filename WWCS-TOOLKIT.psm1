@@ -1,7 +1,7 @@
 ﻿
 function test()
 {
-    echo "PATH: $($MyInvocation)"
+    echo "This is a test to test the testing test"
 }
 
 function logError($message)
