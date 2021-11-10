@@ -14,6 +14,7 @@
                         'WWCS_Programs.psm1'
                         )
     FunctionsToExport = @('Send-Email',
+                            'Get-WWCSTOOLKITPath',
                             'test',
                             'Check-O365PasswordValid',
                             'Create-ADUser',
