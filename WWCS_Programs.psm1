@@ -15,7 +15,7 @@ function Open-WWCSProgram($programName)
     }
     else
     {
-        Start-Process "$(Get-WWCSTOOLKITPath)\$programName"
+        Start-Process "$(Get-WWCSTOOLKITPath)\Programs\$programName"
     }
     
 }
