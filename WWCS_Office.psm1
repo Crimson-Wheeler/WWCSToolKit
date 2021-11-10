@@ -103,4 +103,9 @@ function Create-O365User()
 
 }
 
+function Reset-O365Pass()
+{
+    
+}
+
 
