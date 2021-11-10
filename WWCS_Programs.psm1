@@ -1,4 +1,10 @@
-﻿function Install-BillingReconciliation()
+﻿function Get-WWCSProgramPath()
+{
+    return "C:\Program Files\WWCS\Programs"
+
+}
+
+function Install-BillingReconciliation()
 {
     
 }
@@ -16,7 +22,7 @@ function Open-WWCSProgram($programName)
     else
     {
         Write-Host "Starting program from $(Get-WWCSTOOLKITPath)\Programs\$($programName)"
-        Start-Process "$(Get-WWCSTOOLKITPath)\Programs\$($programName)"
+        Start-Process "$(Get-WWCSProgramPath)\$($programName)"
     }
     
 }
