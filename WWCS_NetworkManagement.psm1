@@ -29,7 +29,7 @@
     notepad.exe $filePath
 }
 
-function Reset-ComputerNetworking($reboot = $false)
+function Clear-NetworkCache($reboot = $false)
 {
     ipconfig /flushdns
     ipconfig /registerdns

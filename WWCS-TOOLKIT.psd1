@@ -24,7 +24,7 @@
                             'Add-Printer',
                             'Get-ADComputersLastLogon',
                             'Get-NetworkInfo',
-                            'Reset-ComputerNetworking',
+                            'Clear-NetworkCache',
                             'Clear-PrintSpooler'
                         )
 }
