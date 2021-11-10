@@ -1,4 +1,7 @@
-﻿
+﻿function Get-WWCSTOOLKITPath()
+{
+    return "C:\Windows\system32\WindowsPowerShell\v1.0\Modules\WWCS-TOOLKIT"
+}
 function test()
 {
     echo "This is a test to test the testing test"
