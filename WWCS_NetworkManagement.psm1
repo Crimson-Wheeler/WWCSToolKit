@@ -22,11 +22,12 @@
     "Network Info-----------------------------------------------------------------------------" | Out-File -FilePath $filePath -Append
     Get-NetworkInfo | Out-File -FilePath $filePath -Append
 
-    "Net Adapters-----------------------------------------------------------------------------" | Out-File -FilePath $filePath -Append
+    "DNS Settings-----------------------------------------------------------------------------" | Out-File -FilePath $filePath -Append
+    ipconfig -displaydns
+
     "DNS Settings-----------------------------------------------------------------------------" | Out-File -FilePath $filePath -Append
     "DNS Settings-----------------------------------------------------------------------------" | Out-File -FilePath $filePath -Append
-    "DNS Settings-----------------------------------------------------------------------------" | Out-File -FilePath $filePath -Append
-    notepad.exe $filePath
+    notepad.exe $filePath | Out-File -FilePath $filePath -Append
 }
 
 function Clear-NetworkCache($reboot = $false)
@@ -36,6 +37,8 @@ function Clear-NetworkCache($reboot = $false)
     ipconfig /release
     ipconfig /renew
     netsh winsock reset
+
+    
 
     if($reboot -eq $true)
     {
