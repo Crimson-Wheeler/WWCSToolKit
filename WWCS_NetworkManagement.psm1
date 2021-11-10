@@ -28,3 +28,17 @@
     "DNS Settings-----------------------------------------------------------------------------" | Out-File -FilePath $filePath -Append
     notepad.exe $filePath
 }
+
+function Reset-ComputerNetworking($reboot = $false)
+{
+    ipconfig /flushdns
+    ipconfig /registerdns
+    ipconfig /release
+    ipconfig /renew
+    netsh winsock reset
+
+    if($reboot -eq $true)
+    {
+        shutdown /r /t 0
+    }
+}
