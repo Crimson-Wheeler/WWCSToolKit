@@ -80,9 +80,9 @@ function changeLocalUserCredentials($username, $password)
 function New-WWCSComputer()
 {
    
-    #winget install -e --id Google.Chrome --force
-    #winget install -e --id Adobe.AdobeAcrobatReaderDC --force
-    #winget install -e --id Oracle.JavaRuntimeEnvironment --force
+    winget install -e --id Google.Chrome --force
+    winget install -e --id Adobe.AdobeAcrobatReaderDC --force
+    winget install -e --id Oracle.JavaRuntimeEnvironment --force
 
     invoke-expression -Command "C:\Windows\system32\WindowsPowerShell\v1.0\Modules\WWCS-TOOLKIT\ODT\runODT.ps1"
 
