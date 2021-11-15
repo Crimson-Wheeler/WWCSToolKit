@@ -31,6 +31,7 @@
                             'Clear-NetworkCache',
                             'Clear-PrintSpooler',
                             'Open-Program',
-                            'Open-WWCSProgram'
+                            'Open-WWCSProgram',
+                            'Get-WWCSDocumentation'
                         )
 }
