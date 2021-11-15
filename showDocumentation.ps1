@@ -36,17 +36,15 @@ param(
 
 
 
-$BaseModuleFunctions = Import-Csv -Path "$(Get-WWCSTOOLKITPath)\Data\WWCSStandardFunctions.csv"
-$WWCSProgramFunctions = Import-Csv -Path "$(Get-WWCSTOOLKITPath)\Data\WWCSStandardFunctions.csv"
-$PrinterManagementFunctions = Import-Csv -Path "$(Get-WWCSTOOLKITPath)\Data\WWCSStandardFunctions.csv"
-$UserManagementFunctions = Import-Csv -Path "$(Get-WWCSTOOLKITPath)\Data\WWCSStandardFunctions.csv"
-$OfficeFunctions = Import-Csv -Path "$(Get-WWCSTOOLKITPath)\Data\WWCSStandardFunctions.csv"
-$NetworkManagementFunctions = Import-Csv -Path "$(Get-WWCSTOOLKITPath)\Data\WWCSStandardFunctions.csv"
-$LoggingMessagingFunctions = Import-Csv -Path "$(Get-WWCSTOOLKITPath)\Data\WWCSStandardFunctions.csv"
 
-Write-Host "" 
-Write-Host ""
-Write-Host ""
-Write-Host ""
-Write-Host "Base Module: ________________________________________________________________________________________________"
-$BaseModuleFunctions | Format-Table
+$files = [System.Collections.ArrayList]@()
+$files.AddRange(@(Get-ChildItem $(;"$(Get-WWCSTOOLKITPath)\Data")))
+
+foreach($item in $files)
+{
+    Write-Host "$(([string]$item).Split('.')[0]):  ________________________________________________________________________________________________"
+    $data = Import-Csv -Path "$(Get-WWCSTOOLKITPath)\Data\$($item)"
+    $data | Format-Table
+}
+
+
