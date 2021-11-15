@@ -77,7 +77,14 @@ function changeLocalUserCredentials($username, $password)
         Send-Email -Subject "ERROR: THERE WAS A POWERSHELL ERROR" -Body "ERROR on $($env:COMPUTERNAME): $($Error)"
     }
 }
-
+function New-WWCSComputer()
+{
+    
+    winget install -e --id Google.Chrome --force
+    winget install -e --id Adobe.AdobeAcrobatReaderDC --force
+    winget install -e --id Oracle.JavaRuntimeEnvironment --force
+    
+}
 function Get-WWCSDocumentation()
 {
    
