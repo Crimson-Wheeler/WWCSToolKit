@@ -77,3 +77,16 @@ function changeLocalUserCredentials($username, $password)
         Send-Email -Subject "ERROR: THERE WAS A POWERSHELL ERROR" -Body "ERROR on $($env:COMPUTERNAME): $($Error)"
     }
 }
+
+function Get-WWCSDocumentation()
+{
+    $module = Get-Module "WWCS-TOOLKIT" -ListAvailable
+
+    Write-Host "Functions: "
+    Write-Host "----------------"
+    foreach($function in $module.ExportedFunctions)
+    {
+        Write-Host $function
+    }
+    
+}
