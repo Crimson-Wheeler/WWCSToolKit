@@ -8,7 +8,7 @@
     # Modules that must be imported into the global environment prior to importing this module
     RequiredModules = @()
     # Script files (.ps1) that are run in the caller's environment prior to importing this module.
-    ScriptsToProcess = @('test.ps1')
+    ScriptsToProcess = @('showDocumentation')
 
 
     NestedModules = @('WWCS-TOOLKIT.psm1',
@@ -39,4 +39,6 @@
                             'Open-WWCSProgram',
                             'Get-WWCSDocumentation'
                         )
+
+
 }

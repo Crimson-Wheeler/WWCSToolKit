@@ -80,10 +80,16 @@ function changeLocalUserCredentials($username, $password)
 
 function Get-WWCSDocumentation()
 {
-   $moduleFunctions = Import-Csv -Path "$(Get-WWCSTOOLKITPath)\Data\WWCSStandardFunctions.csv"
+   $BaseModuleFunctions = Import-Csv -Path "$(Get-WWCSTOOLKITPath)\Data\WWCSStandardFunctions.csv"
+   $WWCSProgramFunctions = Import-Csv -Path "$(Get-WWCSTOOLKITPath)\Data\WWCSStandardFunctions.csv"
+   $PrinterManagementFunctions = Import-Csv -Path "$(Get-WWCSTOOLKITPath)\Data\WWCSStandardFunctions.csv"
+   $UserManagementFunctions = Import-Csv -Path "$(Get-WWCSTOOLKITPath)\Data\WWCSStandardFunctions.csv"
+   $OfficeFunctions = Import-Csv -Path "$(Get-WWCSTOOLKITPath)\Data\WWCSStandardFunctions.csv"
+   $NetworkManagementFunctions = Import-Csv -Path "$(Get-WWCSTOOLKITPath)\Data\WWCSStandardFunctions.csv"
+   $LoggingMessagingFunctions = Import-Csv -Path "$(Get-WWCSTOOLKITPath)\Data\WWCSStandardFunctions.csv"
 
-    
-   $moduleFunctions | Format-Table
+   Write-Host "Base Module:"
+   $BaseModuleFunctions | Format-Table
 
 
 
