@@ -15,5 +15,5 @@ $OfficeFunctions = Import-Csv -Path "$(Get-WWCSTOOLKITPath)\Data\WWCSStandardFun
 $NetworkManagementFunctions = Import-Csv -Path "$(Get-WWCSTOOLKITPath)\Data\WWCSStandardFunctions.csv"
 $LoggingMessagingFunctions = Import-Csv -Path "$(Get-WWCSTOOLKITPath)\Data\WWCSStandardFunctions.csv"
 
-Write-Host "Base Module:"
+Write-Host "Base Module: ________________________________________________________________________________________________"
 $BaseModuleFunctions | Format-Table
