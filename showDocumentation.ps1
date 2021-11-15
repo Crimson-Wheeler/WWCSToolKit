@@ -35,6 +35,9 @@ param(
 (Get-Process -Name powershell).MainWindowHandle | foreach { Set-WindowStyle MAXIMIZE $_ }
 
 
+Write-Host ""
+Write-Host ""
+Write-Host ""
 
 
 $files = [System.Collections.ArrayList]@()
@@ -42,9 +45,12 @@ $files.AddRange(@(Get-ChildItem $(;"$(Get-WWCSTOOLKITPath)\Data")))
 
 foreach($item in $files)
 {
-    Write-Host "$(([string]$item).Split('.')[0]):  ________________________________________________________________________________________________"
+    Write-Host "$(([string]$item).Split('.')[0]):________________________________________________________________________________________________"
     $data = Import-Csv -Path "$(Get-WWCSTOOLKITPath)\Data\$($item)"
     $data | Format-Table
+    Write-Host ""
+    Write-Host ""
+    
 }
 
 
