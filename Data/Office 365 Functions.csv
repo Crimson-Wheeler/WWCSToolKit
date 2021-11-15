@@ -1,7 +1,8 @@
 Functions,Description,Inputs
-Get-WWCSTOOLKITPath,Gets root install location of the WWCS-TOOLKIT module,
-test,A test function to test Module changes,
-logError,Logs information to C:\temp\wwcsLogs\errorLog.txt,message
-Send-Email,"Sends an email to helpdesk@wwcs.com, if From is not populated it defaults to Reports@wwcs.com","From, Subject, Body"
-New-WWCSComputer,Uses winget to install applications and run the basic setup for a new computer at WWCS,
-Get-WWCSDocumentation,Gets all of the functions and variables that can be used in the WWCS-TOOLKIT module,
+Connect-MSOL,Prompts for credential input and then connects to MS Online, MS Exchange and Azure,
+Select-O365User,Lists all Office 365 users and prompts the user to select one of them. This returns user Object,
+Delete-O365User,"Select the user to delete, removes the mailbox, and then deletes the user object",
+Decomission-O365User, Comming Soon to WWCS-TOOLKIT,
+Create-O365User, Walks the user through the creation of a new Office user,
+Reset-O365Pass, Walks the user through resetting a password for an Office user,
+
