@@ -37,6 +37,7 @@
                             'Clear-PrintSpooler',
                             'Open-Program',
                             'Open-WWCSProgram',
+                            'New-WWCSComputer',
                             'Get-WWCSDocumentation'
                         )
 
