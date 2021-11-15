@@ -45,11 +45,14 @@ $files.AddRange(@(Get-ChildItem $(;"$(Get-WWCSTOOLKITPath)\Data")))
 
 foreach($item in $files)
 {
-    Write-Host "$(([string]$item).Split('.')[0]):________________________________________________________________________________________________"
-    $data = Import-Csv -Path "$(Get-WWCSTOOLKITPath)\Data\$($item)"
-    $data | Format-Table
-    Write-Host ""
-    Write-Host ""
+    if(-NOT ([string]$item).Contains("~"))
+    {
+        Write-Host "$(([string]$item).Split('.')[0]):________________________________________________________________________________________________"
+        $data = Import-Csv -Path "$(Get-WWCSTOOLKITPath)\Data\$($item)"
+        $data | Format-Table
+        Write-Host ""
+        Write-Host ""
+    }
     
 }
 
