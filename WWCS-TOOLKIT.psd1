@@ -4,8 +4,13 @@
     Copyright = "© WWCS Inc. All Rights Reserved"
     HelpInfoUri="wwcs.com"
     ModuleVersion = "1.0.1.6" #Key [Structure Change].[New File].[New Function].[Function Change/Bug Fix]
+
     # Modules that must be imported into the global environment prior to importing this module
     RequiredModules = @()
+    # Script files (.ps1) that are run in the caller's environment prior to importing this module.
+    ScriptsToProcess = @('test.ps1')
+
+
     NestedModules = @('WWCS-TOOLKIT.psm1',
                         'WWCS_AD.psm1',
                         'WWCS_Office.psm1',
