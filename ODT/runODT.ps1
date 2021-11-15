@@ -1,0 +1,1 @@
+﻿setup.exe \configure Business_32_Config.xm
