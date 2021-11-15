@@ -80,13 +80,12 @@ function changeLocalUserCredentials($username, $password)
 
 function Get-WWCSDocumentation()
 {
-    $module = Get-Module "WWCS-TOOLKIT" -ListAvailable
+   $moduleFunctions = Import-Csv -Path "$(Get-WWCSTOOLKITPath)\Data\WWCSStandardFunctions.csv"
 
-    Write-Host "Functions: "
-    Write-Host "----------------"
-    foreach($function in $module.ExportedFunctions)
-    {
-        Write-Host $function
-    }
+    
+   $moduleFunctions | Format-Table
+
+
+
     
 }
