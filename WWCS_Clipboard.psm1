@@ -7,7 +7,7 @@ function Get-ClipboardDirectory()
     }
     return "$(Get-WWCSDataPath)\ClipboardFiles"
 }
-function Set-Clipboard()
+function Set-WWCSClipboard()
 {
     "Your Clipboard is: $(Get-Clipboard)"
 
