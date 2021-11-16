@@ -6,7 +6,7 @@ function Get-WWCSDataPath
 {
     if(-not (Test-Path -Path "C:\Users\$($env:USERNAME)\AppData\Local\WWCS"))
     {
-        New-Item -Path "C:\Users\$($env:USERNAME)\AppData\Local\WWCS"
+        New-Item -Path "C:\Users\$($env:USERNAME)\AppData\Local\WWCS" -ItemType directory
     }
     return "C:\Users\$($env:USERNAME)\AppData\Local\WWCS"
 }

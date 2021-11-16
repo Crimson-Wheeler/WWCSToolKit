@@ -3,7 +3,7 @@ function Get-ClipboardDirectory()
 {
     if(-not (Test-Path -Path "$(Get-WWCSDataPath)\ClipboardFiles"))
     {
-        New-Item -Path "$(Get-WWCSDataPath)\ClipboardFiles"
+        New-Item -Path "$(Get-WWCSDataPath)\ClipboardFiles" -ItemType directory
     }
     return "$(Get-WWCSDataPath)\ClipboardFiles"
 }
