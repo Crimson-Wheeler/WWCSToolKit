@@ -1,10 +1,17 @@
 ﻿
-
+function Get-ClipboardDirectory()
+{
+    if(-not (Test-Path -Path "$(Get-WWCSDataPath)\ClipboardFiles"))
+    {
+        New-Item -Path "$(Get-WWCSDataPath)\ClipboardFiles"
+    }
+    return "$(Get-WWCSDataPath)\ClipboardFiles"
+}
 function Set-Clipboard()
 {
     "Your Clipboard is: $(Get-Clipboard)"
 
-    [string]$path = Get-WWCSDataPath
+    [string]$path = Get-ClipboardDirectory
     Write-Host $path
     
     $files = [System.Collections.ArrayList]@()
@@ -35,6 +42,6 @@ function New-ClipboardEntry($text,$fileName,$Inputfile)
 {
     if($text -ne $null)
     {
-        $text > "$(Get-WWCSDataPath)\$($fileName).txt"
+        $text > "$(Get-ClipboardDirectory)\$($fileName).txt"
     }
 }

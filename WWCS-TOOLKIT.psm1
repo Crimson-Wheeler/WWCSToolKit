@@ -4,7 +4,11 @@
 }
 function Get-WWCSDataPath
 {
-    return "C:\Users\$($env:USERNAME)\AppData\Local\WWCS\ClipboardFiles"
+    if(-not (Test-Path -Path "C:\Users\$($env:USERNAME)\AppData\Local\WWCS"))
+    {
+        New-Item -Path "C:\Users\$($env:USERNAME)\AppData\Local\WWCS"
+    }
+    return "C:\Users\$($env:USERNAME)\AppData\Local\WWCS"
 }
 function test()
 {
