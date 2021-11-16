@@ -1,6 +1,10 @@
-﻿function Get-WWCSTOOLKITPath()
+﻿function Get-WWCSTOOLKITPath
 {
     return "C:\Windows\system32\WindowsPowerShell\v1.0\Modules\WWCS-TOOLKIT"
+}
+fucntion Get-WWCSDataPath
+{
+    return "C:\Users\$($env:USERNAME)\AppData\Local\WWCS\ClipboardFiles"
 }
 function test()
 {
