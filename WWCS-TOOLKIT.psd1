@@ -41,7 +41,7 @@
                             'Open-WWCSProgram',
                             'New-WWCSComputer',
                             'Get-WWCSDocumentation',
-                            'Set-Clipboard',
+                            'Set-WWCSClipboard',
                             'New-ClipboardEntry',
                             'Get-ClipboardDirectory'
                         )
