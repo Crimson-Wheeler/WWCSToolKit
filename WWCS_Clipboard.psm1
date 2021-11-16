@@ -7,7 +7,7 @@ function Get-ClipboardDirectory()
     }
     return "$(Get-WWCSDataPath)\ClipboardFiles"
 }
-function Set-WWCSClipboard()
+function Set-WWCSClipboard($text)
 {
     "Your Clipboard is: $(Get-Clipboard)"
 
@@ -48,4 +48,9 @@ function New-ClipboardEntry($text,$fileName,$Inputfile)
 
         Set-Content -Path $path -Value $text
     }
+}
+
+function Get-ClipboardHistory($outputFile)
+{
+    
 }

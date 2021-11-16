@@ -1,0 +1,5 @@
+Functions,Description,Inputs
+Get-ClipboardDirectory,returns the path that clipboard files are stored,
+Set-WWCSClipboard,List clipboard files to set to your clipboard or takes an input,text
+New-ClipboardEntry,"takes a string, and a file name and creates a clipboard file, can also input a n existing clipboard file","text, fileName, InputFile"
+Get-ClipboardHistory,"Displays a list of clipboard history, provide an output file location to have a log file produced",outputFile
