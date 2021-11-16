@@ -42,6 +42,8 @@ function New-ClipboardEntry($text,$fileName,$Inputfile)
 {
     if($text -ne $null)
     {
-        $text > "$(Get-ClipboardDirectory)\$($fileName).txt"
+        $path = "$(Get-ClipboardDirectory)\$($fileName).txt"
+
+        Set-Content -Path $path -Value $text
     }
 }
