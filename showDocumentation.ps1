@@ -3,6 +3,7 @@
     return "C:\Windows\system32\WindowsPowerShell\v1.0\Modules\WWCS-TOOLKIT"
 }
 
+
 function Set-WindowStyle {
 param(
     [Parameter()]
