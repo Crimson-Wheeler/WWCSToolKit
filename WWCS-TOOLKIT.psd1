@@ -3,7 +3,7 @@
     CompanyName = "WWCS Inc."
     Copyright = "© WWCS Inc. All Rights Reserved"
     HelpInfoUri="wwcs.com"
-    ModuleVersion = "1.0.2.11" #Key [Structure Change].[New File].[New Function].[Function Change/Bug Fix]
+    ModuleVersion = "1.0.2.12" #Key [Structure Change].[New File].[New Function].[Function Change/Bug Fix]
 
     # Modules that must be imported into the global environment prior to importing this module
     RequiredModules = @()
@@ -41,7 +41,8 @@
                             'Open-WWCSProgram',
                             'New-WWCSComputer',
                             'Get-WWCSDocumentation',
-                            'Set-Clipboard'
+                            'Set-Clipboard',
+                            'New-ClipboardEntry'
                         )
 
 
