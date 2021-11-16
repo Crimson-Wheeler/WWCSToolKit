@@ -33,8 +33,10 @@ function Set-Clipboard()
     Write-Output " "
     [int]$choice =  Read-Host -Prompt 'Pick your File to set to your clipboard'
 
-
+    
     [string]$val = "$($path)\$($files[($choice-1)])"
+
+    Write-Host "$($val) : $(Get-Content $val)"
     Set-Clipboard -Value $(Get-Content $val)
 }
 
