@@ -36,7 +36,7 @@ function Set-Clipboard()
     
     [string]$val = "$($path)\$($files[($choice-1)])"
 
-    Write-Host "$($val) : $(Get-Content $val)"
+    Write-Host "VALUES: $($val) : $(Get-Content $val)"
     Set-Clipboard -Value $(Get-Content $val)
 }
 
