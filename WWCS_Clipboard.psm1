@@ -35,6 +35,6 @@ function New-ClipboardEntry($text,$fileName,$Inputfile)
 {
     if($text -ne $null)
     {
-        $text > "$($path)\$($fileName).txt"
+        $text > "$(Get-WWCSDataPath)\$($fileName).txt"
     }
 }
