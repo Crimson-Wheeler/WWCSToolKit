@@ -5,6 +5,7 @@ function Set-Clipboard()
     "Your Clipboard is: $(Get-Clipboard)"
 
     [string]$path = Get-WWCSDataPath
+    Write-Host $path
     
     $files = [System.Collections.ArrayList]@()
     $files.AddRange(@(Get-ChildItem $($path)));
