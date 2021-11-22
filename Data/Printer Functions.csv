@@ -1,0 +1,5 @@
+Functions,Description,Inputs
+Clear-PrintSpooler,"Stops the spooler server, clears the queue, and starts the service again",
+Get-WWCSPrinter,"Lists all the available printers, allows the user to choose one and returns that printer if wanted","Prompt, SelectPrompt, Selecting"
+Remove-WWCSPrinter,Promtps the user to select a printer to remove.,
+New-WWCSPrinter,"Coming soon, will eventually walk the user through adding a printer to the system",
