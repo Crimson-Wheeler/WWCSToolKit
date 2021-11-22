@@ -5,7 +5,7 @@
     net start spooler
 }
 
-function Get-WWCSPrinter($input = "Installed Printers", $SelectPrompt = "Select Printer", $Selecting = $false)
+function Get-WWCSPrinter($prompt = "Installed Printers", $SelectPrompt = "Select Printer", $Selecting = $false)
 {
 
     $printers = Get-Printer
@@ -13,14 +13,13 @@ function Get-WWCSPrinter($input = "Installed Printers", $SelectPrompt = "Select 
 
 
     
-    Write-Host $input
-    Write-Host "Index$(New-WhiteSpace -amount 25
-    )|   Printer Name"
+    Write-Host $prompt
+    Write-Host "$(New-TextSpacing -amount 7 -inputText "Choice")|   Printer Name"
     Write-Host "-----------------------------------------------------------"
     foreach($printer in $printers)
     {
 
-        Write-Host "$($index)$(New-WhiteSpace -amount 7 -textOffset $index)|   $($printer.Name)"
+        Write-Host "$(New-TextSpacing -amount 7 -inputText $index.ToString())|   $($printer.Name)"
 
         $index++
     }
