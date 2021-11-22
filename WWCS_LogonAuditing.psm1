@@ -66,6 +66,3 @@ function Get-WWCSLogons($maxEvents)
     
 }
 
-
-
-Get-WWCSLogons -MaxEvents 100
