@@ -97,8 +97,10 @@ function New-WWCSComputer()
     
 }
 function Get-WWCSDocumentation()
-{
-   
-    
+{ 
     invoke-expression -Command "$(Get-WWCSTOOLKITPath)\showDocumentation.ps1"
+}
+function Get-WWCSCommands()
+{
+    gmo WWCS-TOOLKIT -ListAvailable | select -ExpandProperty exportedcommands
 }

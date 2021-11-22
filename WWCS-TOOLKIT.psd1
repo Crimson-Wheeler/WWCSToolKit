@@ -3,7 +3,7 @@
     CompanyName = "WWCS Inc."
     Copyright = "© WWCS Inc. All Rights Reserved"
     HelpInfoUri="wwcs.com"
-    ModuleVersion = "1.3.7.17" #Key [Structure Change].[New File].[New Function].[Function Change/Bug Fix]
+    ModuleVersion = "1.4.12.21" #Key [Structure Change].[New File].[New Function].[Function Change/Bug Fix]
 
     # Modules that must be imported into the global environment prior to importing this module
     RequiredModules = @()
@@ -19,7 +19,8 @@
                         'WWCS_PrinterManagement.psm1',
                         'WWCS_NetworkManagement.psm1',
                         'WWCS_Programs.psm1',
-                        'WWCS_Clipboard.psm1'
+                        'WWCS_Clipboard.psm1',
+                        'WWCS_TextFormatting.psm1'
                         )
     FunctionsToExport = @('Send-Email',
                             'Get-WWCSTOOLKITPath',
@@ -37,14 +38,20 @@
                             'Get-NetworkInfo',
                             'Clear-NetworkCache',
                             'Clear-PrintSpooler',
+                            'Get-WWCSPrinter',
+                            'Remove-WWCSPrinter',
+                            'New-WWCSPrinter',
                             'Open-Program',
                             'Open-WWCSProgram',
                             'New-WWCSComputer',
                             'Get-WWCSDocumentation',
+                            'Get-WWCSCommands',
                             'Set-WWCSClipboard',
                             'New-ClipboardEntry',
                             'Get-ClipboardDirectory',
-                            'Get-ClipboardHistory'
+                            'Get-ClipboardHistory',
+                            'New-WhiteSpace',
+                            'New-TextSpacing'
                         )
 
 

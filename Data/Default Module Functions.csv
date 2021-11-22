@@ -5,3 +5,4 @@ logError,Logs information to C:\temp\wwcsLogs\errorLog.txt,message
 Send-Email,"Sends an email to helpdesk@wwcs.com, if From is not populated it defaults to Reports@wwcs.com","From, Subject, Body"
 New-WWCSComputer,Uses winget to install applications and run the basic setup for a new computer at WWCS,
 Get-WWCSDocumentation,Gets all of the functions and variables that can be used in the WWCS-TOOLKIT module,
+Get-WWCSCommands,Gets a list of all the available exported module functions,

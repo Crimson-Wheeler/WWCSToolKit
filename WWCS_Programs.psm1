@@ -34,7 +34,7 @@ function Open-WWCSProgram($programName)
         [int]$index = 1
         foreach($item in $files)
         {
-            Write-Output "$($index)          | $($files[($index-1)])"
+            Write-Output "$(New-TextSpacing -amount 12 -inputText $index.ToString())| $($files[($index-1)])"
             $index++
         }
         Write-Output " "
