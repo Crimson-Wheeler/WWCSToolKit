@@ -18,6 +18,7 @@ function CreateSuccessEventObj([System.Diagnostics.Eventing.Reader.EventLogRecor
         CompletionType = "Success"
         LogonType = $winEventObj.Properties[8].Value #8 for success 10 for failed
         LogonFrom =  $winEventObj.Properties[11].Value
+        TimeStampt = $winEventObj.TimeCreated
     }
     if($customWinEvent.LogonFrom -eq "-") 
     {
@@ -32,6 +33,7 @@ function CreateFailedEventObj([System.Diagnostics.Eventing.Reader.EventLogRecord
         CompletionType = "Failed"
         LogonType = $winEventObj.Properties[10].Value #8 for success 10 for failed
         LogonFrom = $winEventObj.Properties[13].Value
+        TimeStampt = $winEventObj.TimeCreated
     }
 
     return $customWinEvent
