@@ -60,4 +60,31 @@ function Get-WWCSLogons($maxEvents)
     
     return $events
 }
+function Write-WWCSLogons($maxEvents, $path = "C:\Temp\output.csv")
+{   
+    $successEvents = Get-WinEvent -ComputerName "TECH-NUC" -Logname 'security' -MaxEvents ($maxEvents/2) -FilterXPath '*[System[EventID=4624]]'
+    $failedEvents = Get-WinEvent -ComputerName "TECH-NUC" -Logname 'security' -MaxEvents ($maxEvents/2) -FilterXPath '*[System[EventID=4625]]'
+    
+    $events = [System.Collections.ArrayList]@()
+    foreach($event in $successEvents)
+    {
+        $obj = CreateSuccessEventObj -winEventObj $event
+        $events.Add($obj)
+    }
+    foreach($event in $failedEvents)
+    {
+        $obj = CreateFailedEventObj -winEventObj $event
+        $events.Add($obj)
+    }
+   
+    if(Test-Path -Path $path)
+    {
+        Remove-Item -Path $path -Recurse -Force
+    }
+    foreach($event in $events)
+    {
+        "$($event.ComputerName),$($event.CompletionType),$($event.LogonType),$($event.LogonFrom),$($event.TimeStampt)," | Export-Csv -Path $path -Append
+    }
+    return $events
+}
 

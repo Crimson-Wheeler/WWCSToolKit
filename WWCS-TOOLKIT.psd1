@@ -53,7 +53,8 @@
                             'Get-ClipboardHistory',
                             'New-WhiteSpace',
                             'New-TextSpacing',
-                            'Get-WWCSLogons'
+                            'Get-WWCSLogons',
+                            'Write-WWCSLogons'
                         )
 
 
