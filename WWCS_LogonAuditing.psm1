@@ -46,8 +46,6 @@ function Get-WWCSLogons($maxEvents)
     $failedEvents = Get-WinEvent -ComputerName "TECH-NUC" -Logname 'security' -MaxEvents ($maxEvents/2) -FilterXPath '*[System[EventID=4625]]'
     
     $events = [System.Collections.ArrayList]@()
-    Write-Host ""
-    Write-Host "Success ------------------------------"
     Write-Host $(CreateSuccessEventObj -winEventObj $successEvents[0])
     foreach($event in $successEvents)
     {
@@ -55,16 +53,14 @@ function Get-WWCSLogons($maxEvents)
         Write-Host $obj
         $events.Add($obj)
     }
-    Write-Host ""
-    Write-Host "Failed ------------------------------"
     foreach($event in $failedEvents)
     {
         $obj = CreateFailedEventObj -winEventObj $event
-        Write-Host $obj
+
         $events.Add($obj)
     }
    
     
-    
+    Write-Host $events
 }
 
