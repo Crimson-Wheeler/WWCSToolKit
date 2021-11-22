@@ -20,7 +20,8 @@
                         'WWCS_NetworkManagement.psm1',
                         'WWCS_Programs.psm1',
                         'WWCS_Clipboard.psm1',
-                        'WWCS_TextFormatting.psm1'
+                        'WWCS_TextFormatting.psm1',
+                        'WWCS_LogonAuditing.psm1'
                         )
     FunctionsToExport = @('Send-Email',
                             'Get-WWCSTOOLKITPath',
@@ -51,7 +52,8 @@
                             'Get-ClipboardDirectory',
                             'Get-ClipboardHistory',
                             'New-WhiteSpace',
-                            'New-TextSpacing'
+                            'New-TextSpacing',
+                            'Get-WWCSLogons'
                         )
 
 
