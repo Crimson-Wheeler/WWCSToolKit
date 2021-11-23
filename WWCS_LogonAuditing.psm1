@@ -39,17 +39,17 @@ function CreateFailedEventObj([System.Diagnostics.Eventing.Reader.EventLogRecord
     return $customWinEvent
 }
 
-function Get-SuccessLogons($count = 0)
+function Get-SuccessLogons([int]$count = 0)
 {
-   if($count -gt 0)
+   if($count -ne 0)
    {
    return Get-WinEvent -ComputerName "TECH-NUC" -Logname 'security' -MaxEvents $count -FilterXPath '*[System[EventID=4624]]'
    }
    return [System.Collections.ArrayList]@()
 }
-function Get-FailedLogons($count = 0)
+function Get-FailedLogons([int]$count = 0)
 {
-   if($count -gt 0)
+   if($count -ne 0)
    {
    return Get-WinEvent -ComputerName "TECH-NUC" -Logname 'security' -MaxEvents $count -FilterXPath '*[System[EventID=4625]]'
    }
