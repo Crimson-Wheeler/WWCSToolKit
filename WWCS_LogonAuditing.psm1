@@ -98,8 +98,25 @@ function Write-WWCSLogons($succesCount = 0, $failedCount = 0, $path = "C:\Temp\o
     }
     foreach($event in $events)
     {
-        "$($event.ComputerName),$($event.CompletionType),$($event.LogonType),$($event.LogonFrom),$($event.TimeStampt)" | Out-File -FilePath $path -Append
+       
     }
     return $events
+}
+
+function Get-WWCSFailedLogonAudit($count,$timeCap,$logPath)
+{
+    $failedEvents = Get-FailedLogons -count $count
+    [DateTime]$startTime = $failedEvents[0].TimeStamp
+    [DateTime]$endTime = $failedEvents[$failedEvents.Cout -1].TimeStamp
+
+    Write-Host $startTime " - " $endTime
+    if($logPath -eq $null)
+    {
+        
+    }
+    else
+    {
+        
+    }
 }
 

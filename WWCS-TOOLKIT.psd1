@@ -54,7 +54,8 @@
                             'New-WhiteSpace',
                             'New-TextSpacing',
                             'Get-WWCSLogons',
-                            'Write-WWCSLogons'
+                            'Write-WWCSLogons',
+                            'Get-WWCSFailedLogonAudit'
                         )
 
 
