@@ -39,11 +39,26 @@ function CreateFailedEventObj([System.Diagnostics.Eventing.Reader.EventLogRecord
     return $customWinEvent
 }
 
-
+function Get-SuccessLogons($count = 0)
+{
+   if($count -gt 0)
+   {
+   return Get-WinEvent -ComputerName "TECH-NUC" -Logname 'security' -MaxEvents $count -FilterXPath '*[System[EventID=4624]]'
+   }
+   return [System.Collections.ArrayList]@()
+}
+function Get-FailedLogons($count = 0)
+{
+   if($count -gt 0)
+   {
+   return Get-WinEvent -ComputerName "TECH-NUC" -Logname 'security' -MaxEvents $count -FilterXPath '*[System[EventID=4625]]'
+   }
+   return [System.Collections.ArrayList]@()
+}
 function Get-WWCSLogons($succesCount = 0, $failedCount = 0)
 {   
-    $successEvents = Get-WinEvent -ComputerName "TECH-NUC" -Logname 'security' -MaxEvents $succesCount -FilterXPath '*[System[EventID=4624]]'
-    $failedEvents = Get-WinEvent -ComputerName "TECH-NUC" -Logname 'security' -MaxEvents $failedCount -FilterXPath '*[System[EventID=4625]]'
+    $successEvents = Get-SuccessLogons -count $successCount
+    $failedEvents = Get-FailedLogons -count $failedCount
     
     $events = [System.Collections.ArrayList]@()
     foreach($event in $successEvents)
@@ -62,8 +77,8 @@ function Get-WWCSLogons($succesCount = 0, $failedCount = 0)
 }
 function Write-WWCSLogons($succesCount = 0, $failedCount = 0, $path = "C:\Temp\output.csv")
 {   
-    $successEvents = Get-WinEvent -ComputerName "TECH-NUC" -Logname 'security' -MaxEvents $succesCount -FilterXPath '*[System[EventID=4624]]'
-    $failedEvents = Get-WinEvent -ComputerName "TECH-NUC" -Logname 'security' -MaxEvents $failedCount -FilterXPath '*[System[EventID=4625]]'
+    $successEvents = Get-SuccessLogons -count $successCount
+    $failedEvents = Get-FailedLogons -count $failedCount
 
     $events = [System.Collections.ArrayList]@()
     foreach($event in $successEvents)
