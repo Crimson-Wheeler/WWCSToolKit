@@ -98,7 +98,7 @@ function Write-WWCSLogons($succesCount = 0, $failedCount = 0, $path = "C:\Temp\o
     }
     foreach($event in $events)
     {
-        "$($event.ComputerName),$($event.CompletionType),$($event.LogonType),$($event.LogonFrom),$($event.TimeStampt)," | Export-Csv -Path $path -Append
+        "$($event.ComputerName),$($event.CompletionType),$($event.LogonType),$($event.LogonFrom),$($event.TimeStampt)" | Out-File -FilePath $path -Append
     }
     return $events
 }
