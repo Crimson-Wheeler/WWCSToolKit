@@ -1,8 +1,4 @@
-﻿cls
-
-
-
-function Get-LogonType([System.Diagnostics.Eventing.Reader.EventLogRecord]$winEventObj)
+﻿function Get-LogonType([System.Diagnostics.Eventing.Reader.EventLogRecord]$winEventObj)
 {
     [string]$description = $winEventObj.
     $index = $description.IndexOf("Account For Which")
