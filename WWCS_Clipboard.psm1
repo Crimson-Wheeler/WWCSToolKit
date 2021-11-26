@@ -6,7 +6,7 @@ function Get-ClipboardDirectory($set = $false)
         New-Item -Path "$(Get-WWCSDataPath)\ClipboardFiles" -ItemType directory
     }
 
-    if($set -eq $false)
+    if($set -eq $true)
     {
         Set-Clipboard -Value "$(Get-WWCSDataPath)\ClipboardFiles"
     }
