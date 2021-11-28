@@ -1,4 +1,4 @@
-﻿function Connect-MSOL()
+﻿    function Connect-MSOL()
 {
     try
     {
@@ -8,6 +8,10 @@
     {
         $creds = Get-Credential -Message "Credentials for Office 365 Admin User"
         
+
+        Install-Module MSOnline -Force
+        Install-Module azureADPreview -Force
+        Install-Module ExchangePowerShell -Force
 
 
         Import-Module MSOnline -Force
