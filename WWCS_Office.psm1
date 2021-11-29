@@ -25,6 +25,9 @@
 }
 function Select-O365User()
 {
+    $index=0
+    Get-MsolUser| Sort-Object -Property FirstName | Format-Table -Property @{name="index";expression={$global:index;$global:index+=1}},name,handles
+    
     Connect-MSOL
     $objs = (Get-MsolUser | Sort-Object -Property FirstName)
     $m = 0
