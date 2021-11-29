@@ -26,7 +26,7 @@
 
 function Select-O365User()
 {
-    C
+    Connect-MSOL
     $objs = (Get-MsolUser | Where-Object {$_.FirstName.Length -gt 0} |Sort-Object -Property FirstName)
     $m = 0
 
@@ -47,6 +47,7 @@ function Select-O365User()
 
 function Delete-O365User()
 {
+    Connect-MSOL
     $userToDelete = (Select-O365User)
     $userEmail = $userToDelete.UserPrincipalName
     $identity = "$($userToDelete.FirstName) $($userToDelete.LastName)"
