@@ -1,4 +1,4 @@
-﻿    function Connect-MSOL()
+﻿function Connect-MSOL()
 {
     try
     {
@@ -6,7 +6,7 @@
     }
     catch 
     {
-        $creds = Get-Credential -Message "Credentials for Office 365 Admin User"
+        #$creds = Get-Credential -Message "Credentials for Office 365 Admin User"
         
 
         Install-Module MSOnline -Force
@@ -18,37 +18,40 @@
         Import-Module azureADPreview -Force
         Import-Module ExchangePowerShell -Force
         
-        Connect-MsolService -Credential $creds
-        Connect-AzureAD -Credential $creds
-        Connect-ExchangeOnline -Credential $creds
+        Connect-MsolService -Credential 
+        Connect-AzureAD -Credential 
+        Connect-ExchangeOnline -Credential 
     }
 }
+
 function Select-O365User()
 {
-    $index=0
-    Get-MsolUser| Sort-Object -Property FirstName | Format-Table -Property @{name="index";expression={$global:index;$global:index+=1}},name,handles
-    
-    Connect-MSOL
-    $objs = (Get-MsolUser | Sort-Object -Property FirstName)
+    C
+    $objs = (Get-MsolUser | Where-Object {$_.FirstName.Length -gt 0} |Sort-Object -Property FirstName)
     $m = 0
+
+    Write-Host "$(New-TextSpacing -amount 8 -inputText "Index")|$(New-TextSpacing -amount 12 -inputText "First Name")|$(New-TextSpacing -amount 12 -inputText "Last Name")|$($(New-TextSpacing -amount 16 -inputText "Principal Name"))" 
+    Write-Host "--------------------------------------------------------------------------------------------"
     foreach($i in $objs)
     {
         $m++
-        Write-Host "$($m) : $($i.FirstName) $($i.LastName)"  
+        Write-Host "$(New-TextSpacing -amount 8 -inputText $m.ToString())|$(New-TextSpacing -amount 12 -inputText $i.FirstName)|$(New-TextSpacing -amount 12 -inputText $i.LastName)|$($i.UserPrincipalName)"
+      
     }
     $index = [int](Read-Host -Prompt "Select which user your want by typing its associated number")
+
+   # $users = Get-MsolUser
     return $objs[$index-1]
 }
 
 
 function Delete-O365User()
 {
-    Connect-MSOL
     $userToDelete = (Select-O365User)
     $userEmail = $userToDelete.UserPrincipalName
     $identity = "$($userToDelete.FirstName) $($userToDelete.LastName)"
     Write-Host $identity
-    Write-Host "Getting ready to delete $($userEmail)"
+    Write-Host "Getting ready to delete $($userToDelete | Format-Table -Property FirstName,LastName,UserPrincipalName)"
 
     if((Read-Host -Prompt "This fully deletes the user and cannot be undone. Would you like to continue? Y or N?").ToLower() -eq 'n' ){return}
     if((Read-Host -Prompt "Are you sure you want to delete $($userEmail) this is perminant? Y or N?").ToLower() -eq 'n' ){return}
