@@ -28,10 +28,9 @@
         Connect-ExchangeOnline -Credential $creds 
     }
 }
-
 function Select-O365User()
 {
-    Connect-MSOL
+
     $objs = (Get-MsolUser | Where-Object {$_.FirstName.Length -gt 0} |Sort-Object -Property FirstName)
     $m = 0
 
@@ -43,15 +42,19 @@ function Select-O365User()
         Write-Host "$(New-TextSpacing -amount 8 -inputText $m.ToString())|$(New-TextSpacing -amount 12 -inputText $i.FirstName)|$(New-TextSpacing -amount 12 -inputText $i.LastName)|$($i.UserPrincipalName)"
       
     }
-    $index = [int](Read-Host -Prompt "Select which user(s) you want by typing the associated number").Split(",")
+    $index = (Read-Host -Prompt "Select which user(s) you want by typing the associated number").Split(",")
 
-   # $users = Get-MsolUser
+    # $users = Get-MsolUser
+    $listOfSelectedUsers = [System.Collections.ArrayList]@()
     foreach($i in $index)
     {
-        Write-Host "You selected $($i)"
+        Write-Host "You selected $($objs[$i-1].UserPrincipalName)"
+        $listOfSelectedUsers.Add($objs[$i-1])
     }
+    
+    
 
-    #return $objs[$index-1]
+    return $listOfSelectedUsers
 }
 
 
@@ -61,24 +64,24 @@ function Delete-O365User()
     $userToDelete = (Select-O365User)
     foreach($userDeleting in $userToDelete)
     {
-        Write-Host "You selected $($userDeleting)"
+        $userEmail = $userToDelete.UserPrincipalName
+        $identity = "$($userToDelete.FirstName) $($userToDelete.LastName)"
+        Write-Host $identity
+        Write-Host "Getting ready to delete $($userToDelete.UserPrincipalName) $($identity)"
+
+        #if((Read-Host -Prompt "This fully deletes the user and cannot be undone. Would you like to continue? Y or N?").ToLower() -eq 'n' ){return}
+        #if((Read-Host -Prompt "Are you sure you want to delete $($userEmail) this is perminant? Y or N?").ToLower() -eq 'n' ){return}
+
+        Write-Host "Removing User..."
+        Remove-MsolUser -UserPrincipalName $userEmail
+        Write-Host "Removing User From Recycle Bin..."
+        Remove-MsolUser -UserPrincipalName $userEmail -RemoveFromRecycleBin
+        Write-Host "Removing Mailbox"
+        Remove-Mailbox -Identity $identity
+
+        Write-Host "Continue deleting----------------------------------------------------------------------------------------------------"
     }
-    $userEmail = $userToDelete.UserPrincipalName
-    $identity = "$($userToDelete.FirstName) $($userToDelete.LastName)"
-    Write-Host $identity
-    Write-Host "Getting ready to delete $($userToDelete | Format-Table -Property FirstName,LastName,UserPrincipalName)"
-
-    if((Read-Host -Prompt "This fully deletes the user and cannot be undone. Would you like to continue? Y or N?").ToLower() -eq 'n' ){return}
-    if((Read-Host -Prompt "Are you sure you want to delete $($userEmail) this is perminant? Y or N?").ToLower() -eq 'n' ){return}
-
-    Write-Host "Removing User..."
-    Remove-MsolUser -UserPrincipalName $userEmail
-    Write-Host "Removing User From Recycle Bin..."
-    Remove-MsolUser -UserPrincipalName $userEmail -RemoveFromRecycleBin
-    Write-Host "Removing Mailbox"
-    Remove-Mailbox -Identity $identity
-
-    Write-Host "Continue deleting----------------------------------------------------------------------------------------------------"
+    
 }
 function Decomission-O365User()
 {
