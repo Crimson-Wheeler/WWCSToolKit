@@ -1,26 +1,31 @@
 ﻿function Connect-MSOL()
 {
+    $neededPackages = @("MSOnline",
+                        "AzureADPreview",
+                        "ExchangePowerShell")
     try
     {
         Get-MsolDomain -ErrorAction Stop > $null
     }
     catch 
     {
-        #$creds = Get-Credential -Message "Credentials for Office 365 Admin User"
+        $creds = Get-Credential -Message "Credentials for Office 365 Admin User"
+        
+        foreach($module in $neededPackages)
+        {
+            try{Get-Package -Name $module}
+            catch{Install-Module $module -Force}
+
+            Import-Module $module -Force
+        }
         
 
-        Install-Module MSOnline -Force
-        Install-Module azureADPreview -Force
-        Install-Module ExchangePowerShell -Force
 
-
-        Import-Module MSOnline -Force
-        Import-Module azureADPreview -Force
-        Import-Module ExchangePowerShell -Force
         
-        Connect-MsolService -Credential 
-        Connect-AzureAD -Credential 
-        Connect-ExchangeOnline -Credential 
+        
+        Connect-MsolService -Credential $creds
+        Connect-AzureAD -Credential $creds
+        Connect-ExchangeOnline -Credential $creds 
     }
 }
 
