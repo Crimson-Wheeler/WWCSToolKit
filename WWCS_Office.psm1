@@ -43,10 +43,15 @@ function Select-O365User()
         Write-Host "$(New-TextSpacing -amount 8 -inputText $m.ToString())|$(New-TextSpacing -amount 12 -inputText $i.FirstName)|$(New-TextSpacing -amount 12 -inputText $i.LastName)|$($i.UserPrincipalName)"
       
     }
-    $index = [int](Read-Host -Prompt "Select which user your want by typing its associated number")
+    $index = [int](Read-Host -Prompt "Select which user(s) you want by typing the associated number").Split(",")
 
    # $users = Get-MsolUser
-    return $objs[$index-1]
+    foreach($i in $index)
+    {
+        Write-Host "You selected $($i)"
+    }
+
+    #return $objs[$index-1]
 }
 
 
@@ -54,6 +59,10 @@ function Delete-O365User()
 {
     Connect-MSOL
     $userToDelete = (Select-O365User)
+    foreach($userDeleting in $userToDelete)
+    {
+        Write-Host "You selected $($userDeleting)"
+    }
     $userEmail = $userToDelete.UserPrincipalName
     $identity = "$($userToDelete.FirstName) $($userToDelete.LastName)"
     Write-Host $identity
