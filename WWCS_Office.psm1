@@ -64,10 +64,10 @@ function Delete-O365User()
     $userToDelete = (Select-O365User)
     foreach($userDeleting in $userToDelete)
     {
-        $userEmail = $userToDelete.UserPrincipalName
-        $identity = "$($userToDelete.FirstName) $($userToDelete.LastName)"
-        Write-Host $identity
-        Write-Host "Getting ready to delete $($userToDelete.UserPrincipalName) $($identity)"
+        $userEmail = $userDeleting.UserPrincipalName
+        $identity = "$($userDeleting.FirstName) $($userDeleting.LastName)"
+        Write-Host "IDENTITY: " $identity
+        Write-Host "Getting ready to delete $($userDeleting.UserPrincipalName) $($identity)"
 
         #if((Read-Host -Prompt "This fully deletes the user and cannot be undone. Would you like to continue? Y or N?").ToLower() -eq 'n' ){return}
         #if((Read-Host -Prompt "Are you sure you want to delete $($userEmail) this is perminant? Y or N?").ToLower() -eq 'n' ){return}
