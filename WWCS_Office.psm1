@@ -86,6 +86,11 @@ function Delete-O365User()
 function Decomission-O365User()
 {
     Connect-MSOL
+    $users = (Select-O365User)
+    foreach($user in $users)
+    {
+        write $user.FirstName
+    }
 }
 function Create-O365User()
 {
