@@ -89,7 +89,7 @@ function Decomission-O365User()
     $users = (Select-O365User)
     foreach($user in $users)
     {
-        write $user.FirstName
+        Write-Host $user.FirstName
     }
 }
 function Create-O365User()
