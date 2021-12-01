@@ -13,19 +13,39 @@
         
         foreach($module in $neededPackages)
         {
-            try{Get-Package -Name $module}
-            catch{Install-Module $module -Force}
+            try
+            {
+            Get-Package -Name $module
+            }
+            catch
+            {
+                try
+                {
+                    Install-Module $module -Force
+                }
+                catch
+                {
+                    Write-Host "Could not install module: " $module
+                }
+            }
 
-            Import-Module $module -Force
+            try
+            {
+                Import-Module $module -Force
+            }
+            catch
+            {
+                Write-Host "Could not import module: " $module
+            }
         }
         
 
 
         
         
-        Connect-MsolService -Credential $creds
-        Connect-AzureAD -Credential $creds
-        Connect-ExchangeOnline -Credential $creds 
+        try{Connect-MsolService -Credential $creds}catch{Write-Host "Connection to MSOL failed."}
+        try{Connect-AzureAD -Credential $creds}catch{Write-Host "Connection to AzureAD failed."}
+        try{Connect-ExchangeOnline -Credential $creds}catch{Write-Host "Connection to Exchange failed."}
     }
 }
 function Select-O365User($prompt = "elect which user(s) you want by typing the associated number")
