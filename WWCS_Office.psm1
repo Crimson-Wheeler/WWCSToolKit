@@ -96,8 +96,8 @@ function Delete-O365User()
         Remove-MsolUser -UserPrincipalName $userEmail
         Write-Host "Removing User From Recycle Bin..."
         Remove-MsolUser -UserPrincipalName $userEmail -RemoveFromRecycleBin
-        Write-Host "Removing Mailbox"
-        Remove-Mailbox -Identity $identity
+        #Write-Host "Removing Mailbox"
+        #Remove-Mailbox -Identity $identity
 
         Write-Host "Continue deleting----------------------------------------------------------------------------------------------------"
     }
@@ -106,7 +106,7 @@ function Delete-O365User()
 function Decomission-O365User()
 {
     Connect-MSOL
-    $users = (Select-O365User)
+    $users = (Select-O365User -prompt "Select user(s) to decomission.")
     foreach($user in $users)
     {
         Write-Host $user.FirstName
@@ -156,9 +156,22 @@ function Create-O365User()
 
 }
 
-function Reset-O365Pass()
+function Reset-O365Pass($csvFile = $null)
 {
+    if($csvFile -eq $null)
+    {
+        Connect-MSOL
+        $users = (Select-O365User -prompt "Select user(s) to reset a password for.")
+        foreach($user in $users)
+        {
+            Write-Host "Resetting password for "$user.FirstName" "$user.LastName
+
+        }
+    }
+    else
+    {
     
+    }
 }
 
 

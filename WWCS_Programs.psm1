@@ -40,7 +40,7 @@ function Open-WWCSProgram($programName)
         Write-Output " "
         Write-Output " "
         Write-Output " "
-        [int]$choice =  Read-Host -Prompt 'Pick your File to set to your clipboard'
+        [int]$choice =  Read-Host -Prompt 'Pick your File to open and press the [Enter] key:'
         [string]$val = "$($path)\$($files[($choice-1)])"
         Write-Host $val
         Start-Process $val
