@@ -28,7 +28,7 @@
         Connect-ExchangeOnline -Credential $creds 
     }
 }
-function Select-O365User()
+function Select-O365User($prompt = "elect which user(s) you want by typing the associated number")
 {
 
     $objs = (Get-MsolUser | Where-Object {$_.FirstName.Length -gt 0} |Sort-Object -Property FirstName)
@@ -39,10 +39,10 @@ function Select-O365User()
     foreach($i in $objs)
     {
         $m++
-        Write-Host "$(New-TextSpacing -amount 8 -inputText $m.ToString())|$(New-TextSpacing -amount 12 -inputText $i.FirstName)|$(New-TextSpacing -amount 12 -inputText $i.LastName)|$($i.UserPrincipalName)"
+        Write-Host "$(New-TextSpacing -amount 8 -inputText $m.ToString())|$(New-TextSpacing -amount 12 -inputText $i.FirstName) $(New-TextSpacing -amount 12 -inputText $i.LastName) $($i.UserPrincipalName)"
       
     }
-    $index = (Read-Host -Prompt "Select which user(s) you want by typing the associated number").Split(",")
+    $index = (Read-Host -Prompt $prompt).Split(",")
 
     # $users = Get-MsolUser
     $listOfSelectedUsers = [System.Collections.ArrayList]@()
@@ -61,13 +61,13 @@ function Select-O365User()
 function Delete-O365User()
 {
     Connect-MSOL
-    $userToDelete = (Select-O365User)
-    foreach($userDeleting in $userToDelete)
+    $users = (Select-O365User)
+    foreach($user in $users)
     {
-        $userEmail = $userDeleting.UserPrincipalName
-        $identity = "$($userDeleting.FirstName) $($userDeleting.LastName)"
+        $userEmail = $user.UserPrincipalName
+        $identity = "$($user.FirstName) $($user.LastName)"
         Write-Host "IDENTITY: " $identity
-        Write-Host "Getting ready to delete $($userDeleting.UserPrincipalName) $($identity)"
+        Write-Host "Getting ready to delete $($user.UserPrincipalName) $($identity)"
 
         #if((Read-Host -Prompt "This fully deletes the user and cannot be undone. Would you like to continue? Y or N?").ToLower() -eq 'n' ){return}
         #if((Read-Host -Prompt "Are you sure you want to delete $($userEmail) this is perminant? Y or N?").ToLower() -eq 'n' ){return}
