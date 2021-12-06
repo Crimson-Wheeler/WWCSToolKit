@@ -81,25 +81,10 @@ function Select-O365User($prompt = "elect which user(s) you want by typing the a
 function Delete-O365User()
 {
     Connect-MSOL
-    $users = (Select-O365User)
+    $users = (Select-O365User -prompt "Select user(s) to decomission.")
     foreach($user in $users)
     {
-        $userEmail = $user.UserPrincipalName
-        $identity = "$($user.FirstName) $($user.LastName)"
-        Write-Host "IDENTITY: " $identity
-        Write-Host "Getting ready to delete $($user.UserPrincipalName) $($identity)"
-
-        #if((Read-Host -Prompt "This fully deletes the user and cannot be undone. Would you like to continue? Y or N?").ToLower() -eq 'n' ){return}
-        #if((Read-Host -Prompt "Are you sure you want to delete $($userEmail) this is perminant? Y or N?").ToLower() -eq 'n' ){return}
-
-        Write-Host "Removing User..."
-        Remove-MsolUser -UserPrincipalName $userEmail
-        Write-Host "Removing User From Recycle Bin..."
-        Remove-MsolUser -UserPrincipalName $userEmail -RemoveFromRecycleBin
-        #Write-Host "Removing Mailbox"
-        #Remove-Mailbox -Identity $identity
-
-        Write-Host "Continue deleting----------------------------------------------------------------------------------------------------"
+        Write-Host $user.FirstName
     }
     
 }
