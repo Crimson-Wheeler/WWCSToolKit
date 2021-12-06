@@ -28,6 +28,7 @@
                             'Get-WWCSDataPath',
                             'test',
                             'Check-O365PasswordValid',
+                            'Reset-0365Pass',
                             'Create-ADUser',
                             'Connect-MSOL',
                             'Delete-O365User',
