@@ -21,7 +21,8 @@
                         'WWCS_Programs.psm1',
                         'WWCS_Clipboard.psm1',
                         'WWCS_TextFormatting.psm1',
-                        'WWCS_LogonAuditing.psm1'
+                        'WWCS_LogonAuditing.psm1',
+                        'WWCS_BootDetails.psm1'
                         )
     FunctionsToExport = @('Send-Email',
                             'Get-WWCSTOOLKITPath',
@@ -58,7 +59,8 @@
                             'Write-WWCSLogons',
                             'Get-WWCSFailedLogonAudit',
                             'New-TextSpacing',
-                            'New-WhiteSpace'
+                            'New-WhiteSpace',
+                            'Get-DaysSinceBoot'
                         )
 
 
