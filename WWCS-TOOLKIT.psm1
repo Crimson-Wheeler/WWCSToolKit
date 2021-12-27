@@ -12,20 +12,16 @@ function Get-WWCSDataPath
 }
 function test()
 {
-    echo "This is a test to test the testing test"
+    Write-Host "This is a test to test the testing test"
 }
 
 function logError($message)
 {
-    $logPath = "C:\temp\wwcsLogs"
+    $logPath = "C:\Program Files\WWCS\Logs"
     $fileName = "errorLog.txt"
-    if(Test-Path -Path $logPath)
+    if(-not(Test-Path -Path $logPath))
     {
-
-    }
-    else
-    {
-        mkdir C:\temp\wwcsLogs
+        New-Item -Path $logPath
     }
     $message >> "$($logPath)\$($fileName)"
 }
@@ -36,12 +32,12 @@ function Send-Email($From,$Subject,$Body)
     {
         $EmailFrom = “Reports@wwcs.com”
         $EmailTo = “helpdesk@wwcs.com”
-        if($From -ne $null) {$EmailFrom = $From}
+        if($null -ne $From) {$EmailFrom = $From}
    
 
         $SMTPServer = “wwcs-com.mail.protection.outlook.com”
         $SMTPClient = New-Object Net.Mail.SmtpClient($SMTPServer)
-        echo "$($Subject) : $($Body)"
+        Write-Output "$($Subject) : $($Body)"
         $SMTPClient.Send($EmailFrom, $EmailTo, $Subject, $Body)
     }
     catch
@@ -74,7 +70,6 @@ function changeLocalUserCredentials($username, $password)
                     if($domainJoined -and -not $user.Contains($env:USERDOMAIN))
                     {
                         cmdkey /add:$computer /user:$user /pass:$password
-                        #echo "Setting the credential for the user $($username) on $($computer) to $($computer),$($user),$($password)"
                     }
             }
     
@@ -87,14 +82,10 @@ function changeLocalUserCredentials($username, $password)
 }
 function New-WWCSComputer()
 {
-   
     winget install -e --id Google.Chrome --force
     winget install -e --id Adobe.AdobeAcrobatReaderDC --force
     winget install -e --id Oracle.JavaRuntimeEnvironment --force
-
     invoke-expression -Command "C:\Windows\system32\WindowsPowerShell\v1.0\Modules\WWCS-TOOLKIT\ODT\runODT.ps1"
-
-    
 }
 function Get-WWCSDocumentation()
 { 
@@ -102,5 +93,5 @@ function Get-WWCSDocumentation()
 }
 function Get-WWCSCommands()
 {
-    gmo WWCS-TOOLKIT -ListAvailable | select -ExpandProperty exportedcommands
+    Get-Module WWCS-TOOLKIT -ListAvailable | Select-Object -ExpandProperty exportedcommands
 }
