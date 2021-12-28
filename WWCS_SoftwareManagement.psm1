@@ -38,8 +38,30 @@ function Test-AppInstalled($appName)
         $onProgramFiles86 = $true
     }
 
+    $children = Get-ChildItem -path "C:\users" Local -Recurse -Depth 3 -Force
+    for (($i = 0); $i -lt $children.Count; $i++)
+    {
+        
+        try {
+            $child = $children[$i]
+            $path = $child.ToString()
+            Write-Host $child.FullName
+            Write-Host $child.ToString()
+            $app = Get-ChildItem $path #*$appName*
+            
+            if($app -ne $null)
+            {
+                Write-Host "Application Installed under:"$child.Parent.Parent.Name
+                $onAppData = $true
+            }
+        }
+        catch {
+            
+        }
+       
+    }
 
-
+    <#
     foreach($child in Get-ChildItem -path "C:\users" Local -Recurse -Depth 3 -Force)
     {
         try {
@@ -58,7 +80,7 @@ function Test-AppInstalled($appName)
             
         }
     } 
-
+    #>
 
 
     #Get a list through app and features
