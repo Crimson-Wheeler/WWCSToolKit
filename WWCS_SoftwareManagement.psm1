@@ -40,12 +40,17 @@ function Test-AppInstalled($appName)
 
     foreach($child in Get-ChildItem -path "C:\users" Local -Recurse -Depth 3 -Force)
     {
-        $path = $child.ToString()
-        $app = Get-ChildItem $path *$appName*
-        if($app -ne $null)
-        {
-            Write-Host "Application Installed under:"$child.Parent.Parent.Name
-            $onAppData = $true
+        try {
+            $path = $child.ToString()
+            $app = Get-ChildItem $path *$appName*
+            if($app -ne $null)
+            {
+                Write-Host "Application Installed under:"$child.Parent.Parent.Name
+                $onAppData = $true
+            }
+        }
+        catch {
+            
         }
     } 
 
