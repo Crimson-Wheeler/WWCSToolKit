@@ -38,11 +38,14 @@ function Test-AppInstalled($appName)
         $onProgramFiles86 = $true
     }
 
+
+
     foreach($child in Get-ChildItem -path "C:\users" Local -Recurse -Depth 3 -Force)
     {
         try {
             $path = $child.ToString()
-            $app = Get-ChildItem $path *$appName*
+            $app = Get-ChildItem $path #*$appName*
+            Write-Host "Found APP Data Local at "$path
             if($app -ne $null)
             {
                 Write-Host "Application Installed under:"$child.Parent.Parent.Name
