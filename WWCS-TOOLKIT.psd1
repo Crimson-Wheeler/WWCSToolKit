@@ -3,7 +3,7 @@
     CompanyName = "WWCS Inc."
     Copyright = "© WWCS Inc. All Rights Reserved"
     HelpInfoUri="wwcs.com"
-    ModuleVersion = "1.4.23.35" #Key [Structure Change].[New File].[New Function].[Function Change/Bug Fix]
+    ModuleVersion = "1.5.24.35" #Key [Structure Change].[New File].[New Function].[Function Change/Bug Fix]
 
     # Modules that must be imported into the global environment prior to importing this module
     RequiredModules = @()
@@ -22,7 +22,8 @@
                         'WWCS_Clipboard.psm1',
                         'WWCS_TextFormatting.psm1',
                         'WWCS_LogonAuditing.psm1',
-                        'WWCS_BootDetails.psm1'
+                        'WWCS_BootDetails.psm1',
+                        'WWCS_SoftwareManagement'
                         )
     FunctionsToExport = @('Send-Email',
                             'Get-WWCSTOOLKITPath',
@@ -60,7 +61,8 @@
                             'Get-WWCSFailedLogonAudit',
                             'New-TextSpacing',
                             'New-WhiteSpace',
-                            'Get-DaysSinceBoot'
+                            'Get-DaysSinceBoot',
+                            'Test-AppInstalled'
                         )
 
 
