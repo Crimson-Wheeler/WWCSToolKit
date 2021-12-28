@@ -45,7 +45,7 @@ function Test-AppInstalled($appName)
         try {
             $path = $child.ToString()
             $app = Get-ChildItem $path #*$appName*
-            Write-Host "Found APP Data Local at "$path
+            Write-Host $path
             if($app -ne $null)
             {
                 Write-Host "Application Installed under:"$child.Parent.Parent.Name
