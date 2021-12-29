@@ -41,7 +41,7 @@ function Test-AppInstalled($appName)
             $child = $children[$i]
             $path = $child.ToString()
             Write-Host $child.ToString()
-            $app = Get-ChildItem $path *$appName*
+            $app = Get-ChildItem $path *$appName* -ErrorAction SilentlyContinue
             
             if($app -ne $null)
             {
