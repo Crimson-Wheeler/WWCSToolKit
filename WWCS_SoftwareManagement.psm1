@@ -40,9 +40,7 @@ function Test-AppInstalled($appName)
         try {
             $child = $children[$i]
             $path = $child.ToString()
-            Write-Host $child.ToString()
             $app = Get-ChildItem $path *$appName* -ErrorAction SilentlyContinue
-            
             if($app -ne $null)
             {
                 Write-Host "Application Installed under:"$child.Parent.Parent.Name
