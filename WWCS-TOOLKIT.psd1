@@ -23,7 +23,7 @@
                         'WWCS_TextFormatting.psm1',
                         'WWCS_LogonAuditing.psm1',
                         'WWCS_BootDetails.psm1',
-                        'WWCS_SoftwareManagement'
+                        'WWCS_SoftwareManagement.psm1'
                         )
     FunctionsToExport = @('Send-Email',
                             'Get-WWCSTOOLKITPath',
