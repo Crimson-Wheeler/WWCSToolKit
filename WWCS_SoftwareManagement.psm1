@@ -83,11 +83,10 @@ function Uninstall-WWCSToolkit
 {
     [CmdletBinding(SupportsShouldProcess=$true,ConfirmImpact='High')]
     Param([Switch]$Force)
-    if (-not $Force){
-        if(-not $PSCmdlet.ShouldProcess("Uninstall WWCS Toolkit","")){
-            Write-Host "Terminating WWCS Toolkit Uninstall"
-            return
-        } 
+
+    if(-not ($Force -or $PSCmdlet.ShouldProcess("Uninstall WWCS Toolkit",""))){
+        Write-Host "Process Terminated."
+        return
     }
 
 
@@ -112,6 +111,7 @@ function Uninstall-WWCSToolkit
         catch {
             
         }
-       
+    
     }
+    
 }
