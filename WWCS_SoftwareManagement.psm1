@@ -81,22 +81,20 @@ function Delete([string]$Path)
 
 function Uninstall-WWCSToolkit
 {
+    [CmdletBinding(SupportsShouldProcess=$true,ConfirmImpact='High')]
+    Param()
+    if(-not $PSCmdlet.ShouldProcess("Uninstall WWCS Toolkit","")){
+        Write-Host "Terminating WWCS Toolkit Uninstall"
+        return
+    }
+
+
     Delete -Path "C:\Windows\system32\WindowsPowerShell\v1.0\Modules\WWCS-TOOLKIT"
     Delete -Path "C:\Temp\.zip"
     Delete -Path "C:\Temp\WWCS-TOOLKIT.log"
     Delete -Path "C:\Temp\WWCSToolKit-main"
     Delete -Path 'C:\Windows\system32\WindowsPowerShell\v1.0\Modules\WWCSToolKit-main'
     Delete -Path 'C:\Program Files\WWCS'
-
-    <#
-    $folders = Get-ChildItem "C:\Users" 
-    foreach ($userFolder in $folders) {
-        $appdataFolder = Get-ChildItem $userFolder
-        $appdataFolder
-            
-    }
-    #>
-
     $children = Get-ChildItem -path "C:\users" Local -Recurse -Depth 3 -Force -ErrorAction SilentlyContinue
     for (($i = 0); $i -lt $children.Count; $i++)
     {
