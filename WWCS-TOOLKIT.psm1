@@ -95,3 +95,127 @@ function Get-WWCSCommands()
 {
     Get-Module WWCS-TOOLKIT -ListAvailable | Select-Object -ExpandProperty exportedcommands
 }
+
+
+
+
+
+function Get-WWCSReports($pickLocation = $null)
+{
+    $copyToLoc = "C:\Users\crimson.wheeler\WorldWide Computer Solutions, Inc\WWCS - Documents\Customers\Reports\Executive Summary\Summary"
+
+    <#
+    if($pickLocation -eq $null)
+    {
+        #get the year folder
+        $parentLoc = "C:\Users\crimson.wheeler\WorldWide Computer Solutions, Inc\WWCS - Documents\Customers\Reports\Executive Summary\Summary"
+        $yearFolder = Get-ChildItem $parentLoc -Directory | Sort-Object -Descending -Property Name | Select-Object -First 1
+        #get the month folder
+        $lastMonthFolder = Get-ChildItem $folder -Directory | Sort-Object -Descending -Property LastWriteTime | Select-Object -First 1
+
+        $lastMonthNum = 1
+        if($lastMonthFolder.Name -eq "January"){$lastMonthNum = 1}
+        elseif ($lastMonthFolder.Name -eq "February") {$lastMonthNum = 2}
+        elseif ($lastMonthFolder.Name -eq "March") {$lastMonthNum = 3}
+        elseif ($lastMonthFolder.Name -eq "April") {$lastMonthNum = 4}
+        elseif ($lastMonthFolder.Name -eq "May") {$lastMonthNum = 5}
+        elseif ($lastMonthFolder.Name -eq "June") {$lastMonthNum = 6}
+        elseif ($lastMonthFolder.Name -eq "July") {$lastMonthNum = 7}
+        elseif ($lastMonthFolder.Name -eq "August") {$lastMonthNum = 8}
+        elseif ($lastMonthFolder.Name -eq "September") {$lastMonthNum = 9}
+        elseif ($lastMonthFolder.Name -eq "October") {$lastMonthNum = 10}
+        elseif ($lastMonthFolder.Name -eq "November") {$lastMonthNum = 11}
+        elseif ($lastMonthFolder.Name -eq "December") {$lastMonthNum = 12}
+
+        if($lastMonthNum -eq 12)
+        {
+            $lastMonthNum = 1
+            [int]$newYear = [int]$yearFolder.Name + 1
+            $newMonthName - (Get-Culture).DateTimeFormat.GetMonthName($lastMonthNum)
+            Write-Host $newYear
+            #New-Item ""
+
+        }
+        else 
+        {
+            
+        }
+
+
+    }
+    else 
+    {
+        Add-Type -AssemblyName System.Windows.Forms
+        $browser = New-Object System.Windows.Forms.FolderBrowserDialog
+        $browser.initialDirectory = "C:\"
+        $null = $browser.ShowDialog((New-Object System.Windows.Forms.Form -Property @{TopMost = $true; TopLevel = $true}))
+        $path = $browser.SelectedPath
+        $path
+    }
+    #>
+
+
+    $folders = Get-ChildItem "C:\Users\crimson.wheeler\WorldWide Computer Solutions, Inc\WWCS - Documents\Customers\Customers - Active" Summary -recurse -directory
+    foreach ($folder in $folders) {
+        $newFile = Get-ChildItem $folder -File | Sort-Object -Descending -Property LastWriteTime | Select-Object -First 1
+
+        try 
+        {
+                Copy-Item $newFile.PSPath $copyToLoc 
+        }
+        catch
+        {
+            Write-Host $Error[0]
+        }
+    }
+    
+
+    
+
+}
+
+function Delete([string]$Path)
+{
+    Write-Host "Delete"$Path
+    if (Test-Path -Path $Path)
+    {
+        Remove-Item  $input -Recurse -Force
+    }
+}
+
+function Uninstall-WWCSToolkit
+{
+    Delete -Path "C:\Windows\system32\WindowsPowerShell\v1.0\Modules\WWCS-TOOLKIT"
+    Delete -Path "C:\Temp\.zip"
+    Delete -Path "C:\Temp\WWCS-TOOLKIT.log"
+    Delete -Path "C:\Temp\WWCSToolKit-main"
+    Delete -Path 'C:\Windows\system32\WindowsPowerShell\v1.0\Modules\WWCSToolKit-main'
+    Delete -Path 'C:\Program Files\WWCS'
+
+    <#
+    $folders = Get-ChildItem "C:\Users" 
+    foreach ($userFolder in $folders) {
+        $appdataFolder = Get-ChildItem $userFolder
+        $appdataFolder
+            
+    }
+    #>
+
+    $children = Get-ChildItem -path "C:\users" Local -Recurse -Depth 3 -Force -ErrorAction SilentlyContinue
+    for (($i = 0); $i -lt $children.Count; $i++)
+    {
+        try {
+            $child = $children[$i]
+            $path = $child.ToString()
+            $app = Get-ChildItem $path *wwcs* -ErrorAction SilentlyContinue
+            if($null -ne $app)
+            {
+                #Delete $app
+            }
+        }
+        catch {
+            
+        }
+       
+    }
+}

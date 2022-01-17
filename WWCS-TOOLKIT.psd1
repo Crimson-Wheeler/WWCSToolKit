@@ -62,7 +62,8 @@
                             'New-TextSpacing',
                             'New-WhiteSpace',
                             'Get-DaysSinceBoot',
-                            'Test-AppInstalled'
+                            'Test-AppInstalled',
+                            'Uninstall-WWCSToolkit'
                         )
 
 
