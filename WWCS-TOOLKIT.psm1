@@ -18,6 +18,12 @@ function Get-WWCSLogPath()
     }
     return "C:\Program Files\WWCS\Logs"
 }
+function Get-Directory(){
+    Add-Type -AssemblyName System.Windows.Forms
+    $browser = New-Object System.Windows.Forms.FolderBrowserDialog
+    $null = $browser.ShowDialog((New-Object System.Windows.Forms.Form -Property @{TopMost = $true; TopLevel = $true}))
+    return $browser.SelectedPath
+}
 function test()
 {
     Write-Host "This is a test to test the testing test"
@@ -108,12 +114,12 @@ function Get-WWCSCommands()
 
 
 
-function Get-WWCSReports($pickLocation = $null)
+function Get-WWCSReports([switch]$pickLocation)
 {
     $copyToLoc = "C:\Users\crimson.wheeler\WorldWide Computer Solutions, Inc\WWCS - Documents\Customers\Reports\Executive Summary\Summary"
 
     <#
-    if($pickLocation -eq $null)
+    if($pickLocation)
     {
         #get the year folder
         $parentLoc = "C:\Users\crimson.wheeler\WorldWide Computer Solutions, Inc\WWCS - Documents\Customers\Reports\Executive Summary\Summary"

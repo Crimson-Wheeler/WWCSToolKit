@@ -32,35 +32,37 @@ function Convert-LogonType($val)
         Default {return "($($val)) N/A"}
     }
 }
-
-function Get-SuccessfulLogonEvents ($computerName, $OutputPath,$numOfEvents = 100, [switch]$findDir)
+function Get-LogonEvent($computerName, 
+                        $OutputPath,
+                        $numOfEvents, 
+                        $eventID, 
+                        $LogonTypeIndex, 
+                        $DomainIndex, 
+                        $UsernameIndex, 
+                        $SourceAddressIndex, 
+                        $SourcePortIndex, 
+                        [switch]$listPropertyIndexes)
 {
-    if($findDir)
-    {
-        Add-Type -AssemblyName System.Windows.Forms
-        $browser = New-Object System.Windows.Forms.FolderBrowserDialog
-        #$browser.initialDirectory = "C:\"
-        $null = $browser.ShowDialog((New-Object System.Windows.Forms.Form -Property @{TopMost = $true; TopLevel = $true}))
-        $OutputPath = $browser.SelectedPath
-    }
-
-
-    $winEvent = Get-WinEvent -ComputerName $computerName -Logname 'security' -MaxEvents $numOfEvents -FilterXPath '*[System[EventID=4624]]' 
-    
+    $winEvent = Get-WinEvent -ComputerName $computerName -Logname 'security' -MaxEvents $numOfEvents -FilterXPath "*[System[EventID=$eventID]]" 
     foreach ($event in $winEvent){            
         $auditEvent = [PSCustomObject]@{
-            LogonType =  "$(Convert-LogonType $event.Properties[8].Value.ToString())"
-            Username = "$($event.Properties[6].Value)\$($event.Properties[5].Value)"
+            LogonType =  "$(Convert-LogonType $event.Properties[$LogonTypeIndex].Value.ToString())"
+            Username = "$($event.Properties[$DomainIndex].Value)\$($event.Properties[$UsernameIndex].Value)"
             ComputerName = $computerName
             LogonTime = $event.TimeCreated
-            SourceAddress = "$($event.Properties[18].Value):$($event.Properties[19].Value)"
+            SourceAddress = "$($event.Properties[$SourceAddressIndex].Value):$($event.Properties[$SourcePortIndex].Value)"
             ID = $event.Id
         }
-
         Log "$($auditEvent.Username) -- $($auditEvent.LogonTime)"
         Export-Csv -InputObject $auditEvent -Path "$OutputPath\$computerName-LogonEvents.csv" -Append
-    } 
+    }
 }
+function Get-SuccessfulLogonEvents ($computerName, $OutputPath = "C:\temp",$numOfEvents = 100, [switch]$findDir)
+{
+    if($findDir){$OutputPath = Get-Directory}
+    Get-LogonEvent $computerName $OutputPath $numOfEvents -eventID "4624" -LogonTypeIndex 8 -DomainIndex 6 -UsernameIndex 5 -SourceAddressIndex 18 -SourcePortIndex 19
+}
+
 
 function Get-ADComputerLogonEvents(){
     $computers = Get-ADComputer -Filter * -Properties Name,LastLogonDate | Select-Object Name,LastLogonDate

@@ -66,7 +66,8 @@
                             'Test-AppInstalled',
                             'Uninstall-WWCSToolkit',
                             'Get-ADComputerLogonEvents',
-                            'Get-SuccessfulLogonEvents'
+                            'Get-SuccessfulLogonEvents',
+                            'Get-Directory'
                         )
 
 
