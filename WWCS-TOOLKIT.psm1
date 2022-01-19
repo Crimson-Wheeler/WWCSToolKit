@@ -10,6 +10,14 @@ function Get-WWCSDataPath
     }
     return "C:\Users\$($env:USERNAME)\AppData\Local\WWCS"
 }
+function Get-WWCSLogPath()
+{
+    if(-not (Test-Path -Path "C:\Program Files\WWCS\Logs"))
+    {
+        New-Item -Path "C:\Program Files\WWCS\Logs" -ItemType directory
+    }
+    return "C:\Program Files\WWCS\Logs"
+}
 function test()
 {
     Write-Host "This is a test to test the testing test"
@@ -17,7 +25,7 @@ function test()
 
 function logError($message)
 {
-    $logPath = "C:\Program Files\WWCS\Logs"
+    $logPath = Get-WWCSLogPath
     $fileName = "errorLog.txt"
     if(-not(Test-Path -Path $logPath))
     {

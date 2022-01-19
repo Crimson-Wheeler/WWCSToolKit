@@ -28,6 +28,7 @@
     FunctionsToExport = @('Send-Email',
                             'Get-WWCSTOOLKITPath',
                             'Get-WWCSDataPath',
+                            'Get-WWCSLogPath'
                             'test',
                             'Check-O365PasswordValid',
                             'Reset-0365Pass',
@@ -63,7 +64,9 @@
                             'New-WhiteSpace',
                             'Get-DaysSinceBoot',
                             'Test-AppInstalled',
-                            'Uninstall-WWCSToolkit'
+                            'Uninstall-WWCSToolkit',
+                            'Get-ADComputerLogonEvents',
+                            'Get-SuccessfulLogonEvents'
                         )
 
 
