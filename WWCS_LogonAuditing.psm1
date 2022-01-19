@@ -33,7 +33,7 @@ function Convert-LogonType($val)
     }
 }
 
-function Get-SuccessfulLogonEvents ($computer, $OutputPath,$numOfEvents = 100, [switch]$findDir)
+function Get-SuccessfulLogonEvents ($computerName, $OutputPath,$numOfEvents = 100, [switch]$findDir)
 {
     if($findDir)
     {
@@ -45,13 +45,13 @@ function Get-SuccessfulLogonEvents ($computer, $OutputPath,$numOfEvents = 100, [
     }
 
 
-    $winEvent = Get-WinEvent -ComputerName $computer.Name -Logname 'security' -MaxEvents $numOfEvents -FilterXPath '*[System[EventID=4624]]' 
+    $winEvent = Get-WinEvent -ComputerName $computerName -Logname 'security' -MaxEvents $numOfEvents -FilterXPath '*[System[EventID=4624]]' 
     
     foreach ($event in $winEvent){            
         $auditEvent = [PSCustomObject]@{
             LogonType =  "$(Convert-LogonType $event.Properties[8].Value.ToString())"
             Username = "$($event.Properties[6].Value)\$($event.Properties[5].Value)"
-            ComputerName = $computer.Name
+            ComputerName = $computerName
             LogonTime = $event.TimeCreated
             SourceAddress = "$($event.Properties[18].Value):$($event.Properties[19].Value)"
             ID = $event.Id
