@@ -43,6 +43,18 @@ function Get-LogonEvent($computerName,
                         $SourcePortIndex, 
                         [switch]$listPropertyIndexes)
 {
+    if($listPropertyIndexes)
+    {
+        $tempWinEvent = Get-WinEvent -ComputerName $computerName -Logname 'security' -MaxEvents 1 -FilterXPath "*[System[EventID=$eventID]]"
+        foreach ($event in $tempWinEvent) {
+            for ($i = 0; $i -lt $event.Properties.Count; $i++) {
+                Write-Host "($($i)) $($event.Properties[$i])"
+            }
+        }
+        return
+    }
+
+
     $winEvent = Get-WinEvent -ComputerName $computerName -Logname 'security' -MaxEvents $numOfEvents -FilterXPath "*[System[EventID=$eventID]]" 
     foreach ($event in $winEvent){            
         $auditEvent = [PSCustomObject]@{
@@ -58,6 +70,12 @@ function Get-LogonEvent($computerName,
     }
 }
 function Get-SuccessfulLogonEvents ($computerName, $OutputPath = "C:\temp",$numOfEvents = 100, [switch]$findDir)
+{
+    if($findDir){$OutputPath = Get-Directory}
+    Get-LogonEvent $computerName $OutputPath $numOfEvents -eventID "4624" -LogonTypeIndex 8 -DomainIndex 6 -UsernameIndex 5 -SourceAddressIndex 18 -SourcePortIndex 19
+}
+
+function Get-FailedLogonEvents ($computerName, $OutputPath = "C:\temp",$numOfEvents = 100, [switch]$findDir)
 {
     if($findDir){$OutputPath = Get-Directory}
     Get-LogonEvent $computerName $OutputPath $numOfEvents -eventID "4624" -LogonTypeIndex 8 -DomainIndex 6 -UsernameIndex 5 -SourceAddressIndex 18 -SourcePortIndex 19
