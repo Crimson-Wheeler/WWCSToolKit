@@ -14,9 +14,9 @@ function Log($line, $path = $null)
     {
         New-Item -Path $path -ItemType directory
     }
-    Out-File -FilePath "$($path)\LogonAudit.log" -InputObject $line -Append
+    Write-Host "$line being sent to $path"
+    Out-File -FilePath "$path\LogonAudit.log" -InputObject $line -Append
 }
-
 function Convert-LogonType($val)
 {
     Switch ($val) {
