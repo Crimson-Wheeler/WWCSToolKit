@@ -79,7 +79,6 @@ function Get-ADComputerLogonEvents(){
 
 }
 
-Get-ADComputerLogonEvents
 
 
 
