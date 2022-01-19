@@ -67,7 +67,8 @@
                             'Uninstall-WWCSToolkit',
                             'Get-ADComputerLogonEvents',
                             'Get-SuccessfulLogonEvents',
-                            'Get-Directory'
+                            'Get-Directory',
+                            'Get-LogonEvent'
                         )
 
 
