@@ -58,7 +58,7 @@ function Get-SuccessfulLogonEvents ($computerName, $OutputPath,$numOfEvents = 10
         }
 
         Log "$($auditEvent.Username) -- $($auditEvent.LogonTime)"
-        Export-Csv -InputObject $auditEvent -Path $OutputPath -Append
+        Export-Csv -InputObject $auditEvent -Path "$OutputPath\$computerName-LogonEvents.csv" -Append
     } 
 }
 
