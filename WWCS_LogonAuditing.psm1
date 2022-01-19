@@ -47,8 +47,10 @@ function Get-LogonEvent($computerName,
     {
         $tempWinEvent = Get-WinEvent -ComputerName $computerName -Logname 'security' -MaxEvents 1 -FilterXPath "*[System[EventID=$eventID]]"
         foreach ($event in $tempWinEvent) {
+            Write-Host $event.Message
+            Write-Host "___________________________________________________________________"
             for ($i = 0; $i -lt $event.Properties.Count; $i++) {
-                Write-Host "($($i)) $($event.Properties[$i].Value) -----------------"
+                Write-Host "($($i)) $($event.Properties[$i].Value)"
             }
         }
         return
