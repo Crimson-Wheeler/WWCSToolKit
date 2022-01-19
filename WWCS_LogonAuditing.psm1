@@ -39,7 +39,7 @@ function Get-SuccessfulLogonEvents ($computer, $OutputPath,$numOfEvents = 100, [
     {
         Add-Type -AssemblyName System.Windows.Forms
         $browser = New-Object System.Windows.Forms.FolderBrowserDialog
-        $browser.initialDirectory = "C:\"
+        #$browser.initialDirectory = "C:\"
         $null = $browser.ShowDialog((New-Object System.Windows.Forms.Form -Property @{TopMost = $true; TopLevel = $true}))
         $OutputPath = $browser.SelectedPath
     }
