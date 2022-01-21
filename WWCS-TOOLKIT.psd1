@@ -69,7 +69,8 @@
                             'Get-SuccessfulLogonEvents',
                             'Get-Directory',
                             'Get-LogonEvent',
-                            'Get-EventIDPropertiess'
+                            'Get-LogoffEvents',
+                            'Get-EventIDProperties'
                         )
 
 
