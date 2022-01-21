@@ -107,8 +107,12 @@ function Get-ADComputerLogonEvents(){
         if($null -eq $computer.LastLogonDate){continue}
         if(((Get-Date) - $computer.LastLogonDate.Date).days -gt 30) {continue}
         Log "Gathering events for $($computer.Name)----------------------------------------------"
-        Get-SuccessfulLogonEvents $computer Get-ParentOutputDir
+        Get-ADComputerLogonEvents -computerName
     }
+}
+function Get-ADComputerLogonEvents($computerName)
+{
+    Get-SuccessfulLogonEvents $computer Get-ParentOutputDir
 
 }
 
