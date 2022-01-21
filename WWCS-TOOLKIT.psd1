@@ -23,7 +23,8 @@
                         'WWCS_TextFormatting.psm1',
                         'WWCS_LogonAuditing.psm1',
                         'WWCS_BootDetails.psm1',
-                        'WWCS_SoftwareManagement.psm1'
+                        'WWCS_SoftwareManagement.psm1',
+                        'WWCS_DirectoryManagement.psm1'
                         )
     FunctionsToExport = @('Send-Email',
                             'Get-WWCSTOOLKITPath',
@@ -70,7 +71,8 @@
                             'Get-Directory',
                             'Get-LogonEvent',
                             'Get-LogoffEvents',
-                            'Get-EventIDProperties'
+                            'Get-EventIDProperties',
+                            'Get-DirectoryPermissions'
                         )
 
 
