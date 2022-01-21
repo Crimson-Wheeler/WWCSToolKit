@@ -69,7 +69,7 @@
                             'Get-SuccessfulLogonEvents',
                             'Get-Directory',
                             'Get-LogonEvent',
-                            'Get-EventIDProperties'
+                            'Get-EventIDPropertiess'
                         )
 
 
