@@ -82,6 +82,11 @@ function Get-FailedLogonEvents ($computerName, $OutputPath = "C:\temp",$numOfEve
     if($findDir){$OutputPath = Get-Directory}
     Get-LogonEvent $computerName $OutputPath $numOfEvents -eventID "4624" -LogonTypeIndex 10 -DomainIndex 6 -UsernameIndex 5 -SourceAddressIndex 19 -SourcePortIndex 20
 }
+function Get-LogoffEvents ($computerName, $OutputPath = "C:\temp",$numOfEvents = 100, [switch]$findDir)
+{
+    if($findDir){$OutputPath = Get-Directory}
+    Get-LogonEvent $computerName $OutputPath $numOfEvents -eventID "4634" -LogonTypeIndex 4 -DomainIndex 2 -UsernameIndex 1
+}
 
 function Get-EventIDProperties([int]$eventID)
 {
