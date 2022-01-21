@@ -80,7 +80,7 @@ function Get-SuccessfulLogonEvents ($computerName, $OutputPath = "C:\temp",$numO
 function Get-FailedLogonEvents ($computerName, $OutputPath = "C:\temp",$numOfEvents = 100, [switch]$findDir)
 {
     if($findDir){$OutputPath = Get-Directory}
-    Get-LogonEvent $computerName $OutputPath $numOfEvents -eventID "4624" -LogonTypeIndex 8 -DomainIndex 6 -UsernameIndex 5 -SourceAddressIndex 18 -SourcePortIndex 19
+    Get-LogonEvent $computerName $OutputPath $numOfEvents -eventID "4624" -LogonTypeIndex 10 -DomainIndex 6 -UsernameIndex 5 -SourceAddressIndex 19 -SourcePortIndex 20
 }
 
 
