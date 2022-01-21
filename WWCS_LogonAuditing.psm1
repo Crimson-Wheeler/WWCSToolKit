@@ -43,6 +43,8 @@ function Get-LogonEvent($computerName,
                         $SourcePortIndex, 
                         [switch]$listPropertyIndexes)
 {
+    if($null -eq $computerName){$computerName = $env:COMPUTERNAME}
+    
     if($listPropertyIndexes)
     {
         $tempWinEvent = Get-WinEvent -ComputerName $computerName -Logname 'security' -MaxEvents 1 -FilterXPath "*[System[EventID=$eventID]]"
@@ -71,18 +73,18 @@ function Get-LogonEvent($computerName,
         Export-Csv -InputObject $auditEvent -Path "$OutputPath\$computerName-LogonEvents.csv" -Append
     }
 }
-function Get-SuccessfulLogonEvents ($computerName, $OutputPath = "C:\temp",$numOfEvents = 100, [switch]$findDir)
+function Get-SuccessfulLogonEvents ($computerName = $null, $OutputPath = "C:\temp",$numOfEvents = 100, [switch]$findDir)
 {
     if($findDir){$OutputPath = Get-Directory}
     Get-LogonEvent $computerName $OutputPath $numOfEvents -eventID "4624" -LogonTypeIndex 8 -DomainIndex 6 -UsernameIndex 5 -SourceAddressIndex 18 -SourcePortIndex 19
 }
 
-function Get-FailedLogonEvents ($computerName, $OutputPath = "C:\temp",$numOfEvents = 100, [switch]$findDir)
+function Get-FailedLogonEvents ($computerName = $null, $OutputPath = "C:\temp",$numOfEvents = 100, [switch]$findDir)
 {
     if($findDir){$OutputPath = Get-Directory}
     Get-LogonEvent $computerName $OutputPath $numOfEvents -eventID "4624" -LogonTypeIndex 10 -DomainIndex 6 -UsernameIndex 5 -SourceAddressIndex 19 -SourcePortIndex 20
 }
-function Get-LogoffEvents ($computerName, $OutputPath = "C:\temp",$numOfEvents = 100, [switch]$findDir)
+function Get-LogoffEvents ($computerName = $null, $OutputPath = "C:\temp",$numOfEvents = 100, [switch]$findDir)
 {
     if($findDir){$OutputPath = Get-Directory}
     Get-LogonEvent $computerName $OutputPath $numOfEvents -eventID "4634" -LogonTypeIndex 4 -DomainIndex 2 -UsernameIndex 1
