@@ -68,7 +68,8 @@
                             'Get-ADComputerLogonEvents',
                             'Get-SuccessfulLogonEvents',
                             'Get-Directory',
-                            'Get-LogonEvent'
+                            'Get-LogonEvent',
+                            'Get-EventIDProperties'
                         )
 
 
