@@ -83,6 +83,10 @@ function Get-FailedLogonEvents ($computerName, $OutputPath = "C:\temp",$numOfEve
     Get-LogonEvent $computerName $OutputPath $numOfEvents -eventID "4624" -LogonTypeIndex 10 -DomainIndex 6 -UsernameIndex 5 -SourceAddressIndex 19 -SourcePortIndex 20
 }
 
+function Get-EventIDProperties([int]$eventID)
+{
+    Write-Host (Get-LogonEvent $env:COMPUTERNAME -eventID $eventID -listPropertyIndexes)
+}
 
 function Get-ADComputerLogonEvents(){
     $computers = Get-ADComputer -Filter * -Properties Name,LastLogonDate | Select-Object Name,LastLogonDate
