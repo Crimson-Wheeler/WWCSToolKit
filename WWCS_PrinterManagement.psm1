@@ -1,8 +1,8 @@
 ﻿function Clear-PrintSpooler
 {
-    net stop spooler
-    del %systemroot%\System32\spool\printers\* /Q 
-    net start spooler
+    Get-Service *spooler* | Stop-Service
+    Remove-Item -Path %systemroot%\System32\spool\printers\* -Recurse
+    Get-Service *spooler* | Start-Service
 }
 
 function Get-WWCSPrinter($prompt = "Installed Printers", $SelectPrompt = "Select Printer", [Switch] $Selecting)
