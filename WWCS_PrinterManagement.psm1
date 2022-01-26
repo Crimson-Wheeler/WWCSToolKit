@@ -5,7 +5,7 @@
     net start spooler
 }
 
-function Get-WWCSPrinter($prompt = "Installed Printers", $SelectPrompt = "Select Printer", $Selecting = $false)
+function Get-WWCSPrinter($prompt = "Installed Printers", $SelectPrompt = "Select Printer", [Switch] $Selecting)
 {
 
     $printers = Get-Printer
@@ -24,7 +24,7 @@ function Get-WWCSPrinter($prompt = "Installed Printers", $SelectPrompt = "Select
         $index++
     }
     
-    if($Selecting -eq $true) 
+    if($Selecting) 
     {
         $inputVal = Read-Host -Prompt $SelectPrompt
         return Get-Printer -Name $printers[$inputVal-1].Name
