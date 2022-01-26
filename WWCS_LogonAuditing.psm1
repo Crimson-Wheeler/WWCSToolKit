@@ -113,7 +113,8 @@ function Get-ADComputerLogonEvents(){
 function Get-ADComputerLogonEvents($computerName)
 {
     Get-SuccessfulLogonEvents $computer Get-ParentOutputDir
-
+    Get-FailedLogonEvents $computer Get-ParentOutputDir
+    Get-LogoffEvents $computer Get-ParentOutputDir
 }
 
 
