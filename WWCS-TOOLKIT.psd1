@@ -9,7 +9,7 @@
     RequiredModules = @()
     # Script files (.ps1) that are run in the caller's environment prior to importing this module.
     #ScriptsToProcess = @('showDocumentation')
-
+    
 
     NestedModules = @('WWCS-TOOLKIT.psm1',
                         'WWCS_AD.psm1',
@@ -29,7 +29,7 @@
     FunctionsToExport = @('Send-Email',
                             'Get-WWCSTOOLKITPath',
                             'Get-WWCSDataPath',
-                            'Get-WWCSLogPath'
+                            'Get-WWCSLogPath',
                             'test',
                             'Check-O365PasswordValid',
                             'Reset-0365Pass',
