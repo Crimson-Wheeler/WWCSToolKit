@@ -72,7 +72,8 @@
                             'Get-LogonEvent',
                             'Get-LogoffEvents',
                             'Get-EventIDProperties',
-                            'Get-DirectoryPermissions'
+                            'Get-DirectoryPermissions',
+                            'Get-WWCSReports'
                         )
 
 
