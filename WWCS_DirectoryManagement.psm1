@@ -8,7 +8,7 @@ function Get-DirectoryPermissions($directory, $exportLocation = "C:\Temp", [swit
         
         $dirs = Get-ChildItem -Path $directory -Recurse -Directory
         foreach ($dir in $dirs) {
-            Write-Host "$dir"
+            Write-Host $dir.Directory
             #Get-DirectoryPermissions $dir 
         }
         return
