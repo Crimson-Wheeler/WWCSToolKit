@@ -160,8 +160,7 @@ function Get-WWCSReports([switch]$pickLocation)
         }
         catch
         {
-            Write-Host $Error[0]
+            Write-Host $Error
         }
     }
 }
-

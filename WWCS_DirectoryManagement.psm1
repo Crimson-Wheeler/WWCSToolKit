@@ -8,13 +8,14 @@ function Get-DirectoryPermissions($directory, $exportLocation = "C:\Temp", [swit
         
         $dirs = Get-ChildItem -Path $directory -Recurse -Directory
         foreach ($dir in $dirs) {
-            Get-DirectoryPermissions $dir 
+            Write-Host "$dir"
+            #Get-DirectoryPermissions $dir 
         }
         return
     }
 
     $dir = Get-Item -Path $directory
-    $permissionObjects = (Get-Acl -Path $dir).Access
+    $permissionObjects = (Get-Acl -Path $dir).AccessS
     foreach ($obj in $permissionObjects) {
         if($obj.PropagationFlags -ne 'None'){continue}
         $folderInfo = [PSCustomObject]@{
