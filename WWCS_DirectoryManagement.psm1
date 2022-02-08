@@ -5,10 +5,10 @@ function Get-DirectoryPermissions($directory, $exportLocation = "C:\Temp", [swit
 
     if($recurse)
     {
-        
+        $directory = "C:\temp"
         $dirs = Get-ChildItem -Path $directory -Recurse -Directory
         foreach ($dir in $dirs) {
-            $dir = "$directory\$dir"
+            $dir = $dir.ToString()
             Write-Host $dir
             Get-DirectoryPermissions $dir 
         }
