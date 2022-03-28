@@ -89,10 +89,9 @@ function Get-WWCSDocumentation()
 function Get-WWCSCommands()
 {
     Get-Module WWCS-TOOLKIT -ListAvailable | Select-Object -ExpandProperty exportedcommands 
-
-
-
 }
+
+
 
 function Get-WWCSReports([switch]$pickLocation)
 {
