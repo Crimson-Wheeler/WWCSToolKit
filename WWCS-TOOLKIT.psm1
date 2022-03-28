@@ -150,17 +150,23 @@ function Get-WWCSReports([switch]$pickLocation)
     #>
 
 
-    $folders = Get-ChildItem "C:\Users\crimson.wheeler\WorldWide Computer Solutions, Inc\WWCS - Documents\Customers\Customers - Active" *Summary* -recurse -directory
-    foreach ($folder in $folders) {
-        $newFile = Get-ChildItem $folder -File | Sort-Object -Descending -Property LastWriteTime | Select-Object -First 1
+    #$folders = Get-ChildItem "C:\Users\crimson.wheeler\WorldWide Computer Solutions, Inc\WWCS - Documents\Customers\Customers - Active" *Summary* -recurse -directory
+    $folders = Get-ChildItem "C:\Users\crimson.wheeler\WorldWide Computer Solutions, Inc\WWCS - Documents\Customers\Customers - Active" Summary -recurse
+    foreach ($folder in $folders) 
+    {
+        
 
+        
+        $newestFile = Get-ChildItem $folder -File | Sort-Object -Descending -Property LastWriteTime | Select-Object -First 1
+        Write-Host $newestFile.FullName
         try 
         {
-                Copy-Item $newFile.PSPath $copyToLoc 
+            Copy-Item $newestFile.PSPath $copyToLoc 
         }
         catch
         {
             Write-Host $Error
         }
+        #>
     }
 }
