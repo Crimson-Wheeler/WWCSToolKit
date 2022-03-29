@@ -14,6 +14,7 @@ function Send-Email($From,$Subject,$Body)
     }
     catch
     {
-        logError -message $Error
+        //logError -message $Error
+        Write-Host $Error
     }
 }
