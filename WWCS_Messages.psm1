@@ -2,15 +2,21 @@ function Send-Email($From,$Subject,$Body)
 {
     try
     {
-        $EmailFrom = “Reports@wwcs.com”
-        $EmailTo = “helpdesk@wwcs.com”
-        if($null -ne $From) {$EmailFrom = $From}
-   
+        if($null -eq $null){$From = "WWCSToolkit@wwcs.com"}
 
-        $SMTPServer = “wwcs-com.mail.protection.outlook.com”
-        $SMTPClient = New-Object Net.Mail.SmtpClient($SMTPServer)
-        Write-Output "$($Subject) : $($Body)"
-        $SMTPClient.Send($EmailFrom, $EmailTo, $Subject, $Body)
+        $mailParams = @{
+            SmtpServer                 = 'wwcs-com.mail.protection.outlook.com'
+            Port                       = '25' #'587' or '25' if not using TLS
+            UseSSL                     = $true ## or not if using non-TLS
+            From                       = $From
+            To                         = "helpdesk@wwcs.com"
+            Subject                    = $Subject
+            Body                       = $Body
+            DeliveryNotificationOption = 'OnFailure', 'OnSuccess'
+        }
+    
+        ## Send the message
+        Send-MailMessage @mailParams
     }
     catch
     {
