@@ -77,6 +77,4 @@
                             'Write-LogError',
                             'Get-ApplicationList'
                         )
-
-
 }
