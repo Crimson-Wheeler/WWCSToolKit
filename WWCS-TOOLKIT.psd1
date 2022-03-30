@@ -74,7 +74,8 @@
                             'Get-EventIDProperties',
                             'Get-DirectoryPermissions',
                             'Get-WWCSReports',
-                            'Write-LogError'
+                            'Write-LogError',
+                            'Get-ApplicationList'
                         )
 
 
