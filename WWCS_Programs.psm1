@@ -15,6 +15,17 @@ function Remove-WaveBrowser()
 
 }
 
+
+
+function Get-ApplicationDifferences()
+{
+    $oldApps = "C:\Program Files\WWCS\Logs\Auditing\TempAuditLogs\Apps.log"
+    $apps = Get-ApplicationList
+
+    $apps >> "C:\Program Files\WWCS\Logs\Auditing\TempAuditLogs\Apps.log"
+}
+
+
 function Get-ApplicationList()
 {
     $apps = Get-AppxPackage –AllUsers
