@@ -170,7 +170,7 @@ function Invoke-ToolkitTest()
     Write-Host "Beginning Test with logging to WWCS log files"
     Write-LogError "This is a test WWCS Log"
 
-    Write-Host "TSending Test email"
+    Write-Host "Sending Test email"
     Send-Email -Body "This is a test email from $($env:COMPUTERNAME)" -Subject "This is a test email from $($env:COMPUTERNAME) at $($env:USERDOMAIN)"
 
 }
