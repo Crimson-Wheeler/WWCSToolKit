@@ -20,7 +20,7 @@ function Send-Email($From,$Subject,$Body)
     }
     catch
     {
-        #logError -message $Error
+        Write-LogError -message $Error
         Write-Host $Error
     }
 }

@@ -30,7 +30,7 @@
                             'Get-WWCSTOOLKITPath',
                             'Get-WWCSDataPath',
                             'Get-WWCSLogPath',
-                            'test',
+                            'Invoke-ToolkitTest',
                             'Check-O365PasswordValid',
                             'Reset-0365Pass',
                             'Create-ADUser',
@@ -73,7 +73,8 @@
                             'Get-LogoffEvents',
                             'Get-EventIDProperties',
                             'Get-DirectoryPermissions',
-                            'Get-WWCSReports'
+                            'Get-WWCSReports',
+                            'Write-LogError'
                         )
 
 
