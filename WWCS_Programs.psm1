@@ -21,12 +21,18 @@ function Get-ApplicationDifferences()
 {
     $appLogPath = "C:\Program Files\WWCS\Logs\Auditing\ApplicationAuditLogs\AppChanges.log"
     $lastLogPath = "C:\Program Files\WWCS\Logs\Auditing\ApplicationAuditLogs\Apps.log"
+    $directory = "C:\Program Files\WWCS\Logs\Auditing\ApplicationAuditLogs"
+    if(-not(Test-Path $directory))
+    {
+        New-Item -ItemType Directory -Path $directory
+    }
+
     Write-Log -Message "Logged Apps at $(Get-Date)" -Path $appLogPath
 
     $apps = Get-ApplicationList
     if(-not(Test-Path -Path $appLogPath))
     {
-        Out-File -FilePath $lastLogPath -InputObject $apps
+        Out-File -FilePath $lastLogPath -InputObject $apps 
         Write-Log -Message "Complete" -Path $appLogPath
     }
     else 
