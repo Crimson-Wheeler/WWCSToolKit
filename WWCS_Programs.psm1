@@ -30,7 +30,7 @@ function Get-ApplicationDifferences()
     
     Write-Log -Message "Logged Apps at $(Get-Date)" -Path $appLogPath
     
-    <#
+    
     $apps = Get-ApplicationList
     if(-not(Test-Path -Path $appLogPath))
     {
@@ -42,7 +42,7 @@ function Get-ApplicationDifferences()
         $lastApps = Get-Content -$lastLogPath
 
     }
-    #>
+    
 
     
 }

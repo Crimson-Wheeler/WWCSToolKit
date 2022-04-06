@@ -3,7 +3,7 @@
     CompanyName = "WWCS Inc."
     Copyright = "© WWCS Inc. All Rights Reserved"
     HelpInfoUri="wwcs.com"
-    ModuleVersion = "1.5.34.0" #Key [Structure Change].[New File].[New Function].[Function Change/Bug Fix]
+    ModuleVersion = "1.5.34.2" #Key [Structure Change].[New File].[New Function].[Function Change/Bug Fix]
 
     # Modules that must be imported into the global environment prior to importing this module
     RequiredModules = @()
