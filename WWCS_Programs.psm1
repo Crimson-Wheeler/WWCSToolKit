@@ -32,8 +32,11 @@ function Get-ApplicationDifferences()
     
     
     $apps = Get-ApplicationList
-    if(-not(Test-Path -Path $appLogPath))
+    if(-not(Test-Path -Path $appLogPath -PathType Leaf))
     {
+
+        Write-Host "No Initial Log file detected."
+        
         Out-File -FilePath $lastLogPath -InputObject $apps 
         Write-Log -Message "Complete" -Path $appLogPath
     }
