@@ -35,7 +35,22 @@ function Write-LogError($message)
     }
     $message >> "$($logPath)\$($fileName)"
 }
+function Write-Log($message,$rootPath,$path)
+{
 
+    $logPath = "$(Get-WWCSLogPath)\$($rootPath)"
+    if($null -ne $path)
+    {
+        $logPath = $path
+    }
+    
+    if(-not(Test-Path -Path $logPath))
+    {
+        New-Item -Path $logPath
+    }
+
+    Out-File -FilePath $logPath -InputObject $message
+}
 
 function changeLocalUserCredentials($username, $password)
 {

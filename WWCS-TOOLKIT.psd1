@@ -60,6 +60,8 @@
                             'New-WhiteSpace',
                             'New-TextSpacing',
                             'New-ClipboardEntry',
+                            #Write ---,
+                            'Write-Log',
                             #Need To Be Standardized --- 
                             'Check-O365PasswordValid',
                             'Reset-0365Pass',
