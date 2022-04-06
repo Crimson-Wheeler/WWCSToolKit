@@ -19,6 +19,7 @@ function Remove-WaveBrowser()
 
 function Get-ApplicationDifferences()
 {
+    #setup
     $appLogPath = "C:\Program Files\WWCS\Logs\Auditing\ApplicationAuditLogs\AppChanges.log"
     $lastLogPath = "C:\Program Files\WWCS\Logs\Auditing\ApplicationAuditLogs\Apps.log"
     $directory = "C:\Program Files\WWCS\Logs\Auditing\ApplicationAuditLogs"
@@ -27,29 +28,55 @@ function Get-ApplicationDifferences()
         New-Item -ItemType Directory -Path $directory
     }
 
-    
-    Write-Log -Message "Logged Apps at $(Get-Date)" -Path $appLogPath
-    
-    
-    $apps = Get-ApplicationList
-    if(-not(Test-Path -Path $appLogPath -PathType Leaf))
+    #Logic
+    Write-Log -Message "Logged Apps at $(Get-Date)" -Path $appLogPath     
+    $apps = (Get-ApplicationList)
+    $appsList = New-Object System.Collections.ArrayList($null)
+    foreach($app in $apps)
     {
-
-        Write-Host "No Initial Log file detected."
-        
-        Out-File -FilePath $lastLogPath -InputObject $apps 
-        Write-Log -Message "Complete" -Path $appLogPath
+        $appsList.Add($app.Name)
+    }
+    $appsList.RemoveAt(0)
+    if(-not(Test-Path -Path $lastLogPath -PathType Leaf))
+    {
+        Write-Log -Message "Complete" -Path $appLogPath -Append
     }
     else 
     {
-        $lastApps = Get-Content -$lastLogPath
+        $lastApps = Get-Content $lastLogPath
 
+        if($appsList.Count -gt $lastApps.Count) #FOR IF NEW APPS SHOWED UP
+        {
+
+            for($i = 0; $i -lt $lastApps.Count; $i++)
+            {
+                if($appsList[$i] -ne $lastApps[$i])
+                {
+                     Write-Host "FOUND THE APP $($apps[$i]) WAS INSTALLED"
+                     Write-Log -Message "$($apps[$i]) was found new at the time $(Get-Date)" -Path $appLogPath -Append
+                    $appsList.RemoveAt($i)
+                }
+                Write-Host "$($appsList[$i]) ______________ $($lastApps[$i])"
+            }
+        }
+        elseif ($appsList.Count -lt $lastApps.Count) #FOR IF APPS WERE REMOVED
+        {
+
+
+        }
+        else # COUNT STAYED THE SAME ONLY CHECK IF NOT ALL EQUAL THOUGH
+        {
+            
+        }
     }
-    
 
-    
+    #GETS THE APP LIST
+    if(Test-Path -Path $lastLogPath -PathType Leaf){Remove-Item $lastLogPath} 
+    foreach($app in $apps)
+    {
+        Out-File -FilePath $lastLogPath -InputObject $app.Name -Append
+    }
 }
-
 
 function Get-ApplicationList()
 {
@@ -58,19 +85,22 @@ function Get-ApplicationList()
     $apps += Get-InstalledAppsFromRegistry | Select @{N=’Name’; E={$_.DisplayName}}
 
     [System.Collections.ArrayList]$apps = $apps | Sort-Object name
+    [System.Collections.ArrayList]$appsList = @()
     for($i = 0; $i -lt $apps.Count; $i++)
     {   
         if([string]$apps[$i].name -eq [string]$apps[$i+1].name)
         {
             $apps.RemoveAt($i)
-            Write-Host $apps[$i] 
-            Write-Host $apps[$i+1] 
-            Write-Host "--------"
             $i--
         }
-
+        else 
+        {
+            $appsList += $apps[$i].name    
+        }
     }
-    return $apps
+
+    Out-File -FilePath "C:\Temp\testingOut.Log" -InputObject $appsList
+    return $appsList
 }
 function Open-Program($path)
 {
