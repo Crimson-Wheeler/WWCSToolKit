@@ -27,6 +27,7 @@ function Get-ApplicationDifferences()
         New-Item -ItemType Directory -Path $directory
     }
 
+    <#
     Write-Log -Message "Logged Apps at $(Get-Date)" -Path $appLogPath
 
     $apps = Get-ApplicationList
@@ -40,8 +41,7 @@ function Get-ApplicationDifferences()
         $lastApps = Get-Content -$lastLogPath
 
     }
-    
-
+    #>
 
     
 }
