@@ -19,20 +19,20 @@ function Remove-WaveBrowser()
 
 function Get-ApplicationDifferences()
 {
-    $appLogPath = "C:\Program Files\WWCS\Logs\Auditing\TempAuditLogs\AppChanges.log"
-    $lastLogPath = "C:\Program Files\WWCS\Logs\Auditing\TempAuditLogs\Apps.log"
-    Write-Log -Message "Logged Apps at $(Get-Date)" -Path "C:\Program Files\WWCS\Logs\Auditing\TempAuditLogs\AppChanges.log"
+    $appLogPath = "C:\Program Files\WWCS\Logs\Auditing\ApplicationAuditLogs\AppChanges.log"
+    $lastLogPath = "C:\Program Files\WWCS\Logs\Auditing\ApplicationAuditLogs\Apps.log"
+    Write-Log -Message "Logged Apps at $(Get-Date)" -Path $appLogPath
 
     $apps = Get-ApplicationList
     if(-not(Test-Path -Path $appLogPath))
     {
         Out-File -FilePath $lastLogPath -InputObject $apps
-        Write-Log -Message "Complete" -Path "C:\Program Files\WWCS\Logs\Auditing\TempAuditLogs\AppChanges.log"
+        Write-Log -Message "Complete" -Path $appLogPath
     }
     else 
     {
         $lastApps = Get-Content -$lastLogPath
-        
+
     }
     
 
