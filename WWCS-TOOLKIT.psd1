@@ -29,6 +29,7 @@
 
     FunctionsToExport =  @(
                             #Get ---
+                            'Get-ApplicationDifferences',
                             'Get-WWCSTOOLKITPath',
                             'Get-WWCSDataPath',
                             'Get-WWCSLogPath',
