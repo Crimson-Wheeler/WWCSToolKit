@@ -30,7 +30,7 @@
     notepad.exe $filePath | Out-File -FilePath $filePath -Append
 }
 
-function Clear-NetworkCache([switch]$reboot)
+function Clear-NetworkCache($reboot = $false)
 {
     ipconfig /flushdns
     ipconfig /registerdns
@@ -40,7 +40,7 @@ function Clear-NetworkCache([switch]$reboot)
 
     
 
-    if($reboot)
+    if($reboot -eq $true)
     {
         shutdown /r /t 0
     }

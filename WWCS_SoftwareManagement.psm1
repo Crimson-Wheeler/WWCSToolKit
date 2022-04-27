@@ -67,7 +67,10 @@ function Test-AppInstalled($appName)
     }
     return $false
 }   
-function Remove-Path([string]$Path)
+
+
+
+function Delete([string]$Path)
 {
     Write-Host "Delete"$Path
     if (Test-Path -Path $Path)
@@ -75,6 +78,7 @@ function Remove-Path([string]$Path)
         Remove-Item  $Path -Recurse -Force
     }
 }
+
 function Uninstall-WWCSToolkit
 {
     [CmdletBinding(SupportsShouldProcess=$true,ConfirmImpact='High')]
@@ -86,15 +90,28 @@ function Uninstall-WWCSToolkit
     }
 
 
-    Remove-Path -Path "C:\Windows\system32\WindowsPowerShell\v1.0\Modules\WWCS-TOOLKIT"
-    Remove-Path -Path "C:\Temp\.zip"
-    Remove-Path -Path "C:\Temp\WWCS-TOOLKIT.log"
-    Remove-Path -Path "C:\Temp\WWCSToolKit-main"
-    Remove-Path -Path 'C:\Windows\system32\WindowsPowerShell\v1.0\Modules\WWCSToolKit-main'
-    Remove-Path -Path 'C:\Program Files\WWCS'
-
-    #look for app data and remove the wwcs folder
+    Delete -Path "C:\Windows\system32\WindowsPowerShell\v1.0\Modules\WWCS-TOOLKIT"
+    Delete -Path "C:\Temp\.zip"
+    Delete -Path "C:\Temp\WWCS-TOOLKIT.log"
+    Delete -Path "C:\Temp\WWCSToolKit-main"
+    Delete -Path 'C:\Windows\system32\WindowsPowerShell\v1.0\Modules\WWCSToolKit-main'
+    Delete -Path 'C:\Program Files\WWCS'
     $children = Get-ChildItem -path "C:\users" Local -Recurse -Depth 3 -Force -ErrorAction SilentlyContinue
+    for (($i = 0); $i -lt $children.Count; $i++)
+    {
+        try {
+            $child = $children[$i]
+            $path = $child.ToString()
+            $app = Get-ChildItem $path *wwcs* -ErrorAction SilentlyContinue
+            if($null -ne $app)
+            {
+                #Delete $app
+            }
+        }
+        catch {
+            
+        }
     
+    }
     
 }

@@ -1,4 +1,4 @@
-function Get-WWCSTOOLKITPath
+﻿function Get-WWCSTOOLKITPath
 {
     return "C:\Windows\system32\WindowsPowerShell\v1.0\Modules\WWCS-TOOLKIT"
 }
@@ -35,7 +35,7 @@ function Write-LogError($message)
     }
     $message >> "$($logPath)\$($fileName)"
 }
-function Write-Log($message,$rootPath,$path,[switch]$Append)
+function Write-Log($message,$rootPath,$path)
 {
 
     $logPath = "$(Get-WWCSLogPath)\$($rootPath)"
@@ -49,12 +49,7 @@ function Write-Log($message,$rootPath,$path,[switch]$Append)
         New-Item -Path $logPath
     }
 
-    if($Append){
-        Out-File -FilePath $logPath -InputObject $message -Append
-    }
-    else {
-        Out-File -FilePath $logPath -InputObject $messageA
-    }
+    Out-File -FilePath $logPath -InputObject $message
 }
 
 function changeLocalUserCredentials($username, $password)
@@ -113,6 +108,58 @@ function Get-WWCSReports([switch]$pickLocation)
 {
     $copyToLoc = "C:\Users\crimson.wheeler\WorldWide Computer Solutions, Inc\WWCS - Documents\Customers\Reports\Executive Summary\Summary"
 
+    <#
+    if($pickLocation)
+    {
+        #get the year folder
+        $parentLoc = "C:\Users\crimson.wheeler\WorldWide Computer Solutions, Inc\WWCS - Documents\Customers\Reports\Executive Summary\Summary"
+        $yearFolder = Get-ChildItem $parentLoc -Directory | Sort-Object -Descending -Property Name | Select-Object -First 1
+        #get the month folder
+        $lastMonthFolder = Get-ChildItem $folder -Directory | Sort-Object -Descending -Property LastWriteTime | Select-Object -First 1
+
+        $lastMonthNum = 1
+        if($lastMonthFolder.Name -eq "January"){$lastMonthNum = 1}
+        elseif ($lastMonthFolder.Name -eq "February") {$lastMonthNum = 2}
+        elseif ($lastMonthFolder.Name -eq "March") {$lastMonthNum = 3}
+        elseif ($lastMonthFolder.Name -eq "April") {$lastMonthNum = 4}
+        elseif ($lastMonthFolder.Name -eq "May") {$lastMonthNum = 5}
+        elseif ($lastMonthFolder.Name -eq "June") {$lastMonthNum = 6}
+        elseif ($lastMonthFolder.Name -eq "July") {$lastMonthNum = 7}
+        elseif ($lastMonthFolder.Name -eq "August") {$lastMonthNum = 8}
+        elseif ($lastMonthFolder.Name -eq "September") {$lastMonthNum = 9}
+        elseif ($lastMonthFolder.Name -eq "October") {$lastMonthNum = 10}
+        elseif ($lastMonthFolder.Name -eq "November") {$lastMonthNum = 11}
+        elseif ($lastMonthFolder.Name -eq "December") {$lastMonthNum = 12}
+
+        if($lastMonthNum -eq 12)
+        {
+            $lastMonthNum = 1
+            [int]$newYear = [int]$yearFolder.Name + 1
+            $newMonthName - (Get-Culture).DateTimeFormat.GetMonthName($lastMonthNum)
+            Write-Host $newYear
+            #New-Item ""
+
+        }
+        else 
+        {
+            
+        }
+
+
+    }
+    else 
+    {
+        Add-Type -AssemblyName System.Windows.Forms
+        $browser = New-Object System.Windows.Forms.FolderBrowserDialog
+        $browser.initialDirectory = "C:\"
+        $null = $browser.ShowDialog((New-Object System.Windows.Forms.Form -Property @{TopMost = $true; TopLevel = $true}))
+        $path = $browser.SelectedPath
+        $path
+    }
+    #>
+
+
+    #$folders = Get-ChildItem "C:\Users\crimson.wheeler\WorldWide Computer Solutions, Inc\WWCS - Documents\Customers\Customers - Active" *Summary* -recurse -directory
     $folders = Get-ChildItem "C:\Users\crimson.wheeler\WorldWide Computer Solutions, Inc\WWCS - Documents\Customers\Customers - Active" Summary -recurse
     foreach ($folder in $folders) 
     {
