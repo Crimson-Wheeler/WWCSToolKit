@@ -15,8 +15,6 @@ function Remove-WaveBrowser()
 
 }
 
-
-
 function Get-ApplicationDifferences()
 {
     #setup
@@ -29,25 +27,37 @@ function Get-ApplicationDifferences()
     }
 
     #Logic
-    Write-Log -Message "Logged Apps at $(Get-Date)" -Path $appLogPath     
+    Write-Log -Message "Logged Apps at $(Get-Date)" -Path $appLogPath -Append    
+
+    #Get the full list of applications
     $apps = (Get-ApplicationList)
+
+    #populate apps into list as an array
     $appsList = New-Object System.Collections.ArrayList($null)
     foreach($app in $apps)
     {
-        $appsList.Add($app.Name)
+        $appsList.Add($app)
     }
+    #remove the first element of the list because it is usualy empty
     $appsList.RemoveAt(0)
+
+    #if this is the first time creating the log file
     if(-not(Test-Path -Path $lastLogPath -PathType Leaf))
     {
         Write-Log -Message "Complete" -Path $appLogPath -Append
     }
+    #if the log file already exists then compare it to the new list
     else 
     {
+        Write "FILE EXISTS"
         $lastApps = Get-Content $lastLogPath
-
-        if($appsList.Count -gt $lastApps.Count) #FOR IF NEW APPS SHOWED UP
+        Write-Host $lastApps
+        Write-Host $appsList
+        
+        #FOR IF NEW APPS SHOWED UP
+        if($appsList.Count -gt $lastApps.Count)
         {
-
+            
             for($i = 0; $i -lt $lastApps.Count; $i++)
             {
                 if($appsList[$i] -ne $lastApps[$i])
@@ -59,22 +69,24 @@ function Get-ApplicationDifferences()
                 Write-Host "$($appsList[$i]) ______________ $($lastApps[$i])"
             }
         }
-        elseif ($appsList.Count -lt $lastApps.Count) #FOR IF APPS WERE REMOVED
+        #FOR IF APPS WERE REMOVED
+        elseif ($appsList.Count -lt $lastApps.Count) 
         {
-
-
+            Write-Host "SOME APPS DISAPEARED."
         }
-        else # COUNT STAYED THE SAME ONLY CHECK IF NOT ALL EQUAL THOUGH
+        #COUNT STAYED THE SAME ONLY CHECK IF NOT ALL EQUAL THOUGH
+        else 
         {
-            
+            Write-Host "THERE WERE NO CHANGES MADE!"
         }
+        
     }
 
     #GETS THE APP LIST
     if(Test-Path -Path $lastLogPath -PathType Leaf){Remove-Item $lastLogPath} 
-    foreach($app in $apps)
+    foreach($app in $appsList)
     {
-        Out-File -FilePath $lastLogPath -InputObject $app.Name -Append
+        Out-File -FilePath $lastLogPath -InputObject $app -Append
     }
 }
 
@@ -108,7 +120,7 @@ function Open-Program($path)
 }
 function Open-WWCSProgram($programName)
 {
-    if($programName -eq $null)
+    if($null -eq $programName)
     {
         #list all files in the programs
         #select a number from them

@@ -24,7 +24,8 @@
                         'WWCS_LogonAuditing.psm1',
                         'WWCS_BootDetails.psm1',
                         'WWCS_SoftwareManagement.psm1',
-                        'WWCS_DirectoryManagement.psm1'
+                        'WWCS_DirectoryManagement.psm1',
+                        'WWCS_EventLogging.psm1'
                         )
 
     FunctionsToExport =  @(
@@ -63,6 +64,9 @@
                             'New-ClipboardEntry',
                             #Write ---,
                             'Write-Log',
+                            #Remove---
+                            'Remove-Path',
+                            'Remove-WWCSPrinter',
                             #Need To Be Standardized --- 
                             'Check-O365PasswordValid',
                             'Reset-0365Pass',
@@ -77,7 +81,6 @@
                             'Get-NetworkInfo',
                             'Clear-NetworkCache',
                             'Clear-PrintSpooler',
-                            'Remove-WWCSPrinter',
                             'Open-Program',
                             'Open-WWCSProgram',
                             'Get-WWCSLogons',
