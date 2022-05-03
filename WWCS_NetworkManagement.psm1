@@ -37,7 +37,6 @@ function Clear-NetworkCache([switch]$reboot)
     ipconfig /release
     ipconfig /renew
     netsh winsock reset
-
     
 
     if($reboot)

@@ -25,7 +25,8 @@
                         'WWCS_BootDetails.psm1',
                         'WWCS_SoftwareManagement.psm1',
                         'WWCS_DirectoryManagement.psm1',
-                        'WWCS_EventLogging.psm1'
+                        'WWCS_EventLogging.psm1',
+                        '.\WWCS_Troubleshooting.psm1'
                         )
 
     FunctionsToExport =  @(
@@ -67,6 +68,8 @@
                             #Remove---
                             'Remove-Path',
                             'Remove-WWCSPrinter',
+                            #Start---
+                            'Start-Repair',
                             #Need To Be Standardized --- 
                             'Check-O365PasswordValid',
                             'Reset-0365Pass',
