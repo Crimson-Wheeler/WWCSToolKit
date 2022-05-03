@@ -57,6 +57,7 @@
                             'Invoke-ToolkitTest',
                             #Clear ---
                             'Clear-PrintSpooler',
+                            'Clear-UpdateCache',
                             #New ---
                             'New-WWCSPrinter',
                             'New-WWCSComputer',
@@ -70,6 +71,8 @@
                             'Remove-WWCSPrinter',
                             #Start---
                             'Start-Repair',
+                            #Reset---
+                            'Reset-WindowsUpdate',
                             #Need To Be Standardized --- 
                             'Check-O365PasswordValid',
                             'Reset-0365Pass',
