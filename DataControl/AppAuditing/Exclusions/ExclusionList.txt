@@ -1,1 +1,9 @@
-WWCS
+Google
+Google Chrome
+Google Update Helper
+Java 8 Update
+Microsoft .NET
+Microsoft ASP.NET
+Microsoft Windows Desktop Runtime
+Mozilla Firefox
+Click-to-Run
