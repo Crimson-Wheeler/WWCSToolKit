@@ -12,8 +12,9 @@
     {
         Remove-Item 'C:\Windows\system32\WindowsPowerShell\v1.0\Modules\WWCSToolKit-main' -Recurse -Force
     }
-
+    
     $logPath = "C:\Program Files\WWCS\Logs"
+    $dataPath = "C:\Program Files\WWCS\DataControl"
     $programPaths = "C:\Program Files\WWCS\Programs"
     $fileName = "WWCS-TOOLKIT.log"
     $tempPath = "C:\Temp"
@@ -80,12 +81,20 @@
     Write-Host "Renaming to WWCS-TOOLKIT"
     Rename-Item -Path "C:\Windows\system32\WindowsPowerShell\v1.0\Modules\WWCSToolKit-main" -NewName $module
      
-    
+    Write-Host "Copy programs to #($progamPaths)"
     if(Test-Path -Path "$($programPaths)")#removes so everything can be overridden
     {
         Remove-Item -Path "$($programPaths)" -Recurse -Force
     }
     Copy-Item -Path "$($module)\Programs" -Destination $programPaths -Recurse
+
+    Write-Host "Copy data to #($dataPath)"
+    if(Test-Path -Path "$($dataPath)")#removes so everything can be overridden
+    {
+        Remove-Item -Path "$($dataPath)" -Recurse -Force
+    }
+    Copy-Item -Path "$($module)\DataControl" -Destination $dataPath -Recurse
+
 
 
 
