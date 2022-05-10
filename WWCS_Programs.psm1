@@ -118,7 +118,7 @@ function Open-Program($path)
 {
     Start-Process $path
 }
-function Open-WWCSProgram($programName)
+function Open-WWCSProgram($programName,$switches)
 {
     if($null -eq $programName)
     {
@@ -154,7 +154,7 @@ function Open-WWCSProgram($programName)
     else
     {
         Write-Host "Starting program from $(Get-WWCSTOOLKITPath)\Programs\$($programName)"
-        Start-Process "$(Get-WWCSProgramPath)\$($programName)"
+        Start-Process "$(Get-WWCSProgramPath)\$($programName) $($switches)"
     }
     
 }

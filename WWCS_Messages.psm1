@@ -1,4 +1,4 @@
-function Send-Email($From,$Subject,$Body)
+function SSend-Email($From,$Subject,$Body)
 {
     try
     {
@@ -23,4 +23,8 @@ function Send-Email($From,$Subject,$Body)
         Write-LogError -message $Error
         Write-Host $Error
     }
+}
+function Send-Email($to, $From,$Subject,$Body)
+{
+    
 }
