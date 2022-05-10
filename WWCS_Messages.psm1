@@ -32,7 +32,7 @@ function Send-Email($From, $to,$Subject,$Body, $attachments)
     Write-Host "Body: $body"
     Write-Host "Attachments: $attachments"
     Write-Host "Arguments---"
-    Write-Host "$From $to $Subject $Body $attachments" 
+    Write-Host "`"$From`" `"$to`" `"$Subject`" `"$Body`" $attachments" 
     Start-Process -FilePath "C:\Program Files\WWCS\Programs\EmailSender.exe" `
                  -ArgumentList "`"$From`" `"$to`" `"$Subject`" `"$Body`" $attachments" 
 }
