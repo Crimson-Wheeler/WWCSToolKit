@@ -24,14 +24,16 @@ function SSend-Email($From,$Subject,$Body)
         Write-Host $Error
     }
 }
-function Send-Email($to, $From,$Subject,$Body, $attachments)
+function Send-Email($From, $to,$Subject,$Body, $attachments)
 {
-   Start-Process -FilePath "C:\Program Files\WWCS\Programs\EmailSender.exe" `
-                 -ArgumentList "$to $From $Subject $Body $attachments" 
+    Write-Host "Sending to: $to"
+    Write-Host "Sending from: $from"
+    Write-Host "Subject: $subject"
+    Write-Host "Body: $body"
+    Write-Host "Attachments: $attachments"
+    Write-Host "Arguments---"
+    Write-Host "$From $to $Subject $Body $attachments" 
+    Start-Process -FilePath "C:\Program Files\WWCS\Programs\EmailSender.exe" `
+                 -ArgumentList "`"$From`" `"$to`" `"$Subject`" `"$Body`" $attachments" 
 }
 
-Send-Email "test@wwcs.com" `
-        "helpdesk@wwcs.com" `
-        "TEST SUBJECT ASGAIN" `
-        "THIS IS the body" `
-        "C:\Program Files\WWCS\Logs\Auditing\ApplicationAuditLogs\AppChanges.log"
