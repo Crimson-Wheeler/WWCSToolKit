@@ -17,77 +17,7 @@ function Remove-WaveBrowser()
 
 function Get-ApplicationDifferences()
 {
-    #setup
-    $appLogPath = "C:\Program Files\WWCS\Logs\Auditing\ApplicationAuditLogs\AppChanges.log"
-    $lastLogPath = "C:\Program Files\WWCS\Logs\Auditing\ApplicationAuditLogs\Apps.log"
-    $directory = "C:\Program Files\WWCS\Logs\Auditing\ApplicationAuditLogs"
-    if(-not(Test-Path $directory))
-    {
-        New-Item -ItemType Directory -Path $directory
-    }
-
-    #Logic
-    Write-Log -Message "Logged Apps at $(Get-Date)" -Path $appLogPath -Append    
-
-    #Get the full list of applications
-    $apps = (Get-ApplicationList)
-
-    #populate apps into list as an array
-    $appsList = New-Object System.Collections.ArrayList($null)
-    foreach($app in $apps)
-    {
-        $appsList.Add($app)
-    }
-    #remove the first element of the list because it is usualy empty
-    $appsList.RemoveAt(0)
-
-    #if this is the first time creating the log file
-    if(-not(Test-Path -Path $lastLogPath -PathType Leaf))
-    {
-        Write-Log -Message "Complete" -Path $appLogPath -Append
-    }
-    #if the log file already exists then compare it to the new list
-    else 
-    {
-        Write "FILE EXISTS"
-        $lastApps = Get-Content $lastLogPath
-        Write-Host $lastApps
-        Write-Host $appsList
-        
-        #FOR IF NEW APPS SHOWED UP
-        if($appsList.Count -gt $lastApps.Count)
-        {
-            
-            for($i = 0; $i -lt $lastApps.Count; $i++)
-            {
-                if($appsList[$i] -ne $lastApps[$i])
-                {
-                     Write-Host "FOUND THE APP $($apps[$i]) WAS INSTALLED"
-                     Write-Log -Message "$($apps[$i]) was found new at the time $(Get-Date)" -Path $appLogPath -Append
-                    $appsList.RemoveAt($i)
-                }
-                Write-Host "$($appsList[$i]) ______________ $($lastApps[$i])"
-            }
-        }
-        #FOR IF APPS WERE REMOVED
-        elseif ($appsList.Count -lt $lastApps.Count) 
-        {
-            Write-Host "SOME APPS DISAPEARED."
-        }
-        #COUNT STAYED THE SAME ONLY CHECK IF NOT ALL EQUAL THOUGH
-        else 
-        {
-            Write-Host "THERE WERE NO CHANGES MADE!"
-        }
-        
-    }
-
-    #GETS THE APP LIST
-    if(Test-Path -Path $lastLogPath -PathType Leaf){Remove-Item $lastLogPath} 
-    foreach($app in $appsList)
-    {
-        Out-File -FilePath $lastLogPath -InputObject $app -Append
-    }
+    &'C:\Program Files\WWCS\Programs\Application Auditing.exe'
 }
 
 function Get-ApplicationList()
