@@ -1,4 +1,10 @@
 ﻿@{
+    
+    <# Helpful links: 
+    https://blog.danskingdom.com/fix-problem-where-windows-powershell-cannot-run-script-whose-path-contains-spaces/
+
+    #>
+
     Author = "WWCS Inc."
     CompanyName = "WWCS Inc."
     Copyright = "© WWCS Inc. All Rights Reserved"
