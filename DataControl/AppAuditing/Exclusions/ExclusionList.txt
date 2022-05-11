@@ -9,3 +9,4 @@ Mozilla Firefox
 Click-to-Run
 Sentinel Agent
 SentinelOne
+GoTo Opener
