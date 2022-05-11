@@ -6,6 +6,7 @@ Microsoft .NET
 Microsoft ASP.NET
 Microsoft Windows Desktop Runtime
 Mozilla Firefox
+Mozilla Maintenance Service
 Click-to-Run
 Sentinel Agent
 SentinelOne
