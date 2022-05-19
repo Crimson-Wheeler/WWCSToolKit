@@ -5,9 +5,12 @@ Java 8 Update
 Microsoft .NET
 Microsoft ASP.NET
 Microsoft Windows Desktop Runtime
+Microsoft Azure AD Connect Upgrader
 Mozilla Firefox
 Mozilla Maintenance Service
 Click-to-Run
 Sentinel Agent
 SentinelOne
 GoTo Opener
+Update for Windows 10 for x64-based Systems
+RUXIM
