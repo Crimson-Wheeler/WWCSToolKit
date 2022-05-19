@@ -4,6 +4,11 @@
 
 }
 
+function New-ComputerSetup()
+{
+    &'C:\Program Files\WWCS\Programs\ComputerSetup.exe'
+}
+
 function Install-BillingReconciliation()
 {
     
@@ -11,7 +16,6 @@ function Install-BillingReconciliation()
 
 function Remove-WaveBrowser()
 {
-
 
 }
 

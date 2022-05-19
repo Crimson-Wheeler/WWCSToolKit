@@ -32,7 +32,7 @@
                         'WWCS_SoftwareManagement.psm1',
                         'WWCS_DirectoryManagement.psm1',
                         'WWCS_EventLogging.psm1',
-                        '.\WWCS_Troubleshooting.psm1'
+                        'WWCS_Troubleshooting.psm1'
                         )
 
     FunctionsToExport =  @(
@@ -59,6 +59,7 @@
                             'Get-WWCSCommands',
                             #Set ---
                             'Set-WWCSClipboard',
+                            'Set-DomainUserCredentials',
                             #Invoke ---
                             'Invoke-ToolkitTest',
                             #Clear ---
@@ -66,7 +67,7 @@
                             'Clear-UpdateCache',
                             #New ---
                             'New-WWCSPrinter',
-                            'New-WWCSComputer',
+                            'New-ComputerSetup',
                             'New-WhiteSpace',
                             'New-TextSpacing',
                             'New-ClipboardEntry',

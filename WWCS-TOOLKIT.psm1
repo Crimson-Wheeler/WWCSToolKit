@@ -28,7 +28,7 @@ function Get-Directory(){
 function Write-LogError($message)
 {
     $logPath = Get-WWCSLogPath
-    $fileName = "errorLog.txt"
+    $fileName = "errorLog.log"
     if(-not(Test-Path -Path $logPath))
     {
         New-Item -Path $logPath
