@@ -28,7 +28,7 @@ function Get-Directory(){
 function Write-LogError($message)
 {
     $logPath = Get-WWCSLogPath
-    $fileName = "errorLog.log"
+    $fileName = "error.log"
     if(-not(Test-Path -Path $logPath))
     {
         New-Item -Path $logPath
@@ -57,54 +57,9 @@ function Write-Log($message,$rootPath,$path,[switch]$Append)
     }
 }
 
-function changeLocalUserCredentials($username, $password)
-{
-    try
-    {
-        
-        $var = cmdkey /list
-
-        [bool]$domainJoined = $env:USERDOMAIN -ne $env:COMPUTERNAME
-
-        for (($i = 0); $i -lt $var.Count; $i++)
-        {
-            [String]$line = [String]$var[$i]
-
-            [String]$condition = "User:"
-    
-            if($line.Contains($condition) -and $line.Substring($line.IndexOf($condition) + $condition.Length+1).Contains($username))
-            {
-                    $user = $line.Substring($line.IndexOf($condition) + $condition.Length+1)
-                    [String]$computer = $var[$i-2]
-                    $computer = $computer.Substring($computer.IndexOf("=")+1)
-
-                    if($domainJoined -and -not $user.Contains($env:USERDOMAIN))
-                    {
-                        cmdkey /add:$computer /user:$user /pass:$password
-                    }
-            }
-    
-        }
-    }
-    catch
-    {
-        Send-Email -Subject "ERROR: THERE WAS A POWERSHELL ERROR" -Body "ERROR on $($env:COMPUTERNAME): $($Error)"
-    }
-}
-function New-WWCSComputer()
-{
-    winget install -e --id Google.Chrome --force
-    winget install -e --id Adobe.AdobeAcrobatReaderDC --force
-    winget install -e --id Oracle.JavaRuntimeEnvironment --force
-    invoke-expression -Command "C:\Windows\system32\WindowsPowerShell\v1.0\Modules\WWCS-TOOLKIT\ODT\runODT.ps1"
-}
-function Get-WWCSDocumentation()
-{ 
-    invoke-expression -Command "$(Get-WWCSTOOLKITPath)\showDocumentation.ps1"
-}
 function Get-WWCSCommands()
 {
-    Get-Module WWCS-TOOLKIT -ListAvailable | Select-Object -ExpandProperty exportedcommands 
+    return Get-Module WWCS-TOOLKIT -ListAvailable | Select-Object -ExpandProperty exportedcommands | Format-Table -Property Value
 }
 
 
@@ -116,9 +71,6 @@ function Get-WWCSReports([switch]$pickLocation)
     $folders = Get-ChildItem "C:\Users\crimson.wheeler\WorldWide Computer Solutions, Inc\WWCS - Documents\Customers\Customers - Active" Summary -recurse
     foreach ($folder in $folders) 
     {
-        
-
-        
         $newestFile = Get-ChildItem $folder -File | Sort-Object -Descending -Property LastWriteTime | Select-Object -First 1
         Write-Host $newestFile.FullName
         try 
@@ -139,6 +91,6 @@ function Invoke-ToolkitTest()
     Write-LogError "This is a test WWCS Log"
 
     Write-Host "Sending Test email"
-    Send-Email -Body "This is a test email from $($env:COMPUTERNAME)" -Subject "This is a test email from $($env:COMPUTERNAME) at $($env:USERDOMAIN)"
+    Send-Email -From "toolkitTest@wwcs.com" -Body "This is a test email from $($env:COMPUTERNAME)" -Subject "This is a test email from $($env:COMPUTERNAME) at $($env:USERDOMAIN)"
 
 }

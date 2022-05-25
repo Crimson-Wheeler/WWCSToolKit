@@ -59,7 +59,7 @@
                             'Get-WWCSCommands',
                             #Set ---
                             'Set-WWCSClipboard',
-                            'Set-DomainUserCredentials',
+                            'Set-DomainUserWinCredentials',
                             #Invoke ---
                             'Invoke-ToolkitTest',
                             #Clear ---
