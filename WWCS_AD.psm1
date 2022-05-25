@@ -33,8 +33,7 @@ function Get-LocalUsers()
     #invoke-command $_.Name ScriptBlock {Get-LocalGroupMember -Group "Administrators"}
     #>
 }
-
-function Set-DomainUserCredentials($username, $password)
+function Set-DomainUserWinCredentials($username, $password)
 {
     try
     {
