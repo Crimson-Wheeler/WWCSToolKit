@@ -36,6 +36,6 @@ function Send-Email($Subject,$Body, $attachments)
     Write-Host "Arguments---"
     Write-Host "`"$from`" `"$to`" `"$Subject`" `"$Body`" $attachments" 
     #cd 'C:\Program Files\WWCS\Programs\'
-    &"C:\Program Files\WWCS\Programs\EmailSender.exe" `"$from`" `"$to`" `"$Subject`" `"$Body`" $attachments 
+    &"C:\Program Files\WWCS\Programs\EmailSender.exe" `"$Subject`" `"$Body`" $attachments 
 }
 
