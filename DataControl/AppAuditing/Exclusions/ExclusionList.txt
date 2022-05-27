@@ -14,3 +14,6 @@ SentinelOne
 GoTo Opener
 Update for Windows 10 for x64-based Systems
 RUXIM
+Java
+Java 8 Update 261
+Java Auto Updater
