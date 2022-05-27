@@ -24,6 +24,14 @@ function Get-ApplicationDifferences()
     &'C:\Program Files\WWCS\Programs\Application Auditing.exe'
 }
 
+function Remove-AppServiceFile()
+{
+    if (Test-Path -Path "C:\Program Files\WWCS\Logs\Auditing\ApplicationAuditLogs\serviceCheck.log")
+    {
+        Remove-Item  "C:\Program Files\WWCS\Logs\Auditing\ApplicationAuditLogs\serviceCheck.log" -Recurse -Force
+    }
+}
+
 function Get-ApplicationList()
 {
     $apps = Get-AppxPackage –AllUsers

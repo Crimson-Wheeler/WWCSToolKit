@@ -80,6 +80,8 @@
                             'Start-Repair',
                             #Reset---
                             'Reset-WindowsUpdate',
+                            #Remove---
+                            'Remove-AppServiceFile',
                             #Need To Be Standardized --- 
                             'Check-O365PasswordValid',
                             'Reset-0365Pass',
