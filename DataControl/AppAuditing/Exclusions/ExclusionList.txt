@@ -7,6 +7,7 @@ Microsoft ASP.NET
 Microsoft Windows Desktop Runtime
 Microsoft Azure AD Connect Upgrader
 Mozilla Firefox
+Firefox
 Mozilla Maintenance Service
 Click-to-Run
 Sentinel Agent
