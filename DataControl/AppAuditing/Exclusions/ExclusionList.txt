@@ -6,6 +6,7 @@ Microsoft .NET
 Microsoft ASP.NET
 Microsoft Windows Desktop Runtime
 Microsoft Azure AD Connect Upgrader
+Microsoft Visual
 Mozilla Firefox
 Firefox
 Mozilla Maintenance Service
