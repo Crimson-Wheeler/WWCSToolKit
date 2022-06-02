@@ -45,7 +45,7 @@ if(Test-Path 'C:\Temp\wwcstoolkit.zip')
 }
 else
 {
-    $errors += "\n ERROR: Zip File Failed to Download"
+    $errors += "ERROR: Zip File Failed to Download.`n"
 }
 
 
@@ -55,7 +55,7 @@ if(Test-Path 'C:\Temp\wwcstoolkit\WWCSToolKit-main')
 }
 else
 {
-    $errors += "\n ERROR: Zip Extraction Failed."
+    $errors += "ERROR: Zip Extraction Failed.`n"
 }
 #endregion
 
@@ -72,7 +72,7 @@ if(Test-Path -Path "C:\Windows\system32\WindowsPowerShell\v1.0\Modules\WWCS-TOOL
 }
 else
 {
-    $errors += "\n ERROR: Failed to Copy Toolkit to Module Path."
+    $errors += "ERROR: Failed to Copy Toolkit to Module Path.`n"
 }
 if(Test-Path -Path "C:\Windows\system32\WindowsPowerShell\v1.0\Modules\WWCS-TOOLKITold")
 {
@@ -106,7 +106,7 @@ if(Test-Path "C:\Program Files\WWCS")
 }
 else
 {
-    $errors += "\n ERROR: WWCS Directory Does not exist."
+    $errors += "ERROR: WWCS Directory Does not exist.`n"
 }
 
 if(Test-Path 'C:\Program Files\WWCS\Programs')
@@ -115,7 +115,7 @@ if(Test-Path 'C:\Program Files\WWCS\Programs')
 }
 else
 {
-    $errors += "\n ERROR: Programs Folder Failed."
+    $errors += "ERROR: Programs Folder Failed.`n"
 }
 if(Test-Path 'C:\Program Files\WWCS\DataControl')
 {
@@ -123,7 +123,7 @@ if(Test-Path 'C:\Program Files\WWCS\DataControl')
 }
 else
 {
-    $errors += "\n ERROR: Data Control Folder Failed."
+    $errors += "ERROR: Data Control Folder Failed.`n"
 }
 #endregion
 
@@ -156,6 +156,23 @@ if(Test-Path 'C:\Temp\wwcstoolkit.zip'){
 
 if($errors.Length -gt 0)
 {
+    if((Test-Path "C:\Temp\WWCS-TOOLKIT.log") -and (Get-Module WWCS-TOOLKIT).length -gt 0)
+    {
+        $body = ""
+        $lastLog = Get-Content "C:\Temp\WWCS-TOOLKIT.log"
+        if($lastLog.Contains("SUCCESS"))
+        {
+            $body += "SWITCHED TO FAILED"
+            $body += "`n"
+        }
+ 
+        
+        $body += $errors
+        Import-Module WWCS-TOOLKIT 
+        Send-Email -Subject "WWCS Toolkit switched to failed on $($env:COMPUTERNAME) at $($env:USERDOMAIN)" `
+                    -Body $body `
+                    -attachments `"C:\Temp\WWCS-TOOLKIT.log`"
+    }
     Write-Host $errors
     $errors > "$($tempPath)\$($fileName)"
 }

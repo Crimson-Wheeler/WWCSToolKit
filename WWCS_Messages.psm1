@@ -26,10 +26,6 @@ function SSend-Email($From,$Subject,$Body)
 }
 function Send-Email($Subject,$Body, $attachments)
 {
-    $to = "toolkit@wwcs.com"
-    $from = "toolkit@wwcs.com"
-    Write-Host "Sending to: $to"
-    Write-Host "Sending from: $from"
     Write-Host "Subject: $subject"
     Write-Host "Body: $body"
     Write-Host "Attachments: $attachments"
