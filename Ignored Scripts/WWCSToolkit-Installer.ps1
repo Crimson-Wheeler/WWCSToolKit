@@ -71,6 +71,8 @@ if(Test-Path 'C:\Temp\wwcstoolkit.zip')
 else
 {
     $errors += "ERROR: Zip File Failed to Download.`n"
+    Add-Type -assembly "system.io.compression.filesystem"
+    [io.compression.zipfile]::CreateFromDirectory('C:\Temp\wwcstoolkit.zip', 'C:\Temp\wwcstoolkit')
 }
 
 
