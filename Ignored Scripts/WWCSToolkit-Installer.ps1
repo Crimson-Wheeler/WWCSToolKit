@@ -35,6 +35,9 @@ if(Test-Path 'C:\Temp\wwcstoolkit.zip'){
 #region downloading 
 #download the zip 
 Write-Host 'Starting downloading the GitHub Repository'
+
+#sets a temporary 
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 Invoke-RestMethod -Uri $RepositoryZipUrl -OutFile 'C:\Temp\wwcstoolkit.zip'
 
 #extract to toolkit
