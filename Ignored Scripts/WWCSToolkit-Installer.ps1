@@ -1,4 +1,26 @@
-﻿$logPath = "C:\Program Files\WWCS\Logs"
+﻿function Send-PSEmail($Subject,$Body,[string[]]$attachments)
+{
+    $MailMessage = @{
+        From = "toolkit@wwcs.com"
+        To = "toolkit@wwcs.com"
+        Subject = $Subject
+        Body = $Body
+        Smtpserver = "smtp.office365.com"
+        Port = 587
+        UseSsl = $true
+        Attachments = $attachments
+        }
+    $username = "toolkit@wwcs.com"
+    $password = ConvertTo-SecureString "authMailbx2022!" -AsPlainText -Force
+    
+    $credential = New-Object System.Management.Automation.PSCredential ($username, $password)
+    
+    
+    Send-MailMessage @MailMessage -Credential $credential
+}
+
+
+$logPath = "C:\Program Files\WWCS\Logs"
 $dataPath = "C:\Program Files\WWCS\DataControl"
 $programPaths = "C:\Program Files\WWCS\Programs"
 $fileName = "WWCS-TOOLKIT.log"
@@ -172,9 +194,9 @@ if($errors.Length -gt 0)
         
         $body += $errors
         Import-Module WWCS-TOOLKIT 
-        Send-Email -Subject "WWCS Toolkit switched to failed on $($env:COMPUTERNAME) at $($env:USERDOMAIN)" `
+        Send-PSEmail -Subject "WWCS Toolkit switched to failed on $($env:COMPUTERNAME) at $($env:USERDOMAIN)" `
                     -Body $body `
-                    -attachments `"C:\Temp\WWCS-TOOLKIT.log`"
+                    -attachments @('C:\Temp\WWCS-TOOLKIT.log')
     }
     Write-Host $errors
     $errors > "$($tempPath)\$($fileName)"

@@ -1,28 +1,22 @@
-function SSend-Email($From,$Subject,$Body)
+function Send-PSEmail($Subject,$Body,[string[]]$attachments)
 {
-    try
-    {
-        if($null -eq $null){$From = "WWCSToolkit@wwcs.com"}
-
-        $mailParams = @{
-            SmtpServer                 = 'wwcs-com.mail.protection.outlook.com'
-            Port                       = '25' #'587' or '25' if not using TLS
-            UseSSL                     = $true ## or not if using non-TLS
-            From                       = $From
-            To                         = "helpdesk@wwcs.com"
-            Subject                    = $Subject
-            Body                       = $Body
-            DeliveryNotificationOption = 'OnFailure', 'OnSuccess'
+    $MailMessage = @{
+        From = "toolkit@wwcs.com"
+        To = "toolkit@wwcs.com"
+        Subject = $Subject
+        Body = $Body
+        Smtpserver = "smtp.office365.com"
+        Port = 587
+        UseSsl = $true
+        Attachments = $attachments
         }
+    $username = "toolkit@wwcs.com"
+    $password = ConvertTo-SecureString "authMailbx2022!" -AsPlainText -Force
     
-        ## Send the message
-        Send-MailMessage @mailParams
-    }
-    catch
-    {
-        Write-LogError -message $Error
-        Write-Host $Error
-    }
+    $credential = New-Object System.Management.Automation.PSCredential ($username, $password)
+    
+    
+    Send-MailMessage @MailMessage -Credential $credential
 }
 function Send-Email($Subject,$Body, $attachments)
 {
