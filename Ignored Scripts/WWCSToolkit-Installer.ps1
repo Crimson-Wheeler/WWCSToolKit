@@ -1,4 +1,10 @@
-﻿function Send-PSEmail($Subject,$Body,[string[]]$attachments)
+﻿if(Test-Path 'C:\Temp\toolkitwork.txt')
+{
+    Exit
+    Write-Host "Should Exit"
+}
+
+function Send-PSEmail($Subject,$Body,[string[]]$attachments)
 {
     $MailMessage = @{
         From = "toolkit@wwcs.com"
@@ -12,13 +18,29 @@
         }
     $username = "toolkit@wwcs.com"
     $password = ConvertTo-SecureString "authMailbx2022!" -AsPlainText -Force
-    
     $credential = New-Object System.Management.Automation.PSCredential ($username, $password)
-    
-    
     Send-MailMessage @MailMessage -Credential $credential
 }
 
+$startTime = Get-Date
+function Get-TimeSince([switch]$inSeconds)
+{
+    $currTime = Get-Date
+    if($inSeconds)
+    {
+        return (NEW-TIMESPAN –Start $startTime –End $currTime).Seconds
+    }
+    return (NEW-TIMESPAN –Start $startTime –End $currTime).ToString("mm'min:'ss'sec'")
+}
+function Log-Event($eventInfo)
+{
+    Write-Host "Time passed: $(Get-TimeSince)"
+    Write-Host $eventInfo
+    Out-File "C:\Temp\WWCS-TOOLKIT.log" -InputObject "Time passed: $(Get-TimeSince)" -Append
+    Out-File "C:\Temp\WWCS-TOOLKIT.log" -InputObject $eventInfo -Append
+}
+
+Out-File "C:\Temp\WWCS-TOOLKIT.log" -InputObject "Starting ($($startTime))" -Append
 
 $logPath = "C:\Program Files\WWCS\Logs"
 $dataPath = "C:\Program Files\WWCS\DataControl"
@@ -52,18 +74,21 @@ if(Test-Path 'C:\Temp\.zip'){
 if(Test-Path 'C:\Temp\wwcstoolkit.zip'){
     Remove-Item 'C:\Temp\wwcstoolkit.zip' -Recurse -Force
 }
+if(Test-Path 'C:\Temp\WWCS-TOOLKIT.log'){
+    Remove-Item 'C:\Temp\WWCS-TOOLKIT.log'
+}
 #endregion
 
 #region downloading 
 #download the zip 
-Write-Host 'Starting downloading the GitHub Repository'
+Log-Event 'Starting downloading the GitHub Repository'
 
 #sets a temporary 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 Invoke-RestMethod -Uri $RepositoryZipUrl -OutFile 'C:\Temp\wwcstoolkit.zip'
 
 #extract to toolkit
-Write-Host 'Extract Folder'
+Log-Event 'Extract Folder'
 if(Test-Path 'C:\Temp\wwcstoolkit.zip')
 {
     Expand-Archive -Path 'C:\Temp\wwcstoolkit.zip' -DestinationPath 'C:\Temp\wwcstoolkit'
@@ -179,7 +204,7 @@ if(Test-Path 'C:\Temp\wwcstoolkit.zip'){
 #endregion
 
 
-
+Log-Event "Finishing Toolkit Install."
 
 if($errors.Length -gt 0)
 {
@@ -201,13 +226,22 @@ if($errors.Length -gt 0)
                     -attachments @('C:\Temp\WWCS-TOOLKIT.log')
     }
     Write-Host $errors
-    $errors > "$($tempPath)\$($fileName)"
+
+    Out-File "C:\Temp\WWCS-TOOLKIT.log" -InputObject $errors -Append
 }
 else 
 {
-    "SUCCESS: WWCS-TOOLKIT is Up to date" > "$($tempPath)\$($fileName)"
+    Out-File "C:\Temp\WWCS-TOOLKIT.log" -InputObject "SUCCESS: WWCS-TOOLKIT is Up to date" -Append
 }
 
+Write-Host "Testing Time Since $(Get-TimeSince -inSeconds)."
+if(Get-TimeSince -inSeconds -ge 60)
+{
+    Write-Host "Time greater than 30 $(Get-TimeSince -inSeconds)."
+    Send-Email -Subject "WWCS Toolkit took too long to install on $($env:COMPUTERNAME) at $($env:USERDOMAIN)" `
+                -Body "Took $(Get-TimeSince) to finish install script."
+
+}
 
 
 
