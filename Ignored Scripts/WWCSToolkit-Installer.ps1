@@ -1,8 +1,9 @@
 ﻿if(Test-Path 'C:\Temp\toolkitwork.txt')
 {
     Exit
-    Write-Host "Should Exit"
 }
+
+Out-File 'C:\Temp\toolkitwork.txt' -InputObject "Temporary Install"
 
 function Send-PSEmail($Subject,$Body,[string[]]$attachments)
 {
@@ -234,16 +235,22 @@ else
     Out-File "C:\Temp\WWCS-TOOLKIT.log" -InputObject "SUCCESS: WWCS-TOOLKIT is Up to date" -Append
 }
 
+<#
 Write-Host "Testing Time Since $(Get-TimeSince -inSeconds)."
 if(Get-TimeSince -inSeconds -ge 60)
 {
-    Write-Host "Time greater than 30 $(Get-TimeSince -inSeconds)."
+    Write-Host "Time greater than 60 $(Get-TimeSince -inSeconds)."
     Send-Email -Subject "WWCS Toolkit took too long to install on $($env:COMPUTERNAME) at $($env:USERDOMAIN)" `
                 -Body "Took $(Get-TimeSince) to finish install script."
 
 }
+#>
 
 
+if(Test-Path 'C:\Temp\toolkitwork.txt')
+{
+    Remove-Item 'C:\Temp\toolkitwork.txt'
+}
 
 
 
