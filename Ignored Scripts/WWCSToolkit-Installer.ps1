@@ -50,7 +50,6 @@ $fileName = "WWCS-TOOLKIT.log"
 $tempPath = "C:\Temp"
 $modulePath =  "C:\Windows\system32\WindowsPowerShell\v1.0\Modules"
 $RepositoryZipUrl = "https://github.com/Crimson-Wheeler/WWCSToolkit/archive/main.zip" 
-
 $errors = ""
 
 #region Cleaup 
@@ -88,11 +87,29 @@ Log-Event 'Starting downloading the GitHub Repository'
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 Invoke-RestMethod -Uri $RepositoryZipUrl -OutFile 'C:\Temp\wwcstoolkit.zip'
 
+if($true)
+{
+    #Log-Event 'Starting downloading software.'
+    #Invoke-RestMethod -Uri $SoftwareRepositoryUrl -OutFile 'C:\Temp\wwcstoolkitSoftware.zip'
+}
 #extract to toolkit
-Log-Event 'Extract Folder'
+Log-Event 'Extract Toolkit Folder'
 if(Test-Path 'C:\Temp\wwcstoolkit.zip')
 {
     Expand-Archive -Path 'C:\Temp\wwcstoolkit.zip' -DestinationPath 'C:\Temp\wwcstoolkit'
+}
+else
+{
+    $errors += "ERROR: Zip File Failed to Download.`n"
+    Add-Type -assembly "system.io.compression.filesystem"
+    [io.compression.zipfile]::CreateFromDirectory('C:\Temp\wwcstoolkit.zip', 'C:\Temp\wwcstoolkit')
+}
+
+
+if(Test-Path 'C:\Temp\wwcstoolkitSoftware.zip')
+{
+    Log-Event 'Extract Toolkit Folder'
+    Expand-Archive -Path 'C:\Temp\wwcstoolkitSoftware.zip' -DestinationPath 'C:\Temp\wwcstoolkitSoftware'
 }
 else
 {
@@ -152,9 +169,9 @@ if(Test-Path "C:\Program Files\WWCS")
 {
     if(Test-Path 'C:\Program Files\WWCS\Programs')
     {
-        Remove-Item 'C:\Program Files\WWCS\Programs' -Recurse
+        #Remove-Item 'C:\Program Files\WWCS\Programs' -Recurse
     }
-    Copy-Item 'C:\Windows\system32\WindowsPowerShell\v1.0\Modules\WWCS-TOOLKIT\Programs' `
+    Copy-Item 'C:\Temp\wwcstoolkitSoftware' `
                 'C:\Program Files\WWCS\Programs' -Recurse -Force
 }
 else
