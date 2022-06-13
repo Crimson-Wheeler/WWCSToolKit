@@ -32,7 +32,8 @@
                         'WWCS_SoftwareManagement.psm1',
                         'WWCS_DirectoryManagement.psm1',
                         'WWCS_EventLogging.psm1',
-                        'WWCS_Troubleshooting.psm1'
+                        'WWCS_Troubleshooting.psm1',
+                        'WWCS_AppAuditing.psm1'
                         )
 
     FunctionsToExport =  @(
@@ -57,6 +58,7 @@
                             'Get-ClipboardHistory',
                             'Get-WWCSDocumentation',
                             'Get-WWCSCommands',
+                            'Get-AppChangesLog',
                             #Set ---
                             'Set-WWCSClipboard',
                             'Set-DomainUserWinCredentials',

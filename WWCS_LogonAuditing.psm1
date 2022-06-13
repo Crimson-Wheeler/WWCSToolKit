@@ -117,6 +117,11 @@ function Get-ADComputerLogonEvents($computerName)
     Get-LogoffEvents $computer Get-ParentOutputDir
 }
 
+function Get-AppChangesLog($EmailPassword)
+{
+    
+}
+
 
 
 

@@ -1,4 +1,4 @@
-function Send-PSEmail($Subject,$Body,[string[]]$attachments)
+function Send-PSEmail($Password,$Subject,$Body,[string[]]$attachments)
 {
     $MailMessage = @{
         From = "toolkit@wwcs.com"
@@ -11,9 +11,9 @@ function Send-PSEmail($Subject,$Body,[string[]]$attachments)
         Attachments = $attachments
         }
     $username = "toolkit@wwcs.com"
-    $password = ConvertTo-SecureString "authMailbx2022!" -AsPlainText -Force
+    $pass = ConvertTo-SecureString $Password -AsPlainText -Force
     
-    $credential = New-Object System.Management.Automation.PSCredential ($username, $password)
+    $credential = New-Object System.Management.Automation.PSCredential ($username, $pass)
     
     
     Send-MailMessage @MailMessage -Credential $credential

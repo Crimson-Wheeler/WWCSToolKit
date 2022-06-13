@@ -1,14 +1,15 @@
-﻿
+﻿param([string]$pass = "UNCHANGED") 
+
 
 if(Test-Path 'C:\Temp\toolkitwork.txt')
 {
     if(Test-Path "C:\Temp\WWCS-TOOLKIT.log")
     {
         $lastLogData = Get-Content "C:\Temp\WWCS-TOOLKIT.log"
-    }
-    if($lastLogData.Contains("SUCCESS"))
-    {
-        Exit
+        if($lastLogData.Contains("SUCCESS"))
+        {
+            Exit
+        }
     }
 }
 
@@ -26,11 +27,25 @@ function Send-PSEmail($Subject,$Body,[string[]]$attachments)
         UseSsl = $true
         Attachments = $attachments
         }
+    if($null -eq $attachments)
+    {
+        $MailMessage = @{
+            From = "toolkit@wwcs.com"
+            To = "toolkit@wwcs.com"
+            Subject = $Subject
+            Body = $Body
+            Smtpserver = "smtp.office365.com"
+            Port = 587
+            UseSsl = $true
+            }
+    }
+
     $username = "toolkit@wwcs.com"
-    $password = ConvertTo-SecureString "authMailbx2022!" -AsPlainText -Force
+    $password = ConvertTo-SecureString $pass -AsPlainText -Force
     $credential = New-Object System.Management.Automation.PSCredential ($username, $password)
     Send-MailMessage @MailMessage -Credential $credential
 }
+
 
 $startTime = Get-Date
 function Get-TimeSince([switch]$inSeconds)
@@ -42,15 +57,31 @@ function Get-TimeSince([switch]$inSeconds)
     }
     return (NEW-TIMESPAN –Start $startTime –End $currTime).ToString("mm'min:'ss'sec'")
 }
-function Log-Event($eventInfo)
+
+$eventStr = ""
+function Log-Event($eventInfo,[switch] $push, [switch] $logTime)
 {
-    Write-Host "Time passed: $(Get-TimeSince)"
-    Write-Host $eventInfo
-    Out-File "C:\Temp\WWCS-TOOLKIT.log" -InputObject "Time passed: $(Get-TimeSince)" -Append
-    Out-File "C:\Temp\WWCS-TOOLKIT.log" -InputObject $eventInfo -Append
+    if($push)
+    {
+        Out-File "C:\Temp\WWCS-TOOLKIT.log" -InputObject $Global:eventStr #-Append
+    }
+    else 
+    {
+        #Write-Host "Time passed: $(Get-TimeSince)"
+        #Write-Host $eventInfo
+        if($logTime)
+        {
+            $Global:eventStr += "Time passed: $(Get-TimeSince)`n"
+        }
+        $Global:eventStr += "$eventInfo`n"
+        Write-Host "EVENT STR: ----------------------"
+        Write-Host $Global:eventStr
+    }
+
+    
 }
 
-Out-File "C:\Temp\WWCS-TOOLKIT.log" -InputObject "Starting ($($startTime))" -Append
+Log-Event "Starting ($($startTime))"
 
 $logPath = "C:\Program Files\WWCS\Logs"
 $dataPath = "C:\Program Files\WWCS\DataControl"
@@ -83,14 +114,11 @@ if(Test-Path 'C:\Temp\.zip'){
 if(Test-Path 'C:\Temp\wwcstoolkit.zip'){
     Remove-Item 'C:\Temp\wwcstoolkit.zip' -Recurse -Force
 }
-if(Test-Path 'C:\Temp\WWCS-TOOLKIT.log'){
-    Remove-Item 'C:\Temp\WWCS-TOOLKIT.log'
-}
 #endregion
 
 #region downloading 
 #download the zip 
-Log-Event 'Starting downloading the GitHub Repository'
+Log-Event 'Starting downloading the GitHub Repository' -logTime
 
 #sets a temporary 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
@@ -110,17 +138,6 @@ else
 }
 
 
-if(Test-Path 'C:\Temp\wwcstoolkitSoftware.zip')
-{
-    Log-Event 'Extract Toolkit Folder'
-    Expand-Archive -Path 'C:\Temp\wwcstoolkitSoftware.zip' -DestinationPath 'C:\Temp\wwcstoolkitSoftware'
-}
-else
-{
-    $errors += "ERROR: Zip File Failed to Download.`n"
-    Add-Type -assembly "system.io.compression.filesystem"
-    [io.compression.zipfile]::CreateFromDirectory('C:\Temp\wwcstoolkit.zip', 'C:\Temp\wwcstoolkit')
-}
 
 
 if(Test-Path 'C:\Temp\wwcstoolkit\WWCSToolKit-main')
@@ -226,7 +243,7 @@ if(Test-Path 'C:\Temp\wwcstoolkit.zip'){
 #endregion
 
 
-Log-Event "Finishing Toolkit Install."
+Log-Event "Finishing Toolkit Install." -logTime
 
 if($errors.Length -gt 0)
 {
@@ -249,29 +266,38 @@ if($errors.Length -gt 0)
     }
     Write-Host $errors
 
-    Out-File "C:\Temp\WWCS-TOOLKIT.log" -InputObject $errors -Append
+    Log-Event $errors -logTime
 }
 else 
 {
-    Out-File "C:\Temp\WWCS-TOOLKIT.log" -InputObject "SUCCESS: WWCS-TOOLKIT is Up to date" -Append
+    Log-Event "SUCCESS: WWCS-TOOLKIT is Up to date" -logTime
 }
 
-<#
-Write-Host "Testing Time Since $(Get-TimeSince -inSeconds)."
-if(Get-TimeSince -inSeconds -ge 60)
+$timeInSeconds = Get-TimeSince -inSeconds
+Write-Host "Time: $($timeInSeconds)."
+if(Get-TimeSince -inSeconds -ge 180)
 {
-    Write-Host "Time greater than 60 $(Get-TimeSince -inSeconds)."
-    Send-Email -Subject "WWCS Toolkit took too long to install on $($env:COMPUTERNAME) at $($env:USERDOMAIN)" `
-                -Body "Took $(Get-TimeSince) to finish install script."
-
+    Write-Host "Time greater than 180 it took $($timeInSeconds)."
+    
+    Send-PSEmail -Subject "WWCS Toolkit took too long to install on $($env:COMPUTERNAME) at $($env:USERDOMAIN)" `
+                -Body "Took $($timeInSeconds) to finish install script."
+            
 }
-#>
+
+if(Test-Path 'C:\Temp\WWCS-TOOLKIT.log')
+{
+    Remove-Item 'C:\Temp\WWCS-TOOLKIT.log'
+}
 
 
 if(Test-Path 'C:\Temp\toolkitwork.txt')
 {
     Remove-Item 'C:\Temp\toolkitwork.txt'
 }
+
+Write-Host "EVENT INFO -----------------"
+Write-Host $Global:eventStr
+Log-Event -push
 
 
 
