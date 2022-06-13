@@ -59,6 +59,7 @@
                             'Get-WWCSDocumentation',
                             'Get-WWCSCommands',
                             'Get-AppChangesLog',
+                            'Get-WWCSPrinters',
                             #Set ---
                             'Set-WWCSClipboard',
                             'Set-DomainUserWinCredentials',
