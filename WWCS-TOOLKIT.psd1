@@ -111,6 +111,7 @@
                             'Get-DaysSinceBoot',
                             'Test-AppInstalled',
                             'Uninstall-WWCSToolkit',
-                            'Write-LogError'
+                            'Write-LogError',
+                            'Send-Notification'
                         )
 }

@@ -50,3 +50,20 @@ function Show-Notification ([string] $Title,[string][parameter(ValueFromPipeline
     $Notifier.Show($Toast);
 }
 
+
+function Send-Notification([string] $Title,[string]$Message)
+{
+    [void] [System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")
+
+    $objNotifyIcon = New-Object System.Windows.Forms.NotifyIcon
+
+    $objNotifyIcon.Icon = [System.Drawing.SystemIcons]::Information
+    #$objNotifyIcon.BalloonTipIcon = "Info" 
+    $objNotifyIcon.BalloonTipText = $Message
+    $objNotifyIcon.BalloonTipTitle = $Title
+    $objNotifyIcon.Visible = $True
+
+    $objNotifyIcon.ShowBalloonTip(10000)
+
+
+}
