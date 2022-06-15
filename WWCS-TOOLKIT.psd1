@@ -85,6 +85,8 @@
                             'Reset-WindowsUpdate',
                             #Remove---
                             'Remove-AppServiceFile',
+                            #Show---
+                            "Show-Notification",
                             #Need To Be Standardized --- 
                             'Check-O365PasswordValid',
                             'Reset-0365Pass',
