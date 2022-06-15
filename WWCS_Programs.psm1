@@ -21,7 +21,7 @@ function Remove-WaveBrowser()
 
 function Get-ApplicationDifferences($Password)
 {
-    &"C:\Program Files\WWCS\Programs\Application Auditing.exe $($password)"
+    &"C:\Program Files\WWCS\Programs\Application Auditing.exe '$($Password)'"
 }
 
 function Remove-AppServiceFile()
