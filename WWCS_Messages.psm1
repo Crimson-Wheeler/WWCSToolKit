@@ -31,5 +31,5 @@ function Send-Email($Subject,$Body, $attachments)
 
 function Send-Notification([string] $Title,[string]$Message)
 {
-    &"C:\Program Files\WWCS\Programs\NotificationWindow.exe `"$($Title)`" `"$($Message)`""
+    Start-Process "C:\Program Files\WWCS\Programs\NotificationWindow.exe" -ArgumentList @($Title,$Message)
 }
