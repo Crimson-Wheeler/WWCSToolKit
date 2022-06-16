@@ -94,7 +94,6 @@
                             'Delete-O365User',
                             'Decomission-O365User',
                             'Create-O365User',
-                            'Send-Email',
                             'Send-PSEmail',
                             'Add-Printer',
                             'Get-ADComputersLastLogon',
