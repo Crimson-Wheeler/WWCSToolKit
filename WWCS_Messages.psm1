@@ -21,6 +21,6 @@ function Send-PSEmail($Password,$Subject,$Body,[string[]]$attachments)
 
 function Send-Notification([string] $Title,[string]$Message)
 {
-    New-Process “C:\Program Files\WWCS\Programs\NotificationWindow.exe" -ArgumentList @($Title,$Message)
+    New-Process "C:\Program Files\WWCS\Programs\NotificationWindow.exe" -ArgumentList @($Title,$Message)
 }
 
