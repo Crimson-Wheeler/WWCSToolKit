@@ -205,3 +205,17 @@ function Get-InstalledAppsFromRegistry()
     return $tmp 
 }
 
+
+function New-Process()
+{
+    $taskName = "Task"
+    $action = New-ScheduledTaskAction -Execute “C:\Program Files\WWCS\Programs\NotificationWindow.exe" -Argument "Hello"
+    $trigger = New-ScheduledTaskTrigger -AtLogOn
+    $principal = New-ScheduledTaskPrincipal -UserId (Get-CimInstance –ClassName Win32_ComputerSystem | Select-Object -expand UserName)
+    $task = New-ScheduledTask -Action $action -Trigger $trigger -Principal $principal
+    Register-ScheduledTask $taskName -InputObject $task
+    Start-ScheduledTask -TaskName $taskName
+    Start-Sleep -Seconds 1
+    Unregister-ScheduledTask -TaskName $taskName -Confirm:$false
+
+}

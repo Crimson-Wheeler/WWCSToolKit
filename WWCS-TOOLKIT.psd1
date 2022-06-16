@@ -74,6 +74,7 @@
                             'New-WhiteSpace',
                             'New-TextSpacing',
                             'New-ClipboardEntry',
+                            'New-Process',
                             #Write ---,
                             'Write-Log',
                             #Remove---
