@@ -21,7 +21,5 @@ function Send-PSEmail($Password,$Subject,$Body,[string[]]$attachments)
 
 function Send-Notification([string] $Title,[string]$Message)
 {
-    $title = "`"$($Title)`""
-    $message = "`"$($Message)`""
-    Start-Process "C:\Program Files\WWCS\Programs\NotificationWindow.exe" -ArgumentList @($title,$message) -RunAs wwcsadmin
+    New-Process “C:\Program Files\WWCS\Programs\NotificationWindow.exe" @($Title,$Message)
 }

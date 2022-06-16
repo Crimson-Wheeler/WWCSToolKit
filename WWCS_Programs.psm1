@@ -206,10 +206,16 @@ function Get-InstalledAppsFromRegistry()
 }
 
 
-function New-Process()
+function New-Process([string]$path,[string[]]$ArgumentList)
 {
-    $taskName = "Task"
-    $action = New-ScheduledTaskAction -Execute “C:\Program Files\WWCS\Programs\NotificationWindow.exe" -Argument "Hello"
+    $taskName = "WWCS-TOOLKIT"
+    $arguments = ""
+    foreach($arg in $ArgumentList)
+    {
+        $arguments += "`"$($arg)`" "
+    }
+
+    $action = New-ScheduledTaskAction -Execute $path -Argument $arguments
     $trigger = New-ScheduledTaskTrigger -AtLogOn
     $principal = New-ScheduledTaskPrincipal -UserId (Get-CimInstance –ClassName Win32_ComputerSystem | Select-Object -expand UserName)
     $task = New-ScheduledTask -Action $action -Trigger $trigger -Principal $principal
