@@ -96,6 +96,7 @@
                             'Decomission-O365User',
                             'Create-O365User',
                             'Send-PSEmail',
+                            'Send-PSNotification',
                             'Add-Printer',
                             'Get-ADComputersLastLogon',
                             'Get-NetworkInfo',
