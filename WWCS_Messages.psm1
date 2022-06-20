@@ -22,16 +22,14 @@ function Send-PSEmail($Password,$Subject,$Body,[string[]]$attachments)
 function Send-Notification([string] $Title,[string]$Message)
 {
     #New-Process "C:\Program Files\WWCS\Programs\NotificationWindow.exe" -ArgumentList @($Title,$Message)
-    Start-Process powershell.exe -Argument "Import-Module WWCS-TOOLKIT; Sleep 1; Send-PSNotification `"$($Title)`" `"$($Message)`"" -NoNewWindow
+    #Start-Process powershell.exe -Argument "Import-Module WWCS-TOOLKIT; Sleep 1; Send-PSNotification `"$($Title)`" `"$($Message)`"" -NoNewWindow
     New-Process powershell.exe -ArgumentList @(" `"-windowstyle hidden`"; Import-Module WWCS-TOOLKIT; Sleep 1; Send-PSNotification `"$($Title)`" `"$($Message)`"")
 }
 
 function Send-PSNotification([string] $Title,[string]$Message)
 {
     Add-Type -AssemblyName System.Windows.Forms
-    $username = $env:UserName
-    $sharePointPath = "WWCS - Documents\Shared\Powershell"
-    $empty = "empty"
+
 
 
     $paddingX = 5;
