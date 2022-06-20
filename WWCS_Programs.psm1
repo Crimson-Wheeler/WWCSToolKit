@@ -206,22 +206,17 @@ function Get-InstalledAppsFromRegistry()
 }
 
 
-function New-Process([string]$path,[string[]]$ArgumentList)
+function New-Process([string]$path, [string]$Argument)
 {
     $taskName = "WWCS-TOOLKIT"
-    $arguments = ""
-    foreach($arg in $ArgumentList)
-    {
-        $arguments += "`"$($arg)`" "
-    }
 
-    $action = New-ScheduledTaskAction -Execute $path -Argument $arguments
+    $action = New-ScheduledTaskAction -Execute $path -Argument $Argument
     $trigger = New-ScheduledTaskTrigger -AtLogOn
     $principal = New-ScheduledTaskPrincipal -UserId (Get-CimInstance –ClassName Win32_ComputerSystem | Select-Object -expand UserName)
-    $task = New-ScheduledTask -Action $action -Trigger $trigger -Principal $principal
+    $task = New-ScheduledTask -Action $action -Trigger $trigger -Principal $principal 
     Register-ScheduledTask $taskName -InputObject $task
     Start-ScheduledTask -TaskName $taskName
     Start-Sleep -Seconds 1
     Unregister-ScheduledTask -TaskName $taskName -Confirm:$false
-
+        
 }

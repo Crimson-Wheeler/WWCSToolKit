@@ -23,6 +23,7 @@ function Send-Notification([string] $Title,[string]$Message)
 {
     #New-Process "C:\Program Files\WWCS\Programs\NotificationWindow.exe" -ArgumentList @($Title,$Message)
     Start-Process powershell.exe -Argument "Import-Module WWCS-TOOLKIT; Sleep 1; Send-PSNotification `"$($Title)`" `"$($Message)`"" -NoNewWindow
+    New-Process powershell.exe -ArgumentList @(" `"-windowstyle hidden`"; Import-Module WWCS-TOOLKIT; Sleep 1; Send-PSNotification `"$($Title)`" `"$($Message)`"")
 }
 
 function Send-PSNotification([string] $Title,[string]$Message)
