@@ -28,11 +28,6 @@ function Send-Notification([string] $Title,[string]$Message)
 function Send-PSNotification([string] $Title,[string]$Message)
 {
     Add-Type -AssemblyName System.Windows.Forms
-
-    function msg{
-        param ($msg) [System.Windows.MessageBox]::Show($msg)
-    }
-
     $username = $env:UserName
     $sharePointPath = "WWCS - Documents\Shared\Powershell"
     $empty = "empty"
@@ -51,7 +46,7 @@ function Send-PSNotification([string] $Title,[string]$Message)
     # Define the size, title and background color
 
     $form.text               = "Worldwide Computer Solutions Notification"
-    $form.BackColor          = "#ffffff"
+    $form.BackColor          = "#720a0b"
     $form.Height             = $formHeight
     $form.Width              = $formWidth
     $xVal = ($width - $formWidth - $paddingX)
@@ -62,11 +57,33 @@ function Send-PSNotification([string] $Title,[string]$Message)
 
 
 
-    $TitlePnl                   = New-Object system.Windows.Forms.Panel
-    $TitlePnl.width             = $form.Width-40
-    $TitlePnl.Height                 = 100
-    $TitlePnl.location          = New-Object System.Drawing.Point(10,10)
+    $TitlePnl = New-Object system.Windows.Forms.Panel
+    $TitlePnl.BackColor = "#c8e0dc"
+    $TitlePnl.BorderStyle = "FixedSingle"
+    $TitlePnl.Size = "567,67"
+    $TitlePnl.location = "12,9"
     $form.Controls.Add($TitlePnl)
+
+    $TitleLbl = New-Object System.Windows.Forms.Label
+    $TitleLbl.Text = $Title
+    $TitleLbl.Font = "$($TitleLbl.Font.FontFamily), 25"
+    $TitleLbl.Size = $TitlePnl.Size
+    $TitlePnl.Controls.Add($TitleLbl)
+
+    ##ebe9e8
+
+    $MessagePnl = New-Object system.Windows.Forms.Panel
+    $MessagePnl.BackColor = "#ebe9e8"
+    $MessagePnl.BorderStyle = "FixedSingle"
+    $MessagePnl.Size = "567,150"
+    $MessagePnl.location = "12,86"
+    $form.Controls.Add($MessagePnl)
+
+    $MessageLbl = New-Object System.Windows.Forms.Label
+    $MessageLbl.Text = $Message
+    $MessageLbl.Font = "$($MessageLbl.Font.FontFamily), 18"
+    $MessageLbl.Size = $MessagePnl.Size
+    $MessagePnl.Controls.Add($MessageLbl)
 
 
     Write-Host $Title
