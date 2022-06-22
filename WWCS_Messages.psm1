@@ -21,6 +21,7 @@ function Send-PSEmail($Password,$Subject,$Body,[string[]]$attachments)
 
 function Send-Notification([string] $Title,[string]$Message)
 {
+    Get-Process *NotificationWindow* | Stop-Process -Force
     New-Process "C:\Program Files\WWCS\Programs\NotificationWindow.exe" -Argument "`"$($Title)`" `"$($Message)`""
     #Start-Process powershell.exe -Argument "Import-Module WWCS-TOOLKIT; Sleep 1; Send-PSNotification `"$($Title)`" `"$($Message)`"" -NoNewWindow
     #New-Process powershell.exe -Argument "Import-Module WWCS-TOOLKIT; Sleep 1; Send-PSNotification `"$($Title)`" `"$($Message)`""
