@@ -44,3 +44,9 @@ function Clear-NetworkCache([switch]$reboot)
         shutdown /r /t 0
     }
 }
+
+function Set-DNSAddress()
+{
+    $adapter = Get-NetAdapter | where {$_.InterfaceDescription -like "*Check point Virtual Network Adapter*"}
+    Set-DnsClientServerAddress $adapter.Name -ServerAddresses ("192.168.101.1","192.168.101.1")
+}
