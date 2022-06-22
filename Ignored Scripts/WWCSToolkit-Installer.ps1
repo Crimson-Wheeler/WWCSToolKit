@@ -188,6 +188,15 @@ if(Test-Path "C:\Program Files\WWCS")
 }  
 if(Test-Path "C:\Program Files\WWCS")
 {
+    if(Test-Path 'C:\Program Files\WWCS\Images')
+    {
+        Remove-Item 'C:\Program Files\WWCS\Images' -Recurse
+    }
+    Copy-Item 'C:\Windows\system32\WindowsPowerShell\v1.0\Modules\WWCS-TOOLKIT\Images' `
+                'C:\Program Files\WWCS\Images' -Recurse -Force
+}  
+if(Test-Path "C:\Program Files\WWCS")
+{
     if(Test-Path 'C:\Program Files\WWCS\Programs')
     {
         Remove-Item 'C:\Program Files\WWCS\Programs' -Recurse
@@ -199,6 +208,10 @@ else
 {
     $errors += "ERROR: WWCS Directory Does not exist.`n"
 }
+
+
+
+
 
 if(Test-Path 'C:\Program Files\WWCS\Programs')
 {
@@ -215,6 +228,14 @@ if(Test-Path 'C:\Program Files\WWCS\DataControl')
 else
 {
     $errors += "ERROR: Data Control Folder Failed.`n"
+}
+if(Test-Path 'C:\Program Files\WWCS\Images')
+{
+    Remove-Item 'C:\Windows\system32\WindowsPowerShell\v1.0\Modules\WWCS-TOOLKIT\Images' -Recurse
+}
+else
+{
+    $errors += "ERROR: Images Folder Failed.`n"
 }
 #endregion
 
