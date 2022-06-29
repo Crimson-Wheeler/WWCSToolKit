@@ -97,10 +97,16 @@ function Send-PSNotification([string] $Title,[string]$Message)
 
 }
 
-function Send-UptimeNotification($threshold){
-    if(Get-Uptime -gt $threshold)
+function Send-UptimeNotification($threshold)
+{
+
+    $bootuptime = (Get-CimInstance -ClassName Win32_OperatingSystem).LastBootUpTime
+    $CurrentDate = Get-Date
+    $uptime = $CurrentDate - $bootuptime
+
+    if($uptime.Days -gt $threshold)
     {
-        Send-Notification "Message from WWCS..." "Your computer has not been restarted in $(Get-Uptime) days. `
+        Send-Notification "Message from WWCS..." "Your computer has not been restarted in $($uptime.Days) days. `
         if you do not reboot your computer, then it has a higher chance of experiancing errors."
 
     }

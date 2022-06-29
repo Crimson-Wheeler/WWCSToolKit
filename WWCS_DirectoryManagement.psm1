@@ -26,3 +26,10 @@ function Get-DirectoryPermissions($directory, $exportLocation = "C:\Temp", [swit
         Export-Csv -InputObject $folderInfo -Path $exportFile -Append
     }
 }
+
+
+function  Get-AllDrives()
+{
+    Get-PSDrive | Where-Object {$_.Name.Length -le 1}
+    
+}
