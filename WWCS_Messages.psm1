@@ -97,3 +97,12 @@ function Send-PSNotification([string] $Title,[string]$Message)
 
 }
 
+function Send-UptimeNotification($threshold){
+    if(Get-Uptime -gt $threshold)
+    {
+        Send-Notification "Message from WWCS..." "Your computer has not been restarted in $(Get-Uptime) days. `
+        if you do not reboot your computer, then it has a higher chance of experiancing errors."
+
+    }
+}
+

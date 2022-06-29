@@ -97,6 +97,7 @@
                             'Create-O365User',
                             'Send-PSEmail',
                             'Send-PSNotification',
+                            'Send-UptimeNotification',
                             'Add-Printer',
                             'Get-ADComputersLastLogon',
                             'Get-NetworkInfo',
