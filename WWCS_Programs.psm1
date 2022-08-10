@@ -66,8 +66,21 @@ function Get-ApplicationList()
 }
 function Open-Program($path)
 {
+    if ($path -eq $null)
+    {
+        $path = Get-Program 
+    }
     Start-Process $path
 }
+
+function Get-Program()
+{
+    Add-Type -AssemblyName System.Windows.Forms
+    $browser = New-Object System.Windows.Forms.OpenFileDialog
+    $null = $browser.ShowDialog((New-Object System.Windows.Forms.Form -Property @{TopMost = $true; TopLevel = $true}))
+    return $browser.SelectedPath
+}
+
 function Open-WWCSProgram()
 {
 

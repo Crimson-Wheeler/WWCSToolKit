@@ -40,3 +40,9 @@ function  Get-AllDrives()
     #writes an output for all the drives on the system
     return Get-PSDrive | Where-Object {$_.Name.Length -le 1}
 }
+function Get-Directory(){
+    Add-Type -AssemblyName System.Windows.Forms
+    $browser = New-Object System.Windows.Forms.FolderBrowserDialog
+    $null = $browser.ShowDialog((New-Object System.Windows.Forms.Form -Property @{TopMost = $true; TopLevel = $true}))
+    return $browser.SelectedPath
+}
