@@ -19,11 +19,13 @@ function Remove-WaveBrowser()
 
 }
 
+#Runs the applicaiton auditing exe file
 function Get-ApplicationDifferences($Password)
 {
     &"C:\Program Files\WWCS\Programs\Application Auditing.exe '$($Password)'"
 }
 
+#Removes the app auditing service file
 function Remove-AppServiceFile()
 {
     if (Test-Path -Path "C:\Program Files\WWCS\Logs\Auditing\ApplicationAuditLogs\serviceCheck.log")
@@ -32,14 +34,19 @@ function Remove-AppServiceFile()
     }
 }
 
+#
 function Get-ApplicationList()
 {
+
+    #Get list of packages from 3 different sources 
     $apps = Get-AppxPackage –AllUsers
     $apps += Get-WmiObject -Class Win32_Product | Select Name | Sort -Property Name
     $apps += Get-InstalledAppsFromRegistry | Select @{N=’Name’; E={$_.DisplayName}}
 
     [System.Collections.ArrayList]$apps = $apps | Sort-Object name
     [System.Collections.ArrayList]$appsList = @()
+
+    #remove duplicate names
     for($i = 0; $i -lt $apps.Count; $i++)
     {   
         if([string]$apps[$i].name -eq [string]$apps[$i+1].name)
@@ -53,6 +60,7 @@ function Get-ApplicationList()
         }
     }
 
+    #write to file
     Out-File -FilePath "C:\Temp\testingOut.Log" -InputObject $appsList
     return $appsList
 }
@@ -60,10 +68,9 @@ function Open-Program($path)
 {
     Start-Process $path
 }
-function Open-WWCSProgram($programName,$switches)
+function Open-WWCSProgram()
 {
-    if($null -eq $programName)
-    {
+
         #list all files in the programs
         #select a number from them
         #start that process
@@ -91,14 +98,6 @@ function Open-WWCSProgram($programName,$switches)
         [string]$val = "$($path)\$($files[($choice-1)])"
         Write-Host $val
         Start-Process $val
-
-    }
-    else
-    {
-        Write-Host "Starting program from $(Get-WWCSTOOLKITPath)\Programs\$($programName)"
-        Start-Process "$(Get-WWCSProgramPath)\$($programName) $($switches)"
-    }
-    
 }
 
 
@@ -210,12 +209,25 @@ function New-Process([string]$path, [string]$Argument)
 {
     $taskName = "WWCS-TOOLKIT"
 
+    #Defines the application to run and the command line arguments
     $action = New-ScheduledTaskAction -Execute $path -Argument $Argument
+
+    #Triggers it immediately
     $trigger = New-ScheduledTaskTrigger -AtLogOn
+
+    #Runs the program under the context of the user currently logged in
     $principal = New-ScheduledTaskPrincipal -UserId (Get-CimInstance –ClassName Win32_ComputerSystem | Select-Object -expand UserName)
+
+    #Defines the task with the previously defined data
     $task = New-ScheduledTask -Action $action -Trigger $trigger -Principal $principal 
+
+    #Registers task to the task scheduler
     Register-ScheduledTask $taskName -InputObject $task
+
+    #Starts the task
     Start-ScheduledTask -TaskName $taskName
+
+    #Waits a given amount of time and then deletes the scheduled task from the scheduler
     Start-Sleep -Seconds 1
     Unregister-ScheduledTask -TaskName $taskName -Confirm:$false
         

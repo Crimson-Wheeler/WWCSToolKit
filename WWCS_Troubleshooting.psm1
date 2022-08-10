@@ -8,6 +8,7 @@ function Start-Repair()
     Dism.exe /Online /Cleanup-Image /StartComponentCleanup
 }
 
+#Removes all data held for windows updates so that the computer can start fresh
 function Clear-UpdateCache()
 {
     #stop the update service
@@ -20,6 +21,8 @@ function Clear-UpdateCache()
     Start-Service wuauserv
 }
 
+#Removes all data associated with windows updates and other services that aassist in the update process
+#Suggests a reboot after to finalize the windows clearing process
 function Reset-WindowsUpdate()
 {
 

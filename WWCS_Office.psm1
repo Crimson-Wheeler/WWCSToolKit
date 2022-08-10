@@ -48,7 +48,7 @@
         try{Connect-ExchangeOnline -Credential $creds}catch{Write-Host "Connection to Exchange failed."}
     }
 }
-function Select-O365User($prompt = "elect which user(s) you want by typing the associated number")
+function Select-O365User($prompt = "Select which user(s) you want by typing the associated number")
 {
 
     $objs = (Get-MsolUser | Where-Object {$_.FirstName.Length -gt 0} |Sort-Object -Property FirstName)
