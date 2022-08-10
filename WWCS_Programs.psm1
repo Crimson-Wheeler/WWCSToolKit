@@ -19,11 +19,6 @@ function Remove-WaveBrowser()
 
 }
 
-#Runs the applicaiton auditing exe file
-function Get-ApplicationDifferences($Password)
-{
-    &"C:\Program Files\WWCS\Programs\Application Auditing.exe '$($Password)'"
-}
 
 #Removes the app auditing service file
 function Remove-AppServiceFile()
