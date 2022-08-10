@@ -18,12 +18,7 @@ function Get-WWCSLogPath()
     }
     return "C:\Program Files\WWCS\Logs"
 }
-function Get-Directory(){
-    Add-Type -AssemblyName System.Windows.Forms
-    $browser = New-Object System.Windows.Forms.FolderBrowserDialog
-    $null = $browser.ShowDialog((New-Object System.Windows.Forms.Form -Property @{TopMost = $true; TopLevel = $true}))
-    return $browser.SelectedPath
-}
+
 
 function Write-LogError($message)
 {

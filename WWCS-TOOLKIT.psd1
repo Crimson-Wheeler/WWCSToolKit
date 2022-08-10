@@ -49,6 +49,7 @@
                             'Get-ADComputerLogonEvents',
                             'Get-SuccessfulLogonEvents',
                             'Get-Directory',
+                            'Get-Program',
                             'Get-LogonEvent',
                             'Get-LogoffEvents',
                             'Get-EventIDProperties',
