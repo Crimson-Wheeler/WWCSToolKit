@@ -95,19 +95,24 @@ function Get-EventIDProperties([int]$eventID)
     Write-Host (Get-LogonEvent $env:COMPUTERNAME -eventID $eventID -listPropertyIndexes)
 }
 
+
 function Get-ADComputerLogonEvents(){
+    #get list of AD Computers
     $computers = Get-ADComputer -Filter * -Properties Name,LastLogonDate | Select-Object Name,LastLogonDate
     Log "Testing $($computers.Count) computers"
     Log "Domain Computers ---------------------------------"
     Log ($computers | Format-Table)
     Log "End Domain Computers"
 
+
     foreach ($computer in $computers)
     {
+
+        #list each event for each computer
         if($null -eq $computer.LastLogonDate){continue}
         if(((Get-Date) - $computer.LastLogonDate.Date).days -gt 30) {continue}
         Log "Gathering events for $($computer.Name)----------------------------------------------"
-        Get-ADComputerLogonEvents -computerName
+        Get-ADComputerLogonEvents -computerName $computer.Name
     }
 }
 function Get-ADComputerLogonEvents($computerName)

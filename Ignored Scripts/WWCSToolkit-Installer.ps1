@@ -77,22 +77,14 @@ function Log-Event($eventInfo,[switch] $push, [switch] $logTime)
         Write-Host "EVENT STR: ----------------------"
         Write-Host $Global:eventStr
     }
-
-    
 }
 
 Log-Event "Starting ($($startTime))"
 
-$logPath = "C:\Program Files\WWCS\Logs"
-$dataPath = "C:\Program Files\WWCS\DataControl"
-$programPaths = "C:\Program Files\WWCS\Programs"
-$fileName = "WWCS-TOOLKIT.log"
-$tempPath = "C:\Temp"
-$modulePath =  "C:\Windows\system32\WindowsPowerShell\v1.0\Modules"
 $RepositoryZipUrl = "https://github.com/Crimson-Wheeler/WWCSToolkit/archive/main.zip" 
 $errors = ""
 
-#region Cleaup 
+#region Cleanup 
 if(Test-Path 'C:\Windows\system32\WindowsPowerShell\v1.0\Modules\WWCS-TOOLKITnew'){
     Remove-Item 'C:\Windows\system32\WindowsPowerShell\v1.0\Modules\WWCS-TOOLKITnew' -Recurse -Force
 }

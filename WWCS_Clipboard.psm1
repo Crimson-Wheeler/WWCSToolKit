@@ -1,11 +1,13 @@
 ﻿
 function Get-ClipboardDirectory([switch]$set)
 {
+    #Test if the clipbaord directory exists, creates the directory
     if(-not (Test-Path -Path "$(Get-WWCSDataPath)\ClipboardFiles"))
     {
         New-Item -Path "$(Get-WWCSDataPath)\ClipboardFiles" -ItemType directory
     }
 
+    #Sets the clipboard
     if($set)
     {
         Set-Clipboard -Value "$(Get-WWCSDataPath)\ClipboardFiles"

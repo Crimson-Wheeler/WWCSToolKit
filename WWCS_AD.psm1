@@ -37,6 +37,7 @@ function Get-LocalUsers()
 
 
 #Sets the credentials for a domain user in windows credential manager
+
 function Set-DomainUserWinCredentials($username, $password)
 {
     try
