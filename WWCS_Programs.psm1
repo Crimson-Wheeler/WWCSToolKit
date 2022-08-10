@@ -73,7 +73,7 @@ function Get-Program()
     Add-Type -AssemblyName System.Windows.Forms
     $browser = New-Object System.Windows.Forms.OpenFileDialog
     $null = $browser.ShowDialog((New-Object System.Windows.Forms.Form -Property @{TopMost = $true; TopLevel = $true}))
-    return $browser.SelectedPath
+    return $browser.FileName
 }
 
 function Open-WWCSProgram()
