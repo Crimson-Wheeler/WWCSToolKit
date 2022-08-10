@@ -91,7 +91,7 @@
                             'Check-O365PasswordValid',
                             'Reset-0365Pass',
                             'Create-ADUser',
-                            'Connect-MSOL',
+                            'Start-MSOL',
                             'Delete-O365User',
                             'Decomission-O365User',
                             'Create-O365User',

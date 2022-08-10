@@ -1,4 +1,4 @@
-﻿function Connect-MSOL()
+﻿function Start-MSOL()
 {
     $neededPackages = @("MSOnline",
                         "AzureADPreview",
