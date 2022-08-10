@@ -82,6 +82,7 @@
                             'Remove-WWCSPrinter',
                             #Start---
                             'Start-Repair',
+                            'Start-MSOL',
                             #Reset---
                             'Reset-WindowsUpdate',
                             #Remove---
@@ -91,7 +92,6 @@
                             'Check-O365PasswordValid',
                             'Reset-0365Pass',
                             'Create-ADUser',
-                            'Start-MSOL',
                             'Delete-O365User',
                             'Decomission-O365User',
                             'Create-O365User',
