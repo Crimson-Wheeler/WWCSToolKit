@@ -67,14 +67,7 @@ function Test-AppInstalled($appName)
     }
     return $false
 }   
-function Remove-Path([string]$Path)
-{
-    Write-Host "Delete"$Path
-    if (Test-Path -Path $Path)
-    {
-        Remove-Item  $Path -Recurse -Force
-    }
-}
+
 function Uninstall-WWCSToolkit
 {
     [CmdletBinding(SupportsShouldProcess=$true,ConfirmImpact='High')]

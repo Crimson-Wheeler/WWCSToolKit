@@ -46,3 +46,11 @@ function Get-Directory(){
     $null = $browser.ShowDialog((New-Object System.Windows.Forms.Form -Property @{TopMost = $true; TopLevel = $true}))
     return $browser.SelectedPath
 }
+function Remove-Path([string]$Path)
+{
+    Write-Host "Delete"$Path
+    if (Test-Path -Path $Path)
+    {
+        Remove-Item  $Path -Recurse -Force
+    }
+}
