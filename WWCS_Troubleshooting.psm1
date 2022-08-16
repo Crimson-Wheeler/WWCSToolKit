@@ -26,18 +26,22 @@ function Clear-UpdateCache()
 function Reset-WindowsUpdate()
 {
 
+    #stop update services
     Stop-Service wuauserv
     Stop-Service cryptSvc
     Stop-Service bits
     Stop-Service msiserver
 
-    Rename-Item "C:\Windows\SoftwareDistribution" "C:\Windows\SoftwareDistribution.old" 
-    Rename-Item "C:\Windows\System32\catroot2" "C:\Windows\System32\catroot2.old"
+    #renames the cache folders so that update can retry the download
+    Rename-Item "C:\Windows\SoftwareDistribution" "C:\Windows\SoftwareDistribution.old" -Force
+    Rename-Item "C:\Windows\System32\catroot2" "C:\Windows\System32\catroot2.old" -Force
 
+    #start the update services
     Start-Service wuauserv
     Start-Service cryptSvc
     Start-Service bits
     Start-Service msiserver
+
 
     Write-Host "Please reboot your computer to finalize windows update reset."
 }
