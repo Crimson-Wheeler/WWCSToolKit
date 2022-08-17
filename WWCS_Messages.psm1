@@ -21,96 +21,20 @@ function Send-PSEmail($Password,$Subject,$Body,[string[]]$attachments)
 
 function Send-Notification([string] $Title,[string]$Message)
 {
+    #Closes current notification and creates a new process for another notification
     Get-Process *NotificationWindow* | Stop-Process -Force
     New-Process "C:\Program Files\WWCS\Programs\NotificationWindow.exe" -Argument "`"$($Title)`" `"$($Message)`""
-    #Start-Process powershell.exe -Argument "Import-Module WWCS-TOOLKIT; Sleep 1; Send-PSNotification `"$($Title)`" `"$($Message)`"" -NoNewWindow
-    #New-Process powershell.exe -Argument "Import-Module WWCS-TOOLKIT; Sleep 1; Send-PSNotification `"$($Title)`" `"$($Message)`""
-}
-
-function Send-PSNotification([string] $Title,[string]$Message)
-{
-    Add-Type -AssemblyName System.Windows.Forms
-
-
-
-    $paddingX = 5;
-    $paddingY = 50;
-
-    #Get Dimensions of Monitor
-    $width = [System.Windows.Forms.SystemInformation]::PrimaryMonitorSize.Width
-    $height = [System.Windows.Forms.SystemInformation]::PrimaryMonitorSize.Height
-
-    #Set dimensions of the form
-    $formWidth = 611
-    $formHeight = 291
-
-    # Create a new form
-    $form                    = New-Object system.Windows.Forms.Form
-    # Define the size, title and background color
-
-    #inialize Forms
-    $form.text               = "Worldwide Computer Solutions Notification"
-    $form.BackColor          = "#720a0b"
-    $form.Height             = $formHeight
-    $form.Width              = $formWidth
-    $xVal = ($width - $formWidth - $paddingX)
-    $yVal = ($height - $formHeight - $paddingY)
-    Write-Host "$($xVal),$($yVal)"
-    $form.StartPosition = 'Manual'
-    $form.Location = "$($xVal),$($yVal)"
-
-
-    #Add Container
-    $TitlePnl = New-Object system.Windows.Forms.Panel
-    $TitlePnl.BackColor = "#c8e0dc"
-    $TitlePnl.BorderStyle = "FixedSingle"
-    $TitlePnl.Size = "567,67"
-    $TitlePnl.location = "12,9"
-    $form.Controls.Add($TitlePnl)
-
-    #Add title
-    $TitleLbl = New-Object System.Windows.Forms.Label
-    $TitleLbl.Text = $Title
-    $TitleLbl.Font = "$($TitleLbl.Font.FontFamily), 25"
-    $TitleLbl.Size = $TitlePnl.Size
-    $TitlePnl.Controls.Add($TitleLbl)
-
-    ##ebe9e8
-
-    #Container 2
-    $MessagePnl = New-Object system.Windows.Forms.Panel
-    $MessagePnl.BackColor = "#ebe9e8"
-    $MessagePnl.BorderStyle = "FixedSingle"
-    $MessagePnl.Size = "567,150"
-    $MessagePnl.location = "12,86"
-    $form.Controls.Add($MessagePnl)
-
-    #Add Message
-    $MessageLbl = New-Object System.Windows.Forms.Label
-    $MessageLbl.Text = $Message
-    $MessageLbl.Font = "$($MessageLbl.Font.FontFamily), 18"
-    $MessageLbl.Size = $MessagePnl.Size
-    $MessagePnl.Controls.Add($MessageLbl)
-
-
-    Write-Host $Title
-    Write-Host "--------------"
-    Write-Host $Message
-
-
-
-    #Show Form
-    [void]$form.ShowDialog()
-
 }
 
 function Send-UptimeNotification($threshold)
 {
 
+    #calculate how long the computer has been on for
     $bootuptime = (Get-CimInstance -ClassName Win32_OperatingSystem).LastBootUpTime
     $CurrentDate = Get-Date
     $uptime = $CurrentDate - $bootuptime
 
+    #if the computer has been on longer than the given value than send the notification
     if($uptime.Days -gt $threshold)
     {
         Send-Notification "Message from WWCS..." "Your computer has not been restarted in $($uptime.Days) days. `

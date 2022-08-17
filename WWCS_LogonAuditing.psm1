@@ -43,8 +43,10 @@ function Get-LogonEvent($computerName,
                         $SourcePortIndex, 
                         [switch]$listPropertyIndexes)
 {
+    #Will find events for this computer if the computer name is not specified
     if(-not $computerName){$computerName = $env:COMPUTERNAME}
 
+    #Only lists the properies index
     if($listPropertyIndexes)
     {
         $tempWinEvent = Get-WinEvent -ComputerName $computerName -Logname 'security' -MaxEvents 1 -FilterXPath "*[System[EventID=$eventID]]"
@@ -58,9 +60,13 @@ function Get-LogonEvent($computerName,
         return
     }
 
-
+    #gets the win event for the event ID of a certain computer
     $winEvent = Get-WinEvent -ComputerName $computerName -Logname 'security' -MaxEvents $numOfEvents -FilterXPath "*[System[EventID=$eventID]]" 
-    foreach ($event in $winEvent){            
+    
+    #Adds event to a csv output file
+    foreach ($event in $winEvent){    
+        
+        #creates custom ps object to help with formatting the csv file
         $auditEvent = [PSCustomObject]@{
             LogonType =  "$(Convert-LogonType $event.Properties[$LogonTypeIndex].Value.ToString())"
             Username = "$($event.Properties[$DomainIndex].Value)\$($event.Properties[$UsernameIndex].Value)"
@@ -69,7 +75,11 @@ function Get-LogonEvent($computerName,
             SourceAddress = "$($event.Properties[$SourceAddressIndex].Value):$($event.Properties[$SourcePortIndex].Value)"
             ID = $event.Id
         }
+
+        #Log the data
         Log "$($auditEvent.Username) -- $($auditEvent.LogonTime)"
+
+        #Append to file
         Export-Csv -InputObject $auditEvent -Path "$OutputPath\$computerName-LogonEvents.csv" -Append
     }
 }
@@ -90,6 +100,7 @@ function Get-LogoffEvents ($computerName, $OutputPath = "C:\temp",$numOfEvents =
     Get-LogonEvent $computerName $OutputPath $numOfEvents -eventID "4634" -LogonTypeIndex 4 -DomainIndex 2 -UsernameIndex 1
 }
 
+#Gets info that is pertinant to finding which event property index is needed
 function Get-EventIDProperties([int]$eventID)
 {
     Write-Host (Get-LogonEvent $env:COMPUTERNAME -eventID $eventID -listPropertyIndexes)
@@ -126,27 +137,6 @@ function Get-ADComputerLogonEvents($computerName)
 
 
 
-
-<#
-
-
-
-
-foreach ($item in $event.Properties) {
-                Write-Host "VALUE: "$item.Value
-            }
-
-
-
-
-
-
-
-
-#>
-
-
-<#
 function Get-LogonType([System.Diagnostics.Eventing.Reader.EventLogRecord]$winEventObj)
 {
     [string]$description = $winEventObj.
@@ -200,27 +190,8 @@ function Get-FailedLogons([int]$count = 0)
    }
    return [System.Collections.ArrayList]@()
 }
-function Get-WWCSLogons($succesCount = 0, $failedCount = 0)
-{   
-    $successEvents = Get-SuccessLogons -count $successCount
-    $failedEvents = Get-FailedLogons -count $failedCount
-    
-    $events = [System.Collections.ArrayList]@()
-    foreach($event in $successEvents)
-    {
-        $obj = CreateSuccessEventObj -winEventObj $event
-        $events.Add($obj)
-    }
-    foreach($event in $failedEvents)
-    {
-        $obj = CreateFailedEventObj -winEventObj $event
-        $events.Add($obj)
-    }
-   
-    
-    return $events
-}
-function Write-WWCSLogons($succesCount = 0, $failedCount = 0, $path = "C:\Temp\output.csv")
+
+function Get-WWCSLogons($succesCount = 0, $failedCount = 0, $path = "C:\Temp\output.csv")
 {   
     $successEvents = Get-SuccessLogons -count $successCount
     $failedEvents = Get-FailedLogons -count $failedCount
@@ -243,7 +214,7 @@ function Write-WWCSLogons($succesCount = 0, $failedCount = 0, $path = "C:\Temp\o
     }
     foreach($event in $events)
     {
-       
+       Out-File -FilePath $path -InputObject $event -Append
     }
     return $events
 }
@@ -264,4 +235,4 @@ function Get-WWCSFailedLogonAudit($count,$timeCap,$logPath)
         
     }
 }
-#>
+
