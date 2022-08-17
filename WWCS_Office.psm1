@@ -1,16 +1,20 @@
 ﻿function Start-MSOL()
 {
+    #list needed packages
     $neededPackages = @("MSOnline",
                         "AzureADPreview",
                         "ExchangePowerShell")
+
+    #tests to see if already connected
     try
     {
         Get-MsolDomain -ErrorAction Stop > $null
     }
-    catch 
+    catch #throws error if not connected
     {
         $creds = Get-Credential -Message "Credentials for Office 365 Admin User"
         
+        #increments through each needed package and installed it
         foreach($module in $neededPackages)
         {
             try
@@ -42,7 +46,7 @@
 
 
         
-        
+        #force connects to each service as well
         try{Connect-MsolService -Credential $creds}catch{Write-Host "Connection to MSOL failed."}
         try{Connect-AzureAD -Credential $creds}catch{Write-Host "Connection to AzureAD failed."}
         try{Connect-ExchangeOnline -Credential $creds}catch{Write-Host "Connection to Exchange failed."}
@@ -50,10 +54,11 @@
 }
 function Select-O365User($prompt = "Select which user(s) you want by typing the associated number")
 {
-
+    #Gets all Microsoft users with a specified first name
     $objs = (Get-MsolUser | Where-Object {$_.FirstName.Length -gt 0} |Sort-Object -Property FirstName)
     $m = 0
 
+    #Shows users in a readable manner
     Write-Host "$(New-TextSpacing -amount 8 -inputText "Index")|$(New-TextSpacing -amount 12 -inputText "First Name")|$(New-TextSpacing -amount 12 -inputText "Last Name")|$($(New-TextSpacing -amount 16 -inputText "Principal Name"))" 
     Write-Host "--------------------------------------------------------------------------------------------"
     foreach($i in $objs)
@@ -62,9 +67,11 @@ function Select-O365User($prompt = "Select which user(s) you want by typing the 
         Write-Host "$(New-TextSpacing -amount 8 -inputText $m.ToString())|$(New-TextSpacing -amount 12 -inputText $i.FirstName) $(New-TextSpacing -amount 12 -inputText $i.LastName) $($i.UserPrincipalName)"
       
     }
+
+    #Asks the player to select users
     $index = (Read-Host -Prompt $prompt).Split(",")
 
-    # $users = Get-MsolUser
+    #Writes the list of selected users
     $listOfSelectedUsers = [System.Collections.ArrayList]@()
     foreach($i in $index)
     {
@@ -72,32 +79,30 @@ function Select-O365User($prompt = "Select which user(s) you want by typing the 
         $listOfSelectedUsers.Add($objs[$i-1])
     }
     
-    
-
+    #Returns all selected users
     return $listOfSelectedUsers
 }
 
 
-function Delete-O365User()
+function Remove-O365User([switch]$delete)
 {
-    Connect-MSOL
-    $users = (Select-O365User -prompt "Select user(s) to decomission.")
-    foreach($user in $users)
+    if($delete)
     {
-        Write-Host $user.FirstName
+        Connect-MSOL
+        $users = (Select-O365User -prompt "Select user(s) to decomission.")
+        foreach($user in $users)
+        {
+            Write-Host $user.FirstName
+        }
     }
-    
-}
-function Decomission-O365User()
-{
-    Connect-MSOL
-    $users = (Select-O365User -prompt "Select user(s) to decomission.")
-    foreach($user in $users)
+    else 
     {
-        Write-Host $user.FirstName
-    }
+        
+        <# Action when all if and elseif conditions are false #>
+    }   
 }
-function Create-O365User()
+
+function New-O365User()
 {
     Connect-MSOL
     Write-Host "Please fill out the information below..."
