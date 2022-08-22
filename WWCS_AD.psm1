@@ -3,7 +3,7 @@
     echo "This is a test to the active directory."
 }
 
-function Create-ADUser()
+function New-ADUser()
 {
     
 }
