@@ -1,3 +1,18 @@
+function Get-WWCSTOOLKITPath
+{
+    return "C:\Windows\system32\WindowsPowerShell\v1.0\Modules\WWCS-TOOLKIT"
+}
+function Get-WWCSDataPath
+{
+    #Check to see if it exists, creates it if it doesn't
+    if(-not (Test-Path -Path "C:\Users\$($env:USERNAME)\AppData\Local\WWCS"))
+    {
+        New-Item -Path "C:\Users\$($env:USERNAME)\AppData\Local\WWCS" -ItemType directory
+    }
+    return "C:\Users\$($env:USERNAME)\AppData\Local\WWCS"
+}
+
+
 #Gets the permissions of a directory, can recurse through all child directories and get their permissions too
 function Get-DirectoryPermissions($directory, $exportLocation = "C:\Temp", [switch]$findDir, [switch]$Recurse) {
     $exportFile = "$exportLocation\folderPermissions.csv"

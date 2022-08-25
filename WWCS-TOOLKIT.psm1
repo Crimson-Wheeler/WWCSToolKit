@@ -1,64 +1,4 @@
-function Get-WWCSTOOLKITPath
-{
-    return "C:\Windows\system32\WindowsPowerShell\v1.0\Modules\WWCS-TOOLKIT"
-}
-function Get-WWCSDataPath
-{
-    #Check to see if it exists, creates it if it doesn't
-    if(-not (Test-Path -Path "C:\Users\$($env:USERNAME)\AppData\Local\WWCS"))
-    {
-        New-Item -Path "C:\Users\$($env:USERNAME)\AppData\Local\WWCS" -ItemType directory
-    }
-    return "C:\Users\$($env:USERNAME)\AppData\Local\WWCS"
-}
-function Get-WWCSLogPath()
-{
-    #Check to see if log path exists, creates it if it doesn'tt
-    if(-not (Test-Path -Path "C:\Program Files\WWCS\Logs"))
-    {
-        New-Item -Path "C:\Program Files\WWCS\Logs" -ItemType directory
-    }
-    return "C:\Program Files\WWCS\Logs"
-}
 
-
-function Write-LogError($message)
-{
-    #Gets the log path
-    $logPath = Get-WWCSLogPath
-    $fileName = "error.log"
-
-    #Creates a error log if it does not exists
-    if(-not(Test-Path -Path $logPath))
-    {
-        New-Item -Path $logPath
-    }
-    $message >> "$($logPath)\$($fileName)"
-}
-function Write-Log($message,$rootPath,$path,[switch]$Append)
-{
-
-    # if the path has a value overwrite the log path
-    $logPath = "$(Get-WWCSLogPath)\$($rootPath)"
-    if($null -ne $path)
-    {
-        $logPath = $path
-    }
-    
-    #Create log if it doesn't exist
-    if(-not(Test-Path -Path $logPath))
-    {
-        New-Item -Path $logPath
-    }
-
-    #Chooses to overwrite or append file
-    if($Append){
-        Out-File -FilePath $logPath -InputObject $message -Append
-    }
-    else {
-        Out-File -FilePath $logPath -InputObject $messageA
-    }
-}
 
 function Get-WWCSCommands()
 {
@@ -74,7 +14,7 @@ function Get-WWCSReports([switch]$pickLocation)
     $folders = Get-ChildItem "C:\Users\$($env:username)\WorldWide Computer Solutions, Inc\WWCS - Documents\Customers\Customers - Active" Summary -recurse
     foreach ($folder in $folders) 
     {
-        $newestFile = Get-ChildItem $folder -File | Sort-Object -Descending -Property LastWriteTime | Select-Object -First 1
+        $newestFile = Get-ChildItem $folder.FullName -File | Sort-Object -Descending -Property LastWriteTime | Select-Object -First 1
         Write-Host $newestFile.FullName
         try 
         {
@@ -86,6 +26,14 @@ function Get-WWCSReports([switch]$pickLocation)
         }
         
     }
+
+    # foreach ($folder in $folders) 
+    # {
+    #     #$newestFile = Get-ChildItem $folder -File | Sort-Object -Descending -Property LastWriteTime | Select-Object -First 1
+    #     #Write-Host $newestFile.FullName
+    #     Write-host $folder.FullName
+        
+    # }
 }
 
 function Invoke-ToolkitTest()

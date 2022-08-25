@@ -33,7 +33,9 @@
                         'WWCS_DirectoryManagement.psm1',
                         'WWCS_EventLogging.psm1',
                         'WWCS_Troubleshooting.psm1',
-                        'WWCS_AppAuditing.psm1'
+                        'WWCS_AppAuditing.psm1',
+                        'WWCS_Logging.psm1',
+                        'WWCS_UserAuditing.psm1'
                         )
 
     FunctionsToExport =  @(
@@ -61,6 +63,7 @@
                             'Get-WWCSCommands',
                             'Get-AppChangesLog',
                             'Get-WWCSPrinters',
+                            'Get-WWCSUsers',
                             #Set ---
                             'Set-WWCSClipboard',
                             'Set-DomainUserWinCredentials',
