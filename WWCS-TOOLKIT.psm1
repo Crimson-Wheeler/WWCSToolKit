@@ -69,9 +69,9 @@ function Get-WWCSCommands()
 
 function Get-WWCSReports([switch]$pickLocation)
 {
-    $copyToLoc = "C:\Users\crimson.wheeler\WorldWide Computer Solutions, Inc\WWCS - Documents\Customers\Reports\Executive Summary\Summary"
+    $copyToLoc = "C:\Users\$($env:username)\WorldWide Computer Solutions, Inc\WWCS - Documents\Customers\Reports\Executive Summary\Summary"
 
-    $folders = Get-ChildItem "C:\Users\crimson.wheeler\WorldWide Computer Solutions, Inc\WWCS - Documents\Customers\Customers - Active" Summary -recurse
+    $folders = Get-ChildItem "C:\Users\$($env:username)\WorldWide Computer Solutions, Inc\WWCS - Documents\Customers\Customers - Active" Summary -recurse
     foreach ($folder in $folders) 
     {
         $newestFile = Get-ChildItem $folder -File | Sort-Object -Descending -Property LastWriteTime | Select-Object -First 1
