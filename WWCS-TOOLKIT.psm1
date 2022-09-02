@@ -7,7 +7,7 @@ function Get-WWCSCommands()
 
 
 
-function Get-WWCSReports([switch]$pickLocation)
+function Get-WWCSReports()
 {
     $copyToLoc = "C:\Users\$($env:username)\WorldWide Computer Solutions, Inc\WWCS - Documents\Customers\Reports\Executive Summary\Summary"
 
